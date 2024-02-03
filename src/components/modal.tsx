@@ -57,7 +57,7 @@ bg-neutral/70
       >
         <div
           className={`    relative
-        w-[80%]
+        w-[95%]
         md:w-4/6
         lg:w-3/6
         xl:w-[40%]
@@ -66,6 +66,7 @@ bg-neutral/70
         mx-auto
         lg:h-auto
         md:h-auto
+        overflow-auto
         `}
         >
           {/* CONTENT */}
@@ -73,17 +74,17 @@ bg-neutral/70
             className={`
       translate
       duration-300
+      overflow-auto
       h-full
       ${showModal ? "translate-y-0" : "translate-y-full"}
       ${showModal ? "opacity-100" : "opacity-0"}
       `}
           >
             <div
-              className={`overflow-auto
-            scrollbar 
-                scrollbar-none
+              className={`
+              overflow-auto
             translate
-            max-h-[90vh]
+            max-h-[70vh]
             md:max-h-[60vh]
             lg:h-auto
             md:h-auto

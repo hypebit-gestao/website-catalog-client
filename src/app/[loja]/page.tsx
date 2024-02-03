@@ -65,10 +65,8 @@ const Catalog = () => {
     setCategoryFilter("");
   };
 
-  console.log("imgs: ", products);
-
   return (
-    <div className="mt-24 min-h-screen">
+    <div className="mt-24 min-h-screen ">
       {categories?.length > 0 && (
         <div className="flex flex-row justify-center h-full items-center border-b shadow-sm border-gray-200 py-2">
           <Container>
