@@ -51,7 +51,7 @@ inset-0
 z-[100]
 outline-none
 focus:outline-none
-bg-neutral/70
+bg-neutral-800/70
 
   `}
       >
