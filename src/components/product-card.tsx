@@ -1,0 +1,99 @@
+import Image from "next/image";
+import React, { useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import {
+  MdOutlineKeyboardArrowLeft,
+  MdOutlineKeyboardArrowRight,
+} from "react-icons/md";
+import Link from "next/link";
+
+interface ProductCardProps {
+  name: string;
+  price: string;
+  images?: string[];
+  onClick?: () => void;
+}
+
+function SampleNextArrow(props: any) {
+  const { onClick } = props;
+  return (
+    <button
+      onClick={onClick}
+      className={
+        "p-1 z-[100] rounded-full absolute right-3 top-1/2 transform -translate-y-1/2 bg-white"
+      }
+    >
+      <MdOutlineKeyboardArrowRight className="text-2xl text-black" />
+    </button>
+  );
+}
+
+function SamplePrevArrow(props: any) {
+  const { onClick } = props;
+  return (
+    <button
+      onClick={onClick}
+      className={
+        "p-1 z-[100] rounded-full absolute left-3 top-1/2 transform -translate-y-1/2 bg-white"
+      }
+    >
+      <MdOutlineKeyboardArrowLeft className="text-2xl text-black" />
+    </button>
+  );
+}
+
+const ProductCard = ({ name, price, images, onClick }: ProductCardProps) => {
+  const [sliderIndex, setSliderIndex] = useState(0);
+
+  const settings = {
+    dots: images && images?.length > 1 ? true : false,
+    infinite: images && images?.length > 1,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    nextArrow: images && images?.length > 1 ? <SampleNextArrow /> : <></>,
+    prevArrow: images && images?.length > 1 ? <SamplePrevArrow /> : <></>,
+    afterChange: (index: number) => setSliderIndex(index),
+  };
+
+  return (
+    <div className="w-full h-full">
+      <div className="relative w-full h-full rounded-xl">
+        <Slider {...settings}>
+          {images?.map((src, index) => (
+            <div onClick={onClick} className="cursor-pointer" key={index}>
+              <div className="w-[300px] h-[300px] relative ">
+                <Image
+                  className="rounded-xl w-[300px] h-[300px]"
+                  src={src}
+                  width={300}
+                  height={300}
+                  alt={`Imagem Produto ${index + 1}`}
+                  objectFit="cover"
+                />
+              </div>
+            </div>
+          ))}
+        </Slider>
+        <div className="mt-8">
+          <div className="flex justify-between">
+            <h1 className="text-2xl text-gray-800">{name}</h1>
+          </div>
+          <h3 className="text-3xl font-bold">{price}</h3>
+          <div className="mt-5">
+            <button
+              onClick={onClick}
+              className="bg-green-primary w-[60%] px-3 py-1 rounded-lg hover:opacity-70 transition-all duration-200"
+            >
+              <h1 className="text-white text-lg">Comprar</h1>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductCard;
