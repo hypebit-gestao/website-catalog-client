@@ -71,7 +71,7 @@ const ViewCartModal = ({ isOpen, onClose }: ViewCartModalProps) => {
   };
 
   const finishOrder = (data: z.infer<typeof FormSchema>) => {
-    const numeroTelefone = store?.store?.phone;
+    const numeroTelefone = `55${store?.store?.phone}`;
 
     const mensagem = `
 --------------------------
