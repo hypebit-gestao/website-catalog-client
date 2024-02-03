@@ -111,7 +111,7 @@ const Catalog = () => {
                   <h1 className="text-green-secondary text-3xl mb-6">
                     Produtos em destaque
                   </h1>
-                  <div className="w-full gap-x-6 gap-y-16 grid grid-cols grid-cols-1 lg:grid-cols-4 ">
+                  <div className="w-full gap-x-16 gap-y-16 grid grid-cols grid-cols-1 lg:grid-cols-3">
                     {products?.map(
                       (product, index) =>
                         product.featured && (

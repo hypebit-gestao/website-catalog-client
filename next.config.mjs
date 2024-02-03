@@ -4,6 +4,7 @@ const nextConfig = {
     domains: [
       "a0.muscache.com",
       "portimages.nyc3.digitaloceanspaces.com",
+      "portimages.nyc3.cdn.digitaloceanspaces.com",
       "cdn.vendizap.com",
       "via.placeholder.com",
       "www.pallenz.co.nz",
