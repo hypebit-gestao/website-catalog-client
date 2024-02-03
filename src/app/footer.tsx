@@ -14,7 +14,7 @@ const Footer = () => {
   console.log("Store: ", store);
   return (
     <div
-      className={`w-full bg-green-secondary p-24 mt-24  ${
+      className={`w-full bg-green-secondary py-24 px-4 lg:py-24 lg:px-24 mt-24  ${
         !params.loja && "hidden"
       }`}
     >

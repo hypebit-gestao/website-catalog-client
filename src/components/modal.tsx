@@ -110,7 +110,7 @@ bg-neutral/70
               {/* BODY */}
               <div
                 className="
-      mx-24 py-5  
+      mx-4  lg:mx-24 py-5  
           "
               >
                 {body}

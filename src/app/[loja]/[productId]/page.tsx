@@ -79,13 +79,13 @@ const ProductPage = () => {
       ) : (
         <Container>
           <div className="mt-36">
-            <div className="flex flex-row">
-              <div className="flex flex-col max-h-[400px] overflow-auto">
+            <div className="flex flex-col lg:flex-row">
+              <div className="flex flex-row lg:flex-col max-h-[400px] overflow-auto">
                 {product?.images?.map((img) => (
                   <>
                     <Image
                       onClick={() => setCurrentImg(img as string)}
-                      className={`rounded-md cursor-pointer mb-3 h-[150px] w-[150px] ${
+                      className={`rounded-md cursor-pointer mb-3 w-[100px] h-[100px] lg:h-[150px] lg:w-[150px] ${
                         currentImg === img && "border-2 border-green-secondary"
                       }`}
                       alt="Imagem do produto"
@@ -96,9 +96,9 @@ const ProductPage = () => {
                   </>
                 ))}
               </div>
-              <div className="ml-12  ">
+              <div className="ml-0 lg:ml-12  ">
                 <Image
-                  className=" rounded-md cursor-pointer w-[400px] h-[400px]"
+                  className=" rounded-md cursor-pointer w-full lg:w-[400px] lg:h-[400px]"
                   alt="Imagem do produto"
                   src={
                     currentImg ||
@@ -110,7 +110,7 @@ const ProductPage = () => {
                   height={400}
                 />
               </div>
-              <div className="mt-6 ml-12 w-auto ">
+              <div className="mt-6 lg:ml-12 w-auto ">
                 <h1 className="text-4xl text-gray-500">{product?.name}</h1>
                 <div className="flex items-center justify-between mt-6">
                   <div className="flex">
