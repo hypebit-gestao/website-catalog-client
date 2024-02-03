@@ -10,6 +10,7 @@ import useStore from "@/utils/hooks/use-store";
 import Image from "next/image";
 import useSearch from "@/utils/hooks/use-search";
 import Link from "next/link";
+import { GrCatalog } from "react-icons/gr";
 
 const Header = () => {
   const { totalUniqueItems } = useCart();
@@ -28,16 +29,16 @@ const Header = () => {
         <div className="flex justify-between items-center  h-20">
           <div className=" w-full">
             <Link href={`/${params.loja}`}>
-              <Image
-                src={
-                  store?.store?.image_url
-                    ? store?.store?.image_url
-                    : "/images/logo-hypebit.png"
-                }
-                width={50}
-                height={50}
-                alt="Logo da Loja"
-              />
+              {store?.store?.image_url ? (
+                <Image
+                  src={store?.store?.image_url}
+                  width={50}
+                  height={50}
+                  alt="Logo da Loja"
+                />
+              ) : (
+                <GrCatalog className="text-green-primary" size={50} />
+              )}
             </Link>
           </div>
           <div className="flex flex-row">
