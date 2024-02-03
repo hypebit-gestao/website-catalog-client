@@ -6,6 +6,7 @@ const nextConfig = {
       "portimages.nyc3.digitaloceanspaces.com",
       "cdn.vendizap.com",
       "via.placeholder.com",
+      "www.pallenz.co.nz",
     ],
   },
 };

@@ -65,37 +65,41 @@ const Catalog = () => {
     setCategoryFilter("");
   };
 
+  console.log("imgs: ", products);
+
   return (
     <div className="mt-24 min-h-screen">
-      <div className="flex flex-row justify-center h-full items-center border-b shadow-sm border-gray-200 py-2">
-        <Container>
-          {loading ? (
-            <Loader />
-          ) : (
-            <div
-              id="categories"
-              className="h-full  w-full flex flex-row items-center"
-            >
-              <div className="w-full flex flex-row items-center">
-                {categories?.map((category: Category, index: number) => (
-                  <CategoryItem
-                    onClick={() => setCategoryFilter(category?.id)}
-                    key={index}
-                    image={category?.image_url}
-                    name={category?.name}
-                  />
-                ))}
-              </div>
+      {categories?.length > 0 && (
+        <div className="flex flex-row justify-center h-full items-center border-b shadow-sm border-gray-200 py-2">
+          <Container>
+            {loading ? (
+              <Loader />
+            ) : (
               <div
-                onClick={() => removeFilters()}
-                className="ml-auto cursor-pointer"
+                id="categories"
+                className="h-full  w-full flex flex-row items-center"
               >
-                <h3 className="text-red-600">Remover filtros</h3>
+                <div className="w-full flex flex-row items-center">
+                  {categories?.map((category: Category, index: number) => (
+                    <CategoryItem
+                      onClick={() => setCategoryFilter(category?.id)}
+                      key={index}
+                      image={category?.image_url}
+                      name={category?.name}
+                    />
+                  ))}
+                </div>
+                <div
+                  onClick={() => removeFilters()}
+                  className="ml-auto cursor-pointer"
+                >
+                  <h3 className="text-red-600">Remover filtros</h3>
+                </div>
               </div>
-            </div>
-          )}
-        </Container>
-      </div>
+            )}
+          </Container>
+        </div>
+      )}
       <div className="mt-12">
         {loading ? (
           <Loader />
@@ -119,7 +123,13 @@ const Catalog = () => {
                               }
                               name={product.name}
                               price={formater.format(product.price)}
-                              images={product.images}
+                              images={
+                                product.images && product.images.length > 0
+                                  ? product.images
+                                  : [
+                                      "https://www.pallenz.co.nz/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png",
+                                    ]
+                              }
                             />
                           </div>
                         )
@@ -139,11 +149,11 @@ const Catalog = () => {
             {products?.some((product) => !product.featured) && (
               <>
                 <h1 className="text-green-secondary text-3xl mb-6">Produtos</h1>
-                <div className="w-full gap-x-6 gap-y-16 grid grid-cols grid-cols-4 ">
+                <div className="w-full gap-x-16 gap-y-16 grid grid-cols grid-cols-3">
                   {products?.map(
                     (product, index) =>
                       !product.featured && (
-                        <div key={index} className="">
+                        <div key={index} className="w-full">
                           <ProductCard
                             key={index}
                             onClick={() =>
@@ -151,7 +161,13 @@ const Catalog = () => {
                             }
                             name={product.name}
                             price={formater.format(product.price)}
-                            images={product.images}
+                            images={
+                              product.images && product.images.length > 0
+                                ? product.images
+                                : [
+                                    "https://www.pallenz.co.nz/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png",
+                                  ]
+                            }
                           />
                         </div>
                       )
