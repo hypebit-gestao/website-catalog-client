@@ -19,7 +19,7 @@ const Footer = () => {
       }`}
     >
       <Container>
-        <div className="w-full flex justify-between">
+        <div className="w-full flex flex-col lg:flex-row lg:justify-between">
           <div className="w-full ">
             <ul>
               <FooterMenuItem href={`/${params.loja}`} name="Página Inicial" />
@@ -27,7 +27,7 @@ const Footer = () => {
               <FooterMenuItem href="#categories" name="Categorias" />
             </ul>
           </div>
-          <div className="w-full ">
+          <div className="w-full mt-6 lg:mt-0">
             <ul>
               <li>
                 <h1 className="text-gray-200 text-2xl font-bold">

@@ -111,9 +111,11 @@ const ProductPage = () => {
                 />
               </div>
               <div className="mt-6 lg:ml-12 w-auto ">
-                <h1 className="text-4xl text-gray-500">{product?.name}</h1>
-                <div className="flex items-center justify-between mt-6">
-                  <div className="flex">
+                <h1 className="text-4xl truncate text-gray-500 w-full ">
+                  {product?.name}
+                </h1>
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mt-6">
+                  <div className="flex ">
                     <div
                       onClick={() => handleRemove()}
                       className="rounded-full bg-green-primary p-3 mr-5 cursor-pointer"
@@ -133,7 +135,7 @@ const ProductPage = () => {
                       <IoAdd className="text-white" />
                     </div>
                   </div>
-                  <div className="ml-12">
+                  <div className="mt-6 lg:mt-0 lg:ml-12">
                     <h1 className="text-green-secondary font-bold text-3xl">
                       {formater.format(
                         Number(product?.price && product?.price * quantity)
@@ -141,7 +143,7 @@ const ProductPage = () => {
                     </h1>
                   </div>
                 </div>
-                <div className="my-12">
+                <div className="my-5 lg:my-12">
                   <h3 className="text-gray-600 text-xl mb-4">
                     Descrição do produto
                   </h3>

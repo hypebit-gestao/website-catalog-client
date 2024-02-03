@@ -26,9 +26,9 @@ export default function RootLayout({
 }>) {
   const [isClient, setIsClient] = useState(false);
   const viewCartModal = useViewCartModal();
-  const params = useParams()
-  const store = useStore()
-  const cartId = `cart_${params.loja}`
+  const params = useParams();
+  const store = useStore();
+  const cartId = `cart_${params.loja}`;
 
   useEffect(() => {
     setIsClient(true);
@@ -36,30 +36,26 @@ export default function RootLayout({
 
   useEffect(() => {
     const getStore = async () => {
-      const fetchedStore = await storeData(params.loja)
+      const fetchedStore = await storeData(params.loja);
       if (fetchedStore) {
-        useStore.setState({ store: fetchedStore })
+        useStore.setState({ store: fetchedStore });
       }
     };
 
     getStore();
   }, [params]);
 
-
   return (
     <html lang="en">
       <body className={inter.className}>
-      <CartWrapper cartId={cartId}>
+        <CartWrapper cartId={cartId}>
           <ToastProvider />
           <ViewCartModal
             isOpen={viewCartModal.isOpen}
             onClose={viewCartModal.onClose}
           />
           <div>{isClient && <Header />}</div>
-          <div className="pb-24">
-         
-            {children}
-          </div>
+          <div className="pb-24">{children}</div>
           <Footer />
           <Link href="https://www.hypebit.com.br" target="_blank">
             <div className="w-full bg-black flex items-center justify-center p-3 text-white cursor-pointer">
@@ -73,8 +69,7 @@ export default function RootLayout({
               Feito com Hypebit
             </div>
           </Link>
-          </CartWrapper>
-      
+        </CartWrapper>
       </body>
     </html>
   );
