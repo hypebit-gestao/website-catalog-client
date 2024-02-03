@@ -85,7 +85,7 @@ const ProductPage = () => {
                   <>
                     <Image
                       onClick={() => setCurrentImg(img as string)}
-                      className={`rounded-md cursor-pointer mb-3 w-[100px] h-[100px] lg:h-[150px] lg:w-[150px] ${
+                      className={`border border-solid border-gray-200 rounded-md cursor-pointer mb-3 w-[100px] h-[100px] lg:h-[150px] lg:w-[150px] ${
                         currentImg === img && "border-2 border-green-secondary"
                       }`}
                       alt="Imagem do produto"
@@ -96,7 +96,7 @@ const ProductPage = () => {
                   </>
                 ))}
               </div>
-              <div className="ml-0 lg:ml-12  ">
+              <div className="ml-0 lg:ml-12 border border-solid border-gray-200 rounded-md  ">
                 <Image
                   className=" rounded-md cursor-pointer w-full lg:w-[400px] lg:h-[400px]"
                   alt="Imagem do produto"
@@ -110,7 +110,7 @@ const ProductPage = () => {
                   height={400}
                 />
               </div>
-              <div className="mt-6 lg:ml-12 w-auto ">
+              <div className="mt-6 lg:ml-12 w-auto lg:w-1/2 ">
                 <h1 className="text-4xl truncate text-gray-500 w-full ">
                   {product?.name}
                 </h1>

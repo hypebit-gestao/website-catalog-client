@@ -63,7 +63,11 @@ const ProductCard = ({ name, price, images, onClick }: ProductCardProps) => {
       <div className="relative w-full h-full rounded-xl">
         <Slider {...settings}>
           {images?.map((src, index) => (
-            <div onClick={onClick} className="cursor-pointer " key={index}>
+            <div
+              onClick={onClick}
+              className="cursor-pointer border border-solid border-gray-200 rounded-md"
+              key={index}
+            >
               <div className="w-full h-full relative ">
                 <Image
                   className="rounded-xl w-full h-[300px]"
