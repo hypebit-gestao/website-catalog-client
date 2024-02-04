@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Container from "./container";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { useCart } from "react-use-cart";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useViewCartModal from "@/utils/hooks/use-view-cart-modal";
 import useStore from "@/utils/hooks/use-store";
 import Image from "next/image";
@@ -18,6 +18,7 @@ const Header = () => {
   const viewCart = useViewCartModal();
   const store = useStore();
   const search = useSearch();
+  const router = useRouter();
 
   return (
     <header
@@ -52,7 +53,10 @@ const Header = () => {
                 type="text"
               />
             </div>
-            <div onClick={() => viewCart.onOpen()} className="relative ">
+            <div
+              onClick={() => router.push(`/${params.loja}/cart`)}
+              className="relative "
+            >
               <div className="bg-green-secondary cursor-pointer rounded-full flex justify-center items-center w-5 h-5 absolute top-0 -right-3 text-center z-[99999] text-sm text-white">
                 {totalUniqueItems}
               </div>

@@ -85,7 +85,7 @@ bg-neutral-800/70
               overflow-auto
             translate
             max-h-[70vh]
-            md:max-h-[60vh]
+          h-auto
             lg:h-auto
             md:h-auto
             border-0

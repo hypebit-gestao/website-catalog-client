@@ -55,7 +55,7 @@ const ProductPage = () => {
       },
     });
 
-    viewCartModal.onOpen();
+    router.push(`/${params.loja}/cart`);
   };
 
   useEffect(() => {
