@@ -80,12 +80,12 @@ const ProductPage = () => {
         <Container>
           <div className="mt-36">
             <div className="flex flex-col lg:flex-row">
-              <div className="flex flex-row lg:flex-col max-h-[400px] overflow-auto">
+              <div className="flex flex-row lg:flex-col overflow-auto  max-h-[450px]">
                 {product?.images?.map((img) => (
                   <>
                     <Image
                       onClick={() => setCurrentImg(img as string)}
-                      className={`border border-solid border-gray-200 rounded-md cursor-pointer mb-3 w-[100px] h-[100px] lg:h-[150px] lg:w-[150px] ${
+                      className={`border border-solid border-gray-200 rounded-md cursor-pointer mb-3 w-[100px] h-[100px] lg:h-[150px] lg:w-[150px] object-cover object-center ${
                         currentImg === img && "border-2 border-green-secondary"
                       }`}
                       alt="Imagem do produto"
@@ -96,9 +96,9 @@ const ProductPage = () => {
                   </>
                 ))}
               </div>
-              <div className="ml-0 lg:ml-12 border border-solid border-gray-200 rounded-md  ">
+              <div className="ml-0 lg:ml-12 border border-solid border-gray-200 rounded-md w-full lg:w-[450px] h-[450px] ">
                 <Image
-                  className=" rounded-md cursor-pointer w-full lg:w-[400px] lg:h-[400px]"
+                  className=" rounded-md cursor-pointer w-full h-full object-cover object-center lg:w-[450px]"
                   alt="Imagem do produto"
                   src={
                     currentImg ||

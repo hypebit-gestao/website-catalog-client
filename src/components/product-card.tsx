@@ -57,7 +57,19 @@ const ProductCard = ({ name, price, images, onClick }: ProductCardProps) => {
     prevArrow: images && images?.length > 1 ? <SamplePrevArrow /> : <></>,
     afterChange: (index: number) => setSliderIndex(index),
   };
-
+  //   <div className=" w-full h-[450px] rounded-lg ">
+  //   <Image
+  //     className="w-full h-full object-cover object-center rounded-lg "
+  //     src={`${
+  //       product?.images?.length > 0
+  //         ? product?.images[0]
+  //         : ""
+  //     }`}
+  //     alt="Shoes"
+  //     width={450}
+  //     height={300}
+  //   />
+  // </div>
   return (
     <div className="w-full h-full">
       <div className="relative w-full h-full rounded-xl">
@@ -68,14 +80,13 @@ const ProductCard = ({ name, price, images, onClick }: ProductCardProps) => {
               className="cursor-pointer border border-solid border-gray-200 rounded-md"
               key={index}
             >
-              <div className="w-full h-full relative ">
+              <div className=" relative w-full h-[450px]">
                 <Image
-                  className="rounded-xl w-full h-[300px]"
+                  className="w-full h-full object-cover object-center rounded-lg"
                   src={src}
-                  width={400}
-                  height={400}
+                  width={450}
+                  height={300}
                   alt={`Imagem Produto ${index + 1}`}
-                  objectFit="cover"
                 />
               </div>
             </div>
