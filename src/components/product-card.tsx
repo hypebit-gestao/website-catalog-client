@@ -80,7 +80,7 @@ const ProductCard = ({ name, price, images, onClick }: ProductCardProps) => {
               className="cursor-pointer border border-solid border-gray-200 rounded-md"
               key={index}
             >
-              <div className=" relative w-full h-[450px]">
+              <div className=" relative w-full h-[350px]">
                 <Image
                   className="w-full h-full object-cover object-center rounded-lg"
                   src={src}
