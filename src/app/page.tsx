@@ -33,6 +33,7 @@ export default function Home() {
         .then((response) => {
           // receber o resultado do pagamento
           // resolve();
+          resolve(response);
         })
         .catch((error) => {
           // lidar com a resposta de erro ao tentar criar o pagamento
@@ -56,13 +57,13 @@ export default function Home() {
   return (
     <main className="flex justify-center items-center min-h-screen w-full bg-green-primary">
       <div className="text-2xl text-white">CADASTRE SUA LOJA CONOSCO</div>
-      <CardPayment
+      {/* <CardPayment
         customization={customization}
         initialization={initialization}
         onSubmit={onSubmit as any}
         onReady={onReady}
         onError={onError}
-      />
+      /> */}
     </main>
   );
 }
