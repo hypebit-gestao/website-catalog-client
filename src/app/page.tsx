@@ -32,7 +32,7 @@ export default function Home() {
         .then((response) => response.json())
         .then((response) => {
           // receber o resultado do pagamento
-          resolve();
+          // resolve();
         })
         .catch((error) => {
           // lidar com a resposta de erro ao tentar criar o pagamento
@@ -59,7 +59,7 @@ export default function Home() {
       <CardPayment
         customization={customization}
         initialization={initialization}
-        onSubmit={onSubmit}
+        onSubmit={onSubmit as any}
         onReady={onReady}
         onError={onError}
       />
