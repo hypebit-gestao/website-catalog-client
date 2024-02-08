@@ -40,6 +40,8 @@ const PaymentModal = ({ isOpen, onClose, body }: PaymentModalProps) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
+      personWidth="xl:w-[70%]"
+      personHeight="max-h-[90vh]"
       header={
         <>
           <h1 className="text-[#2c6e49] font-bold text-xl">Pagamento</h1>

@@ -8,6 +8,8 @@ interface ModalProps {
   header?: React.ReactElement;
   onClose: () => void;
   body?: React.ReactElement;
+  personWidth?: string;
+  personHeight?: string;
   footer?: string;
 }
 
@@ -15,6 +17,8 @@ const Modal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   body,
+  personWidth,
+  personHeight,
   footer,
   header,
 }) => {
@@ -62,6 +66,7 @@ bg-neutral-800/70
         lg:w-3/6
         xl:w-[40%]
         3xl:w-[50%]
+        ${personWidth}
         my-6
         mx-auto
         lg:h-auto
@@ -84,6 +89,7 @@ bg-neutral-800/70
               className={`
               overflow-auto
             translate
+            ${personHeight}
             max-h-[70vh]
           h-auto
             lg:h-auto

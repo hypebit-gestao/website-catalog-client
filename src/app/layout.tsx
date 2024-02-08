@@ -16,6 +16,8 @@ import storeData from "@/utils/storeData";
 import useStore from "@/utils/hooks/use-store";
 import { Store } from "@/models/store";
 import CartWrapper from "@/providers/CartWrapper";
+import Navbar from "@/components/landing/navbar";
+import LandingFooter from "@/components/landing/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +31,7 @@ export default function RootLayout({
   const params = useParams();
   const store = useStore();
   const cartId = `cart_${params.loja}`;
+  const pathname = usePathname();
 
   useEffect(() => {
     setIsClient(true);
@@ -55,10 +58,22 @@ export default function RootLayout({
             onClose={viewCartModal.onClose}
           />
           <div>{isClient && <Header />}</div>
-          <div className="pb-24">{children}</div>
+          {pathname === "/" && (
+            <div className="fixed top-0 w-full">
+              <Navbar />
+            </div>
+          )}
+          <div className={`${pathname === "/" ? "pb-0" : "pb-24"}`}>
+            {children}
+          </div>
           <Footer />
+          {pathname === "/" && <LandingFooter />}
           <Link href="https://www.hypebit.com.br" target="_blank">
-            <div className="w-full bg-black flex items-center justify-center p-3 text-white cursor-pointer">
+            <div
+              className={`w-full bg-black flex items-center justify-center p-3 text-white cursor-pointer ${
+                pathname === "/" && "hidden"
+              }`}
+            >
               <Image
                 className="mr-4"
                 alt="Logo da Hypebit"
