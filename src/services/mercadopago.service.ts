@@ -2,9 +2,9 @@ import { fetchWrapper } from "../utils/functions/fetch";
 import { Product } from "@/models/product";
 
 export const useMercadoPagoService = () => {
-  const POSTPREFERENCE = async (body: any): Promise<any> => {
+  const POST = async (body: any): Promise<any> => {
     const response = await fetchWrapper(
-      `https://api.mercadopago.com/checkout/preferences`,
+      `https://api.mercadopago.com/preapproval`,
       {
         method: "POST",
         headers: {
@@ -23,6 +23,6 @@ export const useMercadoPagoService = () => {
   };
 
   return {
-    POSTPREFERENCE,
+    POST,
   };
 };
