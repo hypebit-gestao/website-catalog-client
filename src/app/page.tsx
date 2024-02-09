@@ -37,7 +37,7 @@ export default function Home() {
   const [storeData, setStoreData] = useState<any>({});
 
   const initialization = {
-    amount: 2,
+    amount: 10,
   };
 
   const customization = {
