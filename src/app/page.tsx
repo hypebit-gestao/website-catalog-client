@@ -227,7 +227,7 @@ export default function Home() {
 
   return (
     <>
-      <RegisterModal
+      {/* <RegisterModal
         isOpen={registerModal.isOpen}
         onClose={registerModal.onClose}
         body={
@@ -632,7 +632,8 @@ export default function Home() {
             </div>
           </div>
         </section>
-      </Container>
+      </Container> */}
+      aa
       {/* <PaymentModal
         isOpen={paymentModal.isOpen}
         onClose={paymentModal.onClose}
