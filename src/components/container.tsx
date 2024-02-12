@@ -7,7 +7,11 @@ interface ContainerProps {
 
 const Container = ({ children, isLanding = false }: ContainerProps) => {
   return (
-    <div className={`px-4 lg:px-64 w-full ${isLanding && "lg:px-0"}`}>
+    <div
+      className={`px-4 ${!isLanding && "lg:px-64"} w-full ${
+        isLanding && "lg:px-0"
+      }`}
+    >
       {children}
     </div>
   );

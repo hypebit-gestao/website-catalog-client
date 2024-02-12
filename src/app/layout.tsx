@@ -50,6 +50,9 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+      </head>
       <body className={`${inter.className}`}>
         <CartWrapper cartId={cartId}>
           <ToastProvider />
@@ -63,7 +66,11 @@ export default function RootLayout({
               <Navbar />
             </div>
           )}
-          <div className={`${pathname === "/" ? "pb-0" : "pb-24"}`}>
+          <div
+            className={`${
+              pathname === "/" || pathname === "/register" ? "pb-0" : "pb-24"
+            }`}
+          >
             {children}
           </div>
           <Footer />
