@@ -68,7 +68,11 @@ export default function RootLayout({
           )}
           <div
             className={`${
-              pathname === "/" || pathname === "/register" ? "pb-0" : "pb-24"
+              pathname === "/" ||
+              pathname === "/register" ||
+              pathname === "register/success"
+                ? "pb-0"
+                : "pb-24"
             }`}
           >
             {children}

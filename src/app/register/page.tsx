@@ -52,6 +52,7 @@ const Register = () => {
   const userService = useUserService();
   const url = useSearchParams();
   const customerId = url.get("customerId");
+  const router = useRouter();
 
   const inputFileRef = useRef<any>(null);
   const [filePreview, setFilePreview] = useState<any>(null);
@@ -158,60 +159,66 @@ const Register = () => {
   };
 
   const onSubmit = async (data: any) => {
-    console.log("Data: ", data);
-    console.log();
-    if (customerId) {
-      const addressResponse: Address | undefined = await addressService.POST({
-        cep: removeFormatting(data.cep),
-        street: data.street,
-        number: Number(data.number),
-        district: data.district,
-        city: data.city,
-        state: data.state,
-        complement: data.complement,
-      });
-      if (addressResponse) {
-        if (data?.image_url) {
-          await uploadService
-            .POST({
-              file: data.image_url,
-              folderName: data.name,
-            })
-            .then(async (res: ReturnUpload | undefined) => {
-              if (Array.isArray(res) && res.length > 0 && res[0].imageUrl) {
-                await userService.POST({
-                  name: data.name,
-                  cpf_cnpj: removeFormatting(data.cpf_cnpj),
-                  email: data.email,
-                  phone: removeFormatting(data.phone),
-                  username: data.username,
-                  password: data.password,
-                  person_link: data.person_link,
-                  payer_id: customerId,
-                  image_url: res[0].imageUrl,
-                  address_id: addressResponse.id,
-                  user_type: 1,
-                  status: "ACTIVE",
-                });
-              }
+    try {
+      if (customerId) {
+        const addressResponse: Address | undefined = await addressService.POST({
+          cep: removeFormatting(data.cep),
+          street: data.street,
+          number: Number(data.number),
+          district: data.district,
+          city: data.city,
+          state: data.state,
+          complement: data.complement,
+        });
+        if (addressResponse) {
+          if (data?.image_url) {
+            await uploadService
+              .POST({
+                file: data.image_url,
+                folderName: data.name,
+              })
+              .then(async (res: ReturnUpload | undefined) => {
+                if (Array.isArray(res) && res.length > 0 && res[0].imageUrl) {
+                  await userService.POST({
+                    name: data.name,
+                    cpf_cnpj: removeFormatting(data.cpf_cnpj),
+                    email: data.email,
+                    phone: removeFormatting(data.phone),
+                    username: data.username,
+                    password: data.password,
+                    person_link: data.person_link,
+                    payer_id: customerId,
+                    image_url: res[0].imageUrl,
+                    address_id: addressResponse.id,
+                    user_type: 1,
+                    status: "ACTIVE",
+                  });
+                }
+              });
+          } else {
+            await userService.POST({
+              name: data.name,
+              cpf_cnpj: removeFormatting(data.cpf_cnpj),
+              email: data.email,
+              phone: removeFormatting(data.phone),
+              username: data.username,
+              password: data.password,
+              person_link: data.person_link,
+              payer_id: customerId,
+              image_url: null,
+              address_id: addressResponse.id,
+              user_type: 1,
+              status: "ACTIVE",
             });
-        } else {
-          await userService.POST({
-            name: data.name,
-            cpf_cnpj: removeFormatting(data.cpf_cnpj),
-            email: data.email,
-            phone: removeFormatting(data.phone),
-            username: data.username,
-            password: data.password,
-            person_link: data.person_link,
-            payer_id: customerId,
-            image_url: null,
-            address_id: addressResponse.id,
-            user_type: 1,
-            status: "ACTIVE",
-          });
+          }
         }
       }
+
+      toast.success(`Loja criado com sucesso`);
+
+      router.push("/register/success");
+    } catch (error) {
+      toast.error((error as Error).message);
     }
   };
 
