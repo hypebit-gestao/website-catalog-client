@@ -86,8 +86,6 @@ const Register = () => {
     },
   });
 
-  console.log("ID: ", customerId);
-
   const phoneMask = (value: string) => {
     if (!value) return "";
     value = value.replace(/\D/g, "");

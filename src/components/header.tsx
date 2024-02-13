@@ -22,7 +22,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 h-20 border-b bg-white border-gray-200 w-full shadow-md z-[99999] ${
+      className={`h-20 border-b bg-white border-gray-200 w-full shadow-md  ${
         !params.loja && "hidden"
       }`}
     >

@@ -45,7 +45,9 @@ export default function RootLayout({
       }
     };
 
-    getStore();
+    if (params.loja) {
+      getStore();
+    }
   }, [params]);
 
   return (

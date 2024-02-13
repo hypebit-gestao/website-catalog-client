@@ -52,8 +52,10 @@ const Catalog = () => {
       }
     };
 
-    getCategories();
-    getProducts();
+    if (loja) {
+      getCategories();
+      getProducts();
+    }
   }, [loja, search.text, categoryFilter]);
 
   const formater = new Intl.NumberFormat("pt-BR", {
