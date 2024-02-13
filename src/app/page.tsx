@@ -58,7 +58,7 @@ export default function Home() {
                   O plano que cabe no seu orçamento!
                 </p>
                 <h2 className="text-4xl text-center text-black font-bold">
-                  por <span className="text-[40px]">R$40,00</span>/mês
+                  por <span className="text-[40px]">R$50,00</span>/mês
                 </h2>
                 <div className="flex flex-coll justify-center mt-6">
                   <ul>
