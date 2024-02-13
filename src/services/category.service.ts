@@ -1,12 +1,12 @@
-import { Category } from "@/models/category";
+import { Category, UserCategory } from "@/models/category";
 import { fetchWrapper } from "@/utils/functions/fetch";
 
 export const useCategoryService = () => {
   const GETCATEGORIES = async (
     person_link: string
-  ): Promise<Category[] | undefined> => {
-    const response = await fetchWrapper<Category[]>(
-      `category/user/person/person_link?person_link=${person_link}`,
+  ): Promise<UserCategory[] | undefined> => {
+    const response = await fetchWrapper<UserCategory[]>(
+      `userCategory/personLink/${person_link}`,
       {
         method: "GET",
       }

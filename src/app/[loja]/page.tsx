@@ -12,7 +12,7 @@ import Loader from "@/components/loader";
 import { useCart } from "react-use-cart";
 import useSearch from "@/utils/hooks/use-search";
 import { useCategoryService } from "@/services/category.service";
-import { Category } from "@/models/category";
+import { Category, UserCategory } from "@/models/category";
 
 const Catalog = () => {
   const params = useParams();
@@ -20,7 +20,7 @@ const Catalog = () => {
   const productService = useProductService();
   const categoryService = useCategoryService();
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<UserCategory[]>([]);
   const [loading, setLoading] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string>("");
   const { addItem, items, totalItems } = useCart();
@@ -68,33 +68,40 @@ const Catalog = () => {
   };
 
   return (
-    <div className="mt-24 min-h-screen ">
-      {categories?.length > 0 && (
-        <div className="flex flex-row justify-center h-full items-center border-b shadow-sm border-gray-200 py-2">
+    <div className=" min-h-screen ">
+      {categories?.length > 1 && (
+        <div className="flex flex-row justify-center h-full items-center border-b shadow-sm border-gray-200 py-5">
           <Container>
             {loading ? (
               <Loader />
             ) : (
               <div
                 id="categories"
-                className="h-full  w-full flex flex-row items-center"
+                className="w-full flex flex-row items-center"
               >
                 <div className="w-full flex flex-row items-center">
-                  {categories?.map((category: Category, index: number) => (
-                    <CategoryItem
-                      onClick={() => setCategoryFilter(category?.id)}
-                      key={index}
-                      image={category?.image_url}
-                      name={category?.name}
-                    />
-                  ))}
+                  {categories?.map(
+                    (category: UserCategory, index: number) =>
+                      category.category.name !== "Sem Categoria" && (
+                        <CategoryItem
+                          onClick={() =>
+                            setCategoryFilter(category?.category?.id)
+                          }
+                          key={index}
+                          image={category?.category?.image_url}
+                          name={category?.category?.name}
+                        />
+                      )
+                  )}
                 </div>
-                <div
-                  onClick={() => removeFilters()}
-                  className="ml-auto cursor-pointer"
-                >
-                  <h3 className="text-red-600">Remover filtros</h3>
-                </div>
+                {categories?.length > 1 && (
+                  <div
+                    onClick={() => removeFilters()}
+                    className="ml-auto cursor-pointer"
+                  >
+                    <h3 className="text-red-600">Remover filtros</h3>
+                  </div>
+                )}
               </div>
             )}
           </Container>
