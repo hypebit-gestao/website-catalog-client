@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Container from "@/components/container";
+import { Input } from "@/components/ui/input";
 
 interface ProductCart {
   id: string;
@@ -39,6 +40,7 @@ interface ProductCart {
 }
 
 const FormSchema = z.object({
+  fullName: z.string().min(1, "Nome é obrigatório"),
   methodPayment: z.string().min(1, "Método de pagamento é obrigatório"),
   deliveryType: z.string().min(1, "Tipo de entrega é obrigatório"),
 });
@@ -56,6 +58,7 @@ const Cart = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      fullName: "",
       methodPayment: "",
       deliveryType: "",
     },
@@ -85,6 +88,7 @@ ${items
 `
   )
   .join("")}
+*Nome completo*: ${data.fullName}
 *Forma de pagamento*: ${data.methodPayment}
 *Tipo de entrega*: ${data.deliveryType}
 *Valor Total*: ${formater.format(Number(cartTotal))}
@@ -149,45 +153,65 @@ ${items
             </h1>
           </div>
         )}
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(finishOrder)} className="my-6">
-            {totalItems > 0 && (
+        {totalItems > 0 && (
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(finishOrder)} className="my-6">
               <FormField
                 control={form.control}
-                name="methodPayment"
+                name="fullName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-lg">
-                      Método de Pagamento
+                    <FormLabel className="text-blue-primary">
+                      Nome Completo
                     </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecione um método de pagamento" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="z-[300]">
-                        <SelectItem value="CASH">Dinheiro</SelectItem>
-                        <SelectItem value="PIX">Pix</SelectItem>
-                        <SelectItem value="CREDIT_CARD">
-                          Cartão de Crédito
-                        </SelectItem>
-                        <SelectItem value="DEBIT_CARD">
-                          Cartão de Débito
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-
+                    <FormControl>
+                      <Input
+                        placeholder="Insira seu nome completo"
+                        {...field}
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-            )}
-            <div className="mt-5">
-              {totalItems > 0 && (
+
+              <div className="mt-5">
+                <FormField
+                  control={form.control}
+                  name="methodPayment"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-lg">
+                        Método de Pagamento
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione um método de pagamento" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="z-[300]">
+                          <SelectItem value="CASH">Dinheiro</SelectItem>
+                          <SelectItem value="PIX">Pix</SelectItem>
+                          <SelectItem value="CREDIT_CARD">
+                            Cartão de Crédito
+                          </SelectItem>
+                          <SelectItem value="DEBIT_CARD">
+                            Cartão de Débito
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className="mt-5">
                 <FormField
                   control={form.control}
                   name="deliveryType"
@@ -215,8 +239,7 @@ ${items
                     </FormItem>
                   )}
                 />
-              )}
-              {totalItems > 0 && (
+
                 <div className="my-8">
                   <h1 className="text-xl ">
                     Valor total:{" "}
@@ -225,19 +248,19 @@ ${items
                     </span>
                   </h1>
                 </div>
-              )}
-              <div className="mt-6 w-full">
-                <button
-                  onClick={() => {
-                    viewCartModal.onClose();
-                    router.push(`/${params.loja}`);
-                  }}
-                  className="border border-green-primary text-green-primary p-4 rounded-lg  w-full hover:opacity-90 transition-all duration-200"
-                >
-                  Continuar comprando
-                </button>
-              </div>
-              {totalItems > 0 && (
+
+                <div className="mt-6 w-full">
+                  <button
+                    onClick={() => {
+                      viewCartModal.onClose();
+                      router.push(`/${params.loja}`);
+                    }}
+                    className="border border-green-primary text-green-primary p-4 rounded-lg  w-full hover:opacity-90 transition-all duration-200"
+                  >
+                    Continuar comprando
+                  </button>
+                </div>
+
                 <div className="my-6 w-full">
                   <button
                     type="submit"
@@ -246,10 +269,10 @@ ${items
                     Finalizar pedido
                   </button>
                 </div>
-              )}
-            </div>
-          </form>
-        </Form>
+              </div>
+            </form>
+          </Form>
+        )}
       </div>
     </Container>
   );
