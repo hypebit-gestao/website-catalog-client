@@ -13,6 +13,7 @@ export const useUserService = () => {
 
     if (!response) {
       console.error("Sem resposta do servidor");
+      throw new Error("Erro ao criar loja");
     }
 
     return response;

@@ -13,6 +13,7 @@ export async function fetchWrapper<T = unknown>(
 
   // Check if the response is empty
   const text = await data.text();
+
   let result;
   if (text.length) {
     result = JSON.parse(text);

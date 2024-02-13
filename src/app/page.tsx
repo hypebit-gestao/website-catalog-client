@@ -7,6 +7,7 @@ import { Payment, initMercadoPago, StatusScreen } from "@mercadopago/sdk-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import { FaCheck } from "react-icons/fa";
 
 export default function Home() {
   const [paymentId, setPaymentId] = useState();
@@ -188,14 +189,14 @@ export default function Home() {
 
         <section
           id="plans"
-          className=" min-h-screen flex flex-col  items-center bg-green-secondary"
+          className=" min-h-screen h-full flex flex-col  items-center bg-green-secondary"
         >
-          <div className="mt-12">
+          <div className="mt-12 h-full">
             <h1 className=" text-[60px] font-bold text-white">
               Planos do <span className="">CatalogoPlace</span>
             </h1>
-            <div className="shadow-xl rounded-lg flex flex-col items-center bg-white my-12">
-              <div className="bg-white p-8">
+            <div className=" shadow-xl rounded-lg flex flex-col items-center bg-white my-12 ">
+              <div className="bg-white p-8 ">
                 <h1 className="text-4xl font-bold text-green-secondary text-center">
                   STARTER
                 </h1>
@@ -205,12 +206,36 @@ export default function Home() {
                 <h2 className="text-4xl text-center text-black font-bold">
                   por <span className="text-[40px]">R$40,00</span>/mês
                 </h2>
+                <div className="flex flex-coll justify-center mt-6">
+                  <ul>
+                    <li className="flex flex-row items-center mb-4">
+                      <FaCheck className="text-xl text-green-secondary" />
+                      <span className="ml-3">
+                        Recebimento do pedido no WhatsApp
+                      </span>
+                    </li>
+                    <li className="flex flex-row items-center mb-4">
+                      <FaCheck className="text-xl text-green-secondary" />
+                      <span className="ml-3">
+                        Cadastro de produtos ilimitados
+                      </span>
+                    </li>
+                    <li className="flex flex-row items-center mb-4">
+                      <FaCheck className="text-xl text-green-secondary" />
+                      <span className="ml-3">Pedidos ilimitados</span>
+                    </li>
+                    <li className="flex flex-row items-center">
+                      <FaCheck className="text-xl text-green-secondary" />
+                      <span className="ml-3">Controle de pedidos</span>
+                    </li>
+                  </ul>
+                </div>
                 <div className="mt-6 flex justify-center">
                   <Button
                     onClick={() =>
                       router.push("https://buy.stripe.com/8wM4im0kA07icFi9AE")
                     }
-                    className="bg-green-secondary hover:bg-green-primary/90 rounded-3xl w-64 p-6 text-2xl text-center"
+                    className="bg-green-secondary hover:bg-green-primary/90 rounded-3xl w-96 p-6 text-2xl text-center"
                     size={"lg"}
                   >
                     Começar agora

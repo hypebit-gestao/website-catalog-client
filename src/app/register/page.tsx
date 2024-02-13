@@ -159,27 +159,27 @@ const Register = () => {
   };
 
   const onSubmit = async (data: any) => {
-    try {
-      if (customerId) {
-        const addressResponse: Address | undefined = await addressService.POST({
-          cep: removeFormatting(data.cep),
-          street: data.street,
-          number: Number(data.number),
-          district: data.district,
-          city: data.city,
-          state: data.state,
-          complement: data.complement,
-        });
-        if (addressResponse) {
-          if (data?.image_url) {
-            await uploadService
-              .POST({
-                file: data.image_url,
-                folderName: data.name,
-              })
-              .then(async (res: ReturnUpload | undefined) => {
-                if (Array.isArray(res) && res.length > 0 && res[0].imageUrl) {
-                  await userService.POST({
+    if (customerId) {
+      const addressResponse: Address | undefined = await addressService.POST({
+        cep: removeFormatting(data.cep),
+        street: data.street,
+        number: Number(data.number),
+        district: data.district,
+        city: data.city,
+        state: data.state,
+        complement: data.complement,
+      });
+      if (addressResponse) {
+        if (data?.image_url) {
+          await uploadService
+            .POST({
+              file: data.image_url,
+              folderName: data.name,
+            })
+            .then(async (res: ReturnUpload | undefined) => {
+              if (Array.isArray(res) && res.length > 0 && res[0].imageUrl) {
+                await userService
+                  .POST({
                     name: data.name,
                     cpf_cnpj: removeFormatting(data.cpf_cnpj),
                     email: data.email,
@@ -192,11 +192,17 @@ const Register = () => {
                     address_id: addressResponse.id,
                     user_type: 1,
                     status: "ACTIVE",
-                  });
-                }
-              });
-          } else {
-            await userService.POST({
+                  })
+                  .then((res) => {
+                    toast.success("Loja cadastrada com sucesso");
+                    router.push("/register/success");
+                  })
+                  .catch((err) => toast.error(err.message));
+              }
+            });
+        } else {
+          await userService
+            .POST({
               name: data.name,
               cpf_cnpj: removeFormatting(data.cpf_cnpj),
               email: data.email,
@@ -209,17 +215,19 @@ const Register = () => {
               address_id: addressResponse.id,
               user_type: 1,
               status: "ACTIVE",
-            });
-          }
+            })
+            .then((res) => {
+              toast.success("Loja cadastrada com sucesso");
+              router.push("/register/success");
+            })
+            .catch((err) => toast.error(err.message));
         }
       }
-
-      toast.success(`Loja criado com sucesso`);
-
-      router.push("/register/success");
-    } catch (error) {
-      toast.error((error as Error).message);
+    } else {
+      toast.error("Erro ao cadastrar loja");
     }
+
+    //   router.push("/register/success");
   };
 
   return (
