@@ -87,7 +87,7 @@ export default function Home() {
                 <div className="mt-6 flex justify-center">
                   <Button
                     onClick={() =>
-                      router.push("https://buy.stripe.com/8wM4im0kA07icFi9AE")
+                      router.push("https://buy.stripe.com/14kdSW3wM1bmgVy5kp")
                     }
                     className="bg-green-secondary hover:bg-green-primary/90 rounded-3xl w-96 p-6 text-2xl text-center"
                     size={"lg"}
