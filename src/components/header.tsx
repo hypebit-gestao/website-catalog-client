@@ -22,7 +22,7 @@ const Header = () => {
 
   return (
     <header
-      className={`h-20 border-b bg-white border-gray-200 w-full shadow-md  ${
+      className={`h-auto border-b bg-white border-gray-200 w-full shadow-md  ${
         !params.loja && "hidden"
       }`}
     >
@@ -33,8 +33,8 @@ const Header = () => {
               {store?.store?.image_url ? (
                 <Image
                   src={store?.store?.image_url}
-                  width={50}
-                  height={50}
+                  width={80}
+                  height={80}
                   alt="Logo da Loja"
                 />
               ) : (
