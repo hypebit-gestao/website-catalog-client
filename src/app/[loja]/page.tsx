@@ -13,6 +13,7 @@ import { useCart } from "react-use-cart";
 import useSearch from "@/utils/hooks/use-search";
 import { useCategoryService } from "@/services/category.service";
 import { Category, UserCategory } from "@/models/category";
+import { Button } from "@/components/ui/button";
 
 const Catalog = () => {
   const params = useParams();
@@ -23,6 +24,7 @@ const Catalog = () => {
   const [categories, setCategories] = useState<UserCategory[]>([]);
   const [loading, setLoading] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string>("");
+  const [visibleProducts, setVisibleProducts] = useState(6);
   const { addItem, items, totalItems } = useCart();
   const search = useSearch();
   const router = useRouter();
@@ -62,6 +64,14 @@ const Catalog = () => {
     style: "currency",
     currency: "BRL",
   });
+
+  const loadMoreProducts = () => {
+    setVisibleProducts((prev) => prev + 3);
+  };
+
+  const loadLessProducts = () => {
+    setVisibleProducts((prev) => prev - 3);
+  };
 
   const removeFilters = () => {
     setCategoryFilter("");
@@ -157,29 +167,57 @@ const Catalog = () => {
               <>
                 <h1 className="text-green-secondary text-3xl mb-6">Produtos</h1>
                 <div className="w-full gap-x-16 gap-y-16 grid grid-cols grid-cols-1 lg:grid-cols-3">
-                  {products?.map(
-                    (product, index) =>
-                      !product.featured && (
-                        <div key={index} className="w-full">
-                          <ProductCard
-                            key={index}
-                            onClick={() =>
-                              router.push(`/${loja}/${product.id}`)
-                            }
-                            name={product.name}
-                            price={formater.format(product.price)}
-                            images={
-                              product.images && product.images.length > 0
-                                ? product.images
-                                : [
-                                    "https://www.pallenz.co.nz/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png",
-                                  ]
-                            }
-                          />
-                        </div>
-                      )
-                  )}
+                  {products
+                    ?.filter((product) => !product.featured)
+                    .slice(0, visibleProducts)
+                    .map(
+                      (product, index) =>
+                        !product.featured && (
+                          <div key={index} className="w-full">
+                            <ProductCard
+                              key={index}
+                              onClick={() =>
+                                router.push(`/${loja}/${product.id}`)
+                              }
+                              name={product.name}
+                              price={formater.format(product.price)}
+                              images={
+                                product.images && product.images.length > 0
+                                  ? product.images
+                                  : [
+                                      "https://www.pallenz.co.nz/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png",
+                                    ]
+                              }
+                            />
+                          </div>
+                        )
+                    )}
                 </div>
+                {visibleProducts <
+                  products?.filter((product) => !product.featured).length && ( // Verificar se há mais produtos para carregar
+                  <div className="w-full flex justify-center mt-32">
+                    <Button
+                      onClick={loadMoreProducts}
+                      size="xl"
+                      className=" w-[50%] md:w-[30%] text-lg"
+                      type="submit"
+                      variant={"default"}
+                    >
+                      Ver Mais
+                    </Button>
+                    {visibleProducts > 6 && (
+                      <Button
+                        onClick={loadLessProducts}
+                        size="xl"
+                        className="w-[50%] md:w-[30%] text-lg ml-6"
+                        type="submit"
+                        variant={"outline"}
+                      >
+                        Ver menos
+                      </Button>
+                    )}
+                  </div>
+                )}
               </>
             )}
           </Container>
