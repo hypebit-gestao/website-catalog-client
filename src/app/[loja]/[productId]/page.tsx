@@ -126,7 +126,7 @@ const ProductPage = () => {
                       onChange={(e) => setQuantity(Number(e.target.value))}
                       value={quantity}
                       className="w-[100px] border border-gray-200 rounded-xl text-center"
-                      type="text"
+                      type="number"
                     />
                     <div
                       onClick={() => handleAdd()}
