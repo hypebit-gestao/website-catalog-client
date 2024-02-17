@@ -66,11 +66,11 @@ const Catalog = () => {
   });
 
   const loadMoreProducts = () => {
-    setVisibleProducts((prev) => prev + 3);
+    setVisibleProducts((prev) => prev + 6);
   };
 
   const loadLessProducts = () => {
-    setVisibleProducts((prev) => prev - 3);
+    setVisibleProducts((prev) => prev - 6);
   };
 
   const removeFilters = () => {

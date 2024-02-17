@@ -94,7 +94,7 @@ const ProductCard = ({ name, price, images, onClick }: ProductCardProps) => {
         </Slider>
         <div className="mt-8">
           <div className="flex justify-between">
-            <h1 className="text-2xl text-gray-800">{name}</h1>
+            <h1 className="text-2xl text-gray-800 truncate">{name}</h1>
           </div>
           <h3 className="text-3xl font-bold">{price}</h3>
           <div className="mt-5">
