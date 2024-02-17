@@ -112,7 +112,11 @@ ${items
                     <Image
                       className="rounded-xl"
                       alt=""
-                      src={item.image}
+                      src={
+                        item.image
+                          ? item.image
+                          : "https://www.pallenz.co.nz/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png"
+                      }
                       width={100}
                       height={100}
                     />
