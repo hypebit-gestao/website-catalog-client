@@ -29,6 +29,10 @@ import {
 } from "@/components/ui/select";
 import Container from "@/components/container";
 import { Input } from "@/components/ui/input";
+import { useOrderService } from "@/services/order.service";
+import { useSession } from "next-auth/react";
+import { useUserService } from "@/services/user.service";
+import { User } from "@/models/user";
 
 interface ProductCart {
   id: string;
@@ -46,10 +50,15 @@ const FormSchema = z.object({
 });
 
 const Cart = () => {
-  const { items, removeItem, totalItems, cartTotal } = useCart();
+  const { items, removeItem, totalItems, cartTotal, setItems } = useCart();
   const params = useParams();
+  const { loja } = params;
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const viewCartModal = useViewCartModal();
+  const userService = useUserService();
+  const orderService = useOrderService();
+  const [user, setUser] = useState<User>();
   const store = useStore();
   const formater = new Intl.NumberFormat("pt-BR", {
     style: "currency",
@@ -68,7 +77,27 @@ const Cart = () => {
     removeItem(id);
   };
 
-  const finishOrder = (data: z.infer<typeof FormSchema>) => {
+  useEffect(() => {
+    setLoading(true);
+    const getUser = async () => {
+      const fetchedUser = await userService.GETUSER(loja as string);
+      if (fetchedUser) {
+        if (fetchedUser?.status !== "INACTIVE") {
+          setLoading(false);
+          setUser(fetchedUser);
+        } else {
+          router.push("/");
+          setLoading(true);
+        }
+      } else {
+        setLoading(false);
+        router.push("/");
+      }
+    };
+    getUser();
+  }, [loja]);
+
+  const finishOrder = async (data: z.infer<typeof FormSchema>) => {
     const numeroTelefone = `55${store?.store?.phone}`;
 
     const mensagem = `
@@ -98,6 +127,28 @@ ${items
     const linkWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTelefone}&text=${mensagemURLFormatada}`;
 
     window.open(linkWhatsApp);
+
+    const orderResponse = await orderService.POST({
+      user_id: user?.id,
+      observation: "Pedido feito pelo whatsapp",
+      status: "PENDENT",
+      total: Number(cartTotal),
+    });
+
+    if (orderResponse) {
+      items.forEach(async (item: any) => {
+        await orderService.POSTORDERITEMS({
+          order_id: orderResponse.id,
+          product_id: item.id,
+          quantity: item.quantity,
+          unit_price: item.price,
+          total: item.itemTotal,
+        });
+      });
+    }
+
+    setItems([]);
+    router.push(`/${params.loja}`);
   };
 
   return (
