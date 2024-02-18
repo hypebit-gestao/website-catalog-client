@@ -19,6 +19,21 @@ export const useUserService = () => {
     return response;
   };
 
+  const GETUSER = async (person_link: string): Promise<User | undefined> => {
+    const response = await fetchWrapper<User>(
+      `user/person/personLink?person_link=${person_link}`,
+      {
+        method: "GET",
+      }
+    );
+
+    if (!response) {
+      console.error("Sem resposta do servidor");
+    }
+
+    return response;
+  };
+
   const GETALL = async (session: string | any): Promise<User[] | undefined> => {
     const response = await fetchWrapper<User[]>("user", {
       method: "GET",
@@ -83,6 +98,7 @@ export const useUserService = () => {
   };
 
   return {
+    GETUSER,
     GETALL,
     GETBYID,
     POST,

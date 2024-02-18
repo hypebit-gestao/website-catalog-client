@@ -14,12 +14,16 @@ import useSearch from "@/utils/hooks/use-search";
 import { useCategoryService } from "@/services/category.service";
 import { Category, UserCategory } from "@/models/category";
 import { Button } from "@/components/ui/button";
+import { useUserService } from "@/services/user.service";
+import { User } from "@/models/user";
 
 const Catalog = () => {
   const params = useParams();
   const { loja } = params;
+  const userService = useUserService();
   const productService = useProductService();
   const categoryService = useCategoryService();
+  const [user, setUser] = useState<User>();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<UserCategory[]>([]);
   const [loading, setLoading] = useState(false);
@@ -31,6 +35,27 @@ const Catalog = () => {
 
   useEffect(() => {
     setLoading(true);
+    const getUser = async () => {
+      const fetchedUser = await userService.GETUSER(loja as string);
+      if (fetchedUser) {
+        if (fetchedUser?.status !== "INACTIVE") {
+          setLoading(false);
+          setUser(fetchedUser);
+        } else {
+          router.push("/");
+          setLoading(true);
+        }
+      } else {
+        setLoading(false);
+        router.push("/");
+      }
+    };
+    getUser();
+  }, [loja]);
+
+  useEffect(() => {
+    setLoading(true);
+
     const getProducts = async () => {
       const fetchedProduct = await productService.GETPRODUCTS(
         loja as string,
@@ -55,10 +80,12 @@ const Catalog = () => {
     };
 
     if (loja) {
-      getCategories();
-      getProducts();
+      if (user) {
+        getCategories();
+        getProducts();
+      }
     }
-  }, [loja, search.text, categoryFilter]);
+  }, [user, loja, search.text, categoryFilter]);
 
   const formater = new Intl.NumberFormat("pt-BR", {
     style: "currency",

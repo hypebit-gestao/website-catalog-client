@@ -4,7 +4,7 @@ import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 const LandingFooter = () => {
   return (
-    <footer className="bg-white p-6 w-full fixed bottom-0">
+    <footer className="bg-white p-6 w-full  ">
       <div className="flex flex-row justify-center items-center">
         <Link href="https://www.hypebit.com.br" target="_blank">
           <div className="cursor-pointer mr-6">
