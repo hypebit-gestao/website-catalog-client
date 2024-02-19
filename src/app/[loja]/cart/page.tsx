@@ -33,6 +33,8 @@ import { useOrderService } from "@/services/order.service";
 import { useSession } from "next-auth/react";
 import { useUserService } from "@/services/user.service";
 import { User } from "@/models/user";
+import { useCepService } from "@/services/cep.service";
+import toast from "react-hot-toast";
 
 interface ProductCart {
   id: string;
@@ -43,12 +45,6 @@ interface ProductCart {
   itemTotal: number;
 }
 
-const FormSchema = z.object({
-  fullName: z.string().min(1, "Nome é obrigatório"),
-  methodPayment: z.string().min(1, "Método de pagamento é obrigatório"),
-  deliveryType: z.string().min(1, "Tipo de entrega é obrigatório"),
-});
-
 const Cart = () => {
   const { items, removeItem, totalItems, cartTotal, setItems } = useCart();
   const params = useParams();
@@ -58,23 +54,81 @@ const Cart = () => {
   const viewCartModal = useViewCartModal();
   const userService = useUserService();
   const orderService = useOrderService();
+  const cepService = useCepService();
   const [user, setUser] = useState<User>();
   const store = useStore();
   const formater = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
   });
+  const FormSchema = z.object({
+    fullName: z.string().min(1, "Nome é obrigatório"),
+    methodPayment: z.string().min(1, "Método de pagamento é obrigatório"),
+    deliveryType: z.string().min(1, "Tipo de entrega é obrigatório"),
+    cep: z.string(),
+    street: z.string(),
+    district: z.string(),
+    number: z.string(),
+    city: z.string(),
+    state: z.string(),
+  });
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       fullName: "",
-      methodPayment: "",
-      deliveryType: "",
+      methodPayment: "CASH",
+      deliveryType: "Retirada",
+      cep: "",
+      street: "",
+      district: "",
+      number: "",
+      city: "",
+      state: "",
     },
   });
 
+  const { setValue, watch } = form;
+
+  const deliveryType = watch("deliveryType");
+
+  const cep = watch("cep");
+
+  type FormSchemaType = z.infer<typeof FormSchema>;
+
+  type FormField = keyof FormSchemaType;
+
+  const setCustomValue = (id: FormField, value: any) => {
+    setValue(id, value, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+  };
+
   const handleDelete = (id: string) => {
     removeItem(id);
+  };
+
+  const cepMask = (value: string) => {
+    if (!value) return "";
+
+    value = value.replace(/\D/g, "");
+    value = value.replace(/(\d{5})(\d)/, "$1-$2");
+    return value;
+  };
+
+  const getCep = async () => {
+    await cepService
+      .GET(cep)
+      .then((res) => {
+        setCustomValue("street", res.logradouro);
+        setCustomValue("district", res.bairro);
+        setCustomValue("city", res.localidade);
+        setCustomValue("state", res.uf);
+      })
+      .catch((err) => {
+        toast.error("CEP não encontrado");
+      });
   };
 
   useEffect(() => {
@@ -99,6 +153,7 @@ const Cart = () => {
 
   const finishOrder = async (data: z.infer<typeof FormSchema>) => {
     const numeroTelefone = `55${store?.store?.phone}`;
+    const formattedMethod = formatMethodPayment(data.methodPayment);
 
     const mensagem = `
 --------------------------
@@ -118,8 +173,20 @@ ${items
   )
   .join("")}
 *Nome completo*: ${data.fullName}
-*Forma de pagamento*: ${data.methodPayment}
+*Forma de pagamento*: ${formattedMethod}
 *Tipo de entrega*: ${data.deliveryType}
+${
+  data.deliveryType === "Entrega a domícilio"
+    ? `
+*CEP*: ${data.cep}
+*Rua*: ${data.street}
+*Bairro*: ${data.district}
+*Número*: ${data.number}
+*Cidade*: ${data.city}
+*Estado*: ${data.state}
+`
+    : ""
+}
 *Valor Total*: ${formater.format(Number(cartTotal))}
 `;
 
@@ -149,6 +216,21 @@ ${items
 
     setItems([]);
     router.push(`/${params.loja}`);
+  };
+
+  const formatMethodPayment = (method: string) => {
+    switch (method) {
+      case "CASH":
+        return "Dinheiro";
+      case "PIX":
+        return "Pix";
+      case "CREDIT_CARD":
+        return "Cartão de Crédito";
+      case "DEBIT_CARD":
+        return "Cartão de Débito";
+      default:
+        return "";
+    }
   };
 
   return (
@@ -267,34 +349,192 @@ ${items
               </div>
 
               <div className="mt-5">
-                <FormField
-                  control={form.control}
-                  name="deliveryType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-lg">Tipo de entrega</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecione um tipo de entrega" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className="z-[300]">
-                          <SelectItem value="Retirada">Retirada</SelectItem>
-                          <SelectItem value="Entrega a domícilio">
-                            Entrega a domícilio
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="deliveryType"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-lg">
+                          Tipo de entrega
+                        </FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecione um tipo de entrega" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="z-[300]">
+                            <SelectItem value="Retirada">Retirada</SelectItem>
+                            <SelectItem value="Entrega a domícilio">
+                              Entrega a domícilio
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                {deliveryType === "Entrega a domícilio" && (
+                  <>
+                    <div className="flex flex-row mt-5">
+                      <div className="w-full mr-3">
+                        <FormField
+                          control={form.control}
+                          name="cep"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-blue-primary">
+                                Cep
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  required={
+                                    deliveryType === "Entrega a domícilio"
+                                  }
+                                  maxLength={9}
+                                  onBlur={(e) => {
+                                    setCustomValue("cep", e.target.value);
+                                    getCep();
+                                  }}
+                                  placeholder="Insira o cep"
+                                  value={cepMask(field.value)}
+                                  onChange={(e) => {
+                                    field.onChange(e.target.value);
+                                  }}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="w-full mr-3">
+                        <FormField
+                          control={form.control}
+                          name="street"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-blue-primary">
+                                Rua
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  required={
+                                    deliveryType === "Entrega a domícilio"
+                                  }
+                                  placeholder="Insira sua rua"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="w-full">
+                        <FormField
+                          control={form.control}
+                          name="district"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-blue-primary">
+                                Bairro
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  required={
+                                    deliveryType === "Entrega a domícilio"
+                                  }
+                                  placeholder="Insira seu bairro"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-row mt-5">
+                      <div className="w-full mr-3">
+                        <FormField
+                          control={form.control}
+                          name="number"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-blue-primary">
+                                Número
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  required={
+                                    deliveryType === "Entrega a domícilio"
+                                  }
+                                  type="number"
+                                  placeholder="Insira o número"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="w-full mr-3">
+                        <FormField
+                          control={form.control}
+                          name="city"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-blue-primary">
+                                Cidade
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  required={
+                                    deliveryType === "Entrega a domícilio"
+                                  }
+                                  placeholder="Insira a cidade"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="w-full">
+                        <FormField
+                          control={form.control}
+                          name="state"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-blue-primary">
+                                Estado
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  required={
+                                    deliveryType === "Entrega a domícilio"
+                                  }
+                                  placeholder="Insira o estado"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
                 <div className="my-8">
                   <h1 className="text-xl ">
                     Valor total:{" "}
