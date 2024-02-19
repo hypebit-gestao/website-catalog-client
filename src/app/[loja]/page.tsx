@@ -28,7 +28,7 @@ const Catalog = () => {
   const [categories, setCategories] = useState<UserCategory[]>([]);
   const [loading, setLoading] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string>("");
-  const [visibleProducts, setVisibleProducts] = useState(6);
+  const [visibleProducts, setVisibleProducts] = useState(8);
   const { addItem, items, totalItems } = useCart();
   const search = useSearch();
   const router = useRouter();
@@ -93,11 +93,11 @@ const Catalog = () => {
   });
 
   const loadMoreProducts = () => {
-    setVisibleProducts((prev) => prev + 6);
+    setVisibleProducts((prev) => prev + 8);
   };
 
   const loadLessProducts = () => {
-    setVisibleProducts((prev) => prev - 6);
+    setVisibleProducts((prev) => prev - 8);
   };
 
   const removeFilters = () => {
@@ -155,7 +155,7 @@ const Catalog = () => {
                   <h1 className="text-green-secondary text-3xl mb-6">
                     Produtos em destaque
                   </h1>
-                  <div className="w-full gap-x-16 gap-y-16 grid grid-cols grid-cols-1 lg:grid-cols-3">
+                  <div className="w-full gap-x-16 gap-y-16 grid grid-cols grid-cols-1 lg:grid-cols-4">
                     {products?.map(
                       (product, index) =>
                         product.featured && (
@@ -193,7 +193,7 @@ const Catalog = () => {
             {products?.some((product) => !product.featured) && (
               <>
                 <h1 className="text-green-secondary text-3xl mb-6">Produtos</h1>
-                <div className="w-full gap-x-16 gap-y-16 grid grid-cols grid-cols-1 lg:grid-cols-3">
+                <div className="w-full gap-x-16 gap-y-16 grid grid-cols grid-cols-1 lg:grid-cols-4">
                   {products
                     ?.filter((product) => !product.featured)
                     .slice(0, visibleProducts)

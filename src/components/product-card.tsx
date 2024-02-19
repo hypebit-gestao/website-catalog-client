@@ -71,7 +71,7 @@ const ProductCard = ({ name, price, images, onClick }: ProductCardProps) => {
   //   />
   // </div>
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full ">
       <div className="relative w-full h-full rounded-xl">
         <Slider {...settings}>
           {images?.map((src, index) => (
@@ -92,15 +92,17 @@ const ProductCard = ({ name, price, images, onClick }: ProductCardProps) => {
             </div>
           ))}
         </Slider>
-        <div className="mt-8">
-          <div className="flex justify-between">
-            <h1 className="text-2xl text-gray-800 truncate">{name}</h1>
+        <div className="mt-8  flex flex-col items-center w-full">
+          <div className="w-full">
+            <h1 className="text-2xl text-center text-gray-800 truncate">
+              {name}
+            </h1>
           </div>
-          <h3 className="text-3xl font-bold">{price}</h3>
-          <div className="mt-5">
+          <h3 className="text-2xl font-bold">{price}</h3>
+          <div className="mt-5 w-full">
             <button
               onClick={onClick}
-              className="bg-green-primary w-[60%] px-3 py-1 rounded-lg hover:opacity-70 transition-all duration-200"
+              className="bg-green-primary w-full px-3 py-1 rounded-lg hover:opacity-70 transition-all duration-200"
             >
               <h1 className="text-white text-lg">Comprar</h1>
             </button>
