@@ -28,21 +28,14 @@ import Image from "next/image";
 import { TiDelete } from "react-icons/ti";
 
 const formSchema = z.object({
-  name: z.string().min(1, "O campo Nome é obrigatório"),
+  name: z.string().min(1, "O campo nome é obrigatório"),
   cpf_cnpj: z.string().min(1, "O campo CPF/CNPJ é obrigatório"),
-  email: z.string().email("E-mail inválido"),
-  phone: z.string().min(8, "Telefone inválido"),
-  username: z.string().min(1, "O campo Nome de usuário é obrigatório"),
+  email: z.string().email("O campo e-mail é obrigatório"),
+  phone: z.string().min(8, "O campo telefone é obrigatório"),
+  username: z.string().min(1, "O campo nome de usuário é obrigatório"),
   image_url: z.any(),
-  password: z.string().min(1, "O campo Senha é obrigatório"),
-  person_link: z.string().min(1, "O campo Link personalizado é obrigatório"),
-  cep: z.string().min(1, "CEP é obrigatório"),
-  street: z.string().min(1, "Logradouro é obrigatório"),
-  number: z.string().min(1, "Número é obrigatório"),
-  district: z.string().min(1, "Bairro é obrigatório"),
-  city: z.string().min(1, "Cidade é obrigatório"),
-  state: z.string().min(1, "Estado é obrigatório"),
-  complement: z.string(),
+  password: z.string().min(1, "O campo senha é obrigatório"),
+  person_link: z.string().min(1, "O campo link personalizado é obrigatório"),
 });
 
 const Register = () => {
@@ -75,14 +68,6 @@ const Register = () => {
       username: "",
       person_link: "",
       password: "",
-      cep: "",
-      street: "",
-      number: "",
-      district: "",
-      image_url: "",
-      city: "",
-      state: "",
-      complement: "",
     },
   });
 
@@ -127,8 +112,6 @@ const Register = () => {
 
   const { setValue, watch } = form;
 
-  const cep = watch("cep");
-
   type FormSchemaType = z.infer<typeof formSchema>;
 
   type FormField = keyof FormSchemaType;
@@ -139,21 +122,6 @@ const Register = () => {
       shouldDirty: true,
       shouldTouch: true,
     });
-  };
-
-  const getCep = async () => {
-    await cepService
-      .GET(cep)
-      .then((res) => {
-        setCustomValue("street", res.logradouro);
-        setCustomValue("district", res.bairro);
-        setCustomValue("city", res.localidade);
-        setCustomValue("state", res.uf);
-        setCustomValue("complement", res.complemento);
-      })
-      .catch((err) => {
-        toast.error("CEP não encontrado");
-      });
   };
 
   const onSubmit = async (data: any) => {
@@ -230,7 +198,7 @@ const Register = () => {
 
   return (
     <section className="min-h-screen h-full w-full flex justify-center items-center bg-green-secondary">
-      <div className="w-1/2 rounded-xl shadow-xl bg-white p-6 h-[80vh] overflow-auto">
+      <div className="w-[95%] xl:w-1/2 rounded-xl shadow-xl bg-white p-6 h-[80vh] overflow-auto">
         <h1 className="text-center text-green-secondary text-3xl font-bold">
           Cadastrar Loja
         </h1>
@@ -241,8 +209,8 @@ const Register = () => {
                 <h1 className="my-4 font-semibold text-green-primary">
                   Informações da loja
                 </h1>
-                <div className="flex flex-row mb-5">
-                  <div className="w-full mr-5">
+                <div className="flex flex-col xl:flex-row mb-5">
+                  <div className="w-full mr-5 mb-5 xl:mb-0">
                     <FormField
                       control={form.control}
                       name="name"
@@ -289,8 +257,8 @@ const Register = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-row mb-5">
-                  <div className="w-full mr-5">
+                <div className="flex flex-col xl:flex-row mb-5">
+                  <div className="w-full mr-5 mb-5 xl:mb-0">
                     <FormField
                       control={form.control}
                       name="email"
@@ -337,8 +305,8 @@ const Register = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-row ">
-                  <div className="w-full mr-5">
+                <div className="flex flex-col xl:flex-row ">
+                  <div className="w-full mr-5 mb-5 xl:mb-0">
                     <FormField
                       control={form.control}
                       name="username"
@@ -391,10 +359,7 @@ const Register = () => {
                           Link da sua loja
                         </FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="Insira o link da sua loja"
-                            {...field}
-                          />
+                          <Input isPrefix {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -462,145 +427,6 @@ const Register = () => {
                 </div>
               </div>
 
-              <div className="mt-12">
-                <h1 className="my-4 font-semibold text-green-primary">
-                  Informações de endereço
-                </h1>
-                <div className="flex flex-row mb-5">
-                  <div className="w-full mr-5">
-                    <FormField
-                      control={form.control}
-                      name="cep"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-blue-primary">
-                            Cep
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              maxLength={9}
-                              onBlur={(e) => {
-                                setCustomValue("cep", e.target.value);
-                                getCep();
-                              }}
-                              placeholder="Insira o cep"
-                              value={cepMask(field.value)}
-                              onChange={(e) => {
-                                field.onChange(e.target.value);
-                              }}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <FormField
-                      control={form.control}
-                      name="street"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-blue-primary">
-                            Rua
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              className=""
-                              placeholder="Insira a rua"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-row mb-5">
-                  <div className="w-full mr-5">
-                    <FormField
-                      control={form.control}
-                      name="district"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-blue-primary">
-                            Bairro
-                          </FormLabel>
-                          <FormControl>
-                            <Input placeholder="Insira o bairro" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <FormField
-                      control={form.control}
-                      name="number"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-blue-primary">
-                            Número
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              className=""
-                              placeholder="Insira o número"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-row ">
-                  <div className="w-full mr-5">
-                    <FormField
-                      control={form.control}
-                      name="city"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-blue-primary">
-                            Cidade
-                          </FormLabel>
-                          <FormControl>
-                            <Input placeholder="Insira a cidade" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <FormField
-                      control={form.control}
-                      name="state"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-blue-primary">
-                            Estado
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              maxLength={2}
-                              className=""
-                              placeholder="Insira o estado"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
               <div className="mt-12">
                 <Button
                   size="lg"
