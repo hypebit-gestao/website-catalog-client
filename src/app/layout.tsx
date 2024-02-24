@@ -81,7 +81,7 @@ export default function RootLayout({
           </div>
           <Footer />
           {pathname === "/" && <LandingFooter />}
-          <Link href="https://www.hypebit.com.br" target="_blank">
+          {/* <Link href="https://www.hypebit.com.br" target="_blank">
             <div
               className={`w-full bg-black flex items-center justify-center p-3 text-white cursor-pointer ${
                 pathname === "/" && "hidden"
@@ -96,7 +96,7 @@ export default function RootLayout({
               />
               Feito com Hypebit
             </div>
-          </Link>
+          </Link> */}
         </CartWrapper>
       </body>
     </html>
