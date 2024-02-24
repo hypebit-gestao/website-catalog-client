@@ -104,6 +104,8 @@ const Catalog = () => {
     setCategoryFilter("");
   };
 
+
+
   return (
     <div className=" min-h-screen ">
       {categories?.length > 1 && (

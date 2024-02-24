@@ -101,18 +101,18 @@ const ProductCard = ({
           {promotionPrice ? (
             <div className="flex flex-col items-center mt-2">
               <div className="flex flex-row items-center">
-                <p className="mr-2 text-lg">de</p>
-                <h3 className="text-lg  text-gray-500  line-through">
+                <p className="mr-2 text-xl">de</p>
+                <h3 className="text-xl  text-gray-500  line-through">
                   {formater.format(promotionPrice / 2)}
                 </h3>
               </div>
-              <h3 className="text-lg  ml-2">
+              <h3 className="text-xl  ml-2">
                 por <span className="font-bold">{formater.format(price)}</span>
               </h3>
             </div>
           ) : (
             <div className="mt-2">
-              <h3 className="text-lg font-bold">{formater.format(price)}</h3>
+              <h3 className="text-xl font-bold">{formater.format(price)}</h3>
             </div>
           )}
           <div className="mt-5 w-full">
