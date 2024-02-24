@@ -107,7 +107,7 @@ const Register = () => {
   });
 
   const formSchemaStep3 = z.object({
-    image_url: z.string(),
+    image_url: z.any(),
   });
 
   const stepSchemas = [formSchemaStep1, formSchemaStep2, formSchemaStep3];
