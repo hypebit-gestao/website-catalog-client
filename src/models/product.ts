@@ -2,6 +2,7 @@ export interface Product {
   id: string;
   name: string;
   description: string;
+  promotion_price: number;
   category?: {
     id: string;
     name: string;

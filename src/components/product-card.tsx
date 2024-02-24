@@ -11,7 +11,8 @@ import Link from "next/link";
 
 interface ProductCardProps {
   name: string;
-  price: string;
+  price: number;
+  promotionPrice: number;
   images?: string[];
   onClick?: () => void;
 }
@@ -44,7 +45,13 @@ function SamplePrevArrow(props: any) {
   );
 }
 
-const ProductCard = ({ name, price, images, onClick }: ProductCardProps) => {
+const ProductCard = ({
+  name,
+  price,
+  promotionPrice,
+  images,
+  onClick,
+}: ProductCardProps) => {
   const [sliderIndex, setSliderIndex] = useState(0);
 
   const settings = {
@@ -57,6 +64,11 @@ const ProductCard = ({ name, price, images, onClick }: ProductCardProps) => {
     prevArrow: images && images?.length > 1 ? <SamplePrevArrow /> : <></>,
     afterChange: (index: number) => setSliderIndex(index),
   };
+
+  const formater = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
   return (
     <div className="w-full h-full ">
@@ -86,11 +98,27 @@ const ProductCard = ({ name, price, images, onClick }: ProductCardProps) => {
               {name}
             </h1>
           </div>
-          <h3 className="text-2xl font-bold">{price}</h3>
+          {promotionPrice ? (
+            <div className="flex flex-col items-center mt-2">
+              <div className="flex flex-row items-center">
+                <p className="mr-2 text-lg">de</p>
+                <h3 className="text-lg  text-gray-500  line-through">
+                  {formater.format(promotionPrice / 2)}
+                </h3>
+              </div>
+              <h3 className="text-lg  ml-2">
+                por <span className="font-bold">{formater.format(price)}</span>
+              </h3>
+            </div>
+          ) : (
+            <div className="mt-2">
+              <h3 className="text-lg font-bold">{formater.format(price)}</h3>
+            </div>
+          )}
           <div className="mt-5 w-full">
             <button
               onClick={onClick}
-              className="bg-green-primary w-full px-3 py-1 rounded-lg hover:opacity-70 transition-all duration-200"
+              className="bg-green-primary w-full px-3 py-2 rounded-lg hover:opacity-70 transition-all duration-200"
             >
               <h1 className="text-white text-lg">Comprar</h1>
             </button>

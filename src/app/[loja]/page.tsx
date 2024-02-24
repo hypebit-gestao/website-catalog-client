@@ -166,7 +166,8 @@ const Catalog = () => {
                                 router.push(`/${loja}/${product.id}`)
                               }
                               name={product.name}
-                              price={formater.format(product.price)}
+                              price={product.price}
+                              promotionPrice={product.promotion_price}
                               images={
                                 product.images && product.images.length > 0
                                   ? product.images
@@ -207,7 +208,8 @@ const Catalog = () => {
                                 router.push(`/${loja}/${product.id}`)
                               }
                               name={product.name}
-                              price={formater.format(product.price)}
+                              price={product.price}
+                              promotionPrice={product.promotion_price}
                               images={
                                 product.images && product.images.length > 0
                                   ? product.images
