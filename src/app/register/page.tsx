@@ -29,7 +29,7 @@ import Image from "next/image";
 import { TiDelete } from "react-icons/ti";
 import StepByStep from "@/components/step-by-step";
 
-export enum REGISTER_STORE_STEPS {
+enum REGISTER_STORE_STEPS {
   BASIC_INFORMATION = 0,
   ADDRESS = 1,
   ATTACHMENT = 2,
