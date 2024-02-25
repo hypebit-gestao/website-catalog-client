@@ -38,7 +38,12 @@ const Header = () => {
                   alt="Logo da Loja"
                 />
               ) : (
-                <GrCatalog className="text-green-primary" size={50} />
+                <Image
+                  src="/images/logo-dark.png"
+                  width={80}
+                  height={80}
+                  alt="Logo do catálogo place"
+                />
               )}
             </Link>
           </div>
