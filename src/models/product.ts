@@ -13,6 +13,7 @@ export interface Product {
   weight: number;
   images?: string[] | undefined;
   featured: boolean;
+  active: boolean;
   currency: string;
   price: number;
   user: {

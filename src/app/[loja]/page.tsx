@@ -104,8 +104,6 @@ const Catalog = () => {
     setCategoryFilter("");
   };
 
-
-
   return (
     <div className=" min-h-screen ">
       {categories?.length > 1 && (
@@ -152,7 +150,9 @@ const Catalog = () => {
         ) : (
           <div id="featured">
             <Container>
-              {products?.some((product) => product.featured) && (
+              {products?.some(
+                (product) => product.featured && product.active
+              ) && (
                 <>
                   <h1 className="text-green-secondary text-3xl mb-6">
                     Produtos em destaque
@@ -193,7 +193,9 @@ const Catalog = () => {
           <Loader />
         ) : (
           <Container>
-            {products?.some((product) => !product.featured) && (
+            {products?.some(
+              (product) => !product.featured && product.active
+            ) && (
               <>
                 <h1 className="text-green-secondary text-3xl mb-6">Produtos</h1>
                 <div className="w-full gap-x-16 gap-y-16 grid grid-cols grid-cols-1 lg:grid-cols-4">
