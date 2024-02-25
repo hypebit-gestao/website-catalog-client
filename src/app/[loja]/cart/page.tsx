@@ -76,7 +76,7 @@ const Cart = () => {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       fullName: "",
-      methodPayment: "CASH",
+      methodPayment: "CREDIT_CARD",
       deliveryType: "Retirada",
       cep: "",
       street: "",
