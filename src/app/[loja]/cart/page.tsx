@@ -35,6 +35,7 @@ import { useUserService } from "@/services/user.service";
 import { User } from "@/models/user";
 import { useCepService } from "@/services/cep.service";
 import toast from "react-hot-toast";
+import { Textarea } from "@/components/ui/textarea";
 
 interface ProductCart {
   id: string;
@@ -65,6 +66,7 @@ const Cart = () => {
     fullName: z.string().min(1, "Nome é obrigatório"),
     methodPayment: z.string().min(1, "Método de pagamento é obrigatório"),
     deliveryType: z.string().min(1, "Tipo de entrega é obrigatório"),
+    observation: z.string(),
     cep: z.string(),
     street: z.string(),
     district: z.string(),
@@ -78,6 +80,7 @@ const Cart = () => {
       fullName: "",
       methodPayment: "CREDIT_CARD",
       deliveryType: "Retirada",
+      observation: "",
       cep: "",
       street: "",
       district: "",
@@ -187,6 +190,7 @@ ${
 `
     : ""
 }
+${data.observation ? `*Observação*: ${data.observation}` : ""}
 *Valor Total*: ${formater.format(Number(cartTotal))}
 `;
 
@@ -197,8 +201,9 @@ ${
 
     const orderResponse = await orderService.POST({
       user_id: user?.id,
-      observation: "Pedido feito pelo whatsapp",
+      observation: data.observation,
       status: "PENDENT",
+      customer_name: data.fullName,
       total: Number(cartTotal),
     });
 
@@ -535,6 +540,26 @@ ${
                     </div>
                   </>
                 )}
+                <div className="mt-5">
+                  <FormField
+                    control={form.control}
+                    name="observation"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Observação</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Caso tiver alguma observação sobre o pedido, insira aqui"
+                            className="resize-none"
+                            {...field}
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <div className="my-8">
                   <h1 className="text-xl ">
                     Valor total:{" "}

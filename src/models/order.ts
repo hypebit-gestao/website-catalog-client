@@ -1,6 +1,7 @@
 export interface Order {
   id?: string;
   user_id?: string;
+  customer_name: string;
   observation?: string;
   status: string;
   total: number;
