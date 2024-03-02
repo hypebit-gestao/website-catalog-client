@@ -54,15 +54,7 @@ const Register = () => {
   const requiredInfos = [
     {
       step: 1,
-      fields: [
-        "name",
-        "cpf_cnpj",
-        "email",
-        "phone",
-        "username",
-        "password",
-        "person_link",
-      ],
+      fields: ["name", "cpf_cnpj", "email", "phone", "password", "person_link"],
     },
     {
       step: 2,
@@ -91,7 +83,6 @@ const Register = () => {
     cpf_cnpj: z.string().min(1, "O campo CPF/CNPJ é obrigatório"),
     email: z.string().email("O campo e-mail é obrigatório"),
     phone: z.string().min(8, "O campo telefone é obrigatório"),
-    username: z.string().min(1, "O campo nome de usuário é obrigatório"),
     password: z.string().min(1, "O campo senha é obrigatório"),
     person_link: z.string().min(1, "O campo link personalizado é obrigatório"),
   });
@@ -136,7 +127,6 @@ const Register = () => {
       cpf_cnpj: "",
       email: "",
       phone: "",
-      username: "",
       person_link: "",
       password: "",
       cep: "",
@@ -299,7 +289,6 @@ const Register = () => {
                     cpf_cnpj: removeFormatting(data.cpf_cnpj),
                     email: data.email,
                     phone: removeFormatting(data.phone),
-                    username: data.username,
                     password: data.password,
                     person_link: data.person_link,
                     payer_id: customerId,
@@ -322,7 +311,6 @@ const Register = () => {
               cpf_cnpj: removeFormatting(data.cpf_cnpj),
               email: data.email,
               phone: removeFormatting(data.phone),
-              username: data.username,
               password: data.password,
               person_link: data.person_link,
               payer_id: customerId,
@@ -477,23 +465,6 @@ const Register = () => {
         </h1>
 
         <div className="flex flex-col xl:flex-row ">
-          <div className="w-full mr-5 mb-5 xl:mb-0">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-blue-primary">
-                    Nome de usuário
-                  </FormLabel>
-                  <FormControl>
-                    <Input placeholder="Insira o nome de usuário" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
           <div className="w-full">
             <FormField
               control={form.control}
