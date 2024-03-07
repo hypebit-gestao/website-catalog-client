@@ -261,36 +261,37 @@ const Register = () => {
       ...formData,
       ...data,
     });
+
     if (step !== REGISTER_STORE_STEPS.ATTACHMENT) {
       return onNext();
     }
     if (customerId) {
       const addressResponse: Address | undefined = await addressService.POST({
-        cep: removeFormatting(data.cep),
-        street: data.street,
-        number: Number(data.number),
-        district: data.district,
-        city: data.city,
-        state: data.state,
-        complement: data.complement,
+        cep: removeFormatting(formData.cep),
+        street: formData.street,
+        number: Number(formData.number),
+        district: formData.district,
+        city: formData.city,
+        state: formData.state,
+        complement: formData.complement,
       });
       if (addressResponse) {
-        if (data?.image_url) {
+        if (formData?.image_url) {
           await uploadService
             .POST({
-              file: data.image_url,
-              folderName: data.name,
+              file: formData.image_url,
+              folderName: formData.name,
             })
             .then(async (res: ReturnUpload | undefined) => {
               if (Array.isArray(res) && res.length > 0 && res[0].imageUrl) {
                 await userService
                   .POST({
-                    name: data.name,
-                    cpf_cnpj: removeFormatting(data.cpf_cnpj),
-                    email: data.email,
-                    phone: removeFormatting(data.phone),
-                    password: data.password,
-                    person_link: data.person_link,
+                    name: formData.name,
+                    cpf_cnpj: removeFormatting(formData.cpf_cnpj),
+                    email: formData.email,
+                    phone: removeFormatting(formData.phone),
+                    password: formData.password,
+                    person_link: formData.person_link,
                     payer_id: customerId,
                     image_url: res[0].imageUrl,
                     address_id: addressResponse.id,
@@ -307,12 +308,12 @@ const Register = () => {
         } else {
           await userService
             .POST({
-              name: data.name,
-              cpf_cnpj: removeFormatting(data.cpf_cnpj),
-              email: data.email,
-              phone: removeFormatting(data.phone),
-              password: data.password,
-              person_link: data.person_link,
+              name: formData.name,
+              cpf_cnpj: removeFormatting(formData.cpf_cnpj),
+              email: formData.email,
+              phone: removeFormatting(formData.phone),
+              password: formData.password,
+              person_link: formData.person_link,
               payer_id: customerId,
               image_url: null,
               address_id: addressResponse.id,
