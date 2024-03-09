@@ -25,7 +25,7 @@ const Catalog = () => {
   const categoryService = useCategoryService();
   const [user, setUser] = useState<User>();
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<UserCategory[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string>("");
   const [visibleProducts, setVisibleProducts] = useState(8);
@@ -70,9 +70,7 @@ const Catalog = () => {
 
     const getCategories = async () => {
       setLoading(true);
-      const fetchedCategories = await categoryService.GETCATEGORIES(
-        loja as string
-      );
+      const fetchedCategories = await categoryService.GETALL();
       if (fetchedCategories) {
         setLoading(false);
         setCategories(fetchedCategories);
@@ -117,19 +115,14 @@ const Catalog = () => {
                 className="w-full flex flex-row items-center"
               >
                 <div className="w-full flex flex-row items-center">
-                  {categories?.map(
-                    (category: UserCategory, index: number) =>
-                      category.category.name !== "Sem Categoria" && (
-                        <CategoryItem
-                          onClick={() =>
-                            setCategoryFilter(category?.category?.id)
-                          }
-                          key={index}
-                          image={category?.category?.image_url}
-                          name={category?.category?.name}
-                        />
-                      )
-                  )}
+                  {categories?.map((category: Category, index: number) => (
+                    <CategoryItem
+                      onClick={() => setCategoryFilter(category?.id)}
+                      key={index}
+                      image={category?.image_url}
+                      name={category?.name}
+                    />
+                  ))}
                 </div>
                 {categories?.length > 1 && (
                   <div

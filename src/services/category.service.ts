@@ -6,7 +6,7 @@ export const useCategoryService = () => {
     person_link: string
   ): Promise<UserCategory[] | undefined> => {
     const response = await fetchWrapper<UserCategory[]>(
-      `userCategory/personLink/${person_link}`,
+      `category/user/${person_link}`,
       {
         method: "GET",
       }
