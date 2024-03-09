@@ -70,7 +70,9 @@ const Catalog = () => {
 
     const getCategories = async () => {
       setLoading(true);
-      const fetchedCategories = await categoryService.GETALL();
+      const fetchedCategories = await categoryService.GETCATEGORIES(
+        loja as string
+      );
       if (fetchedCategories) {
         setLoading(false);
         setCategories(fetchedCategories);

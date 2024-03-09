@@ -4,8 +4,8 @@ import { fetchWrapper } from "@/utils/functions/fetch";
 export const useCategoryService = () => {
   const GETCATEGORIES = async (
     person_link: string
-  ): Promise<UserCategory[] | undefined> => {
-    const response = await fetchWrapper<UserCategory[]>(
+  ): Promise<Category[] | undefined> => {
+    const response = await fetchWrapper<Category[]>(
       `category/user/${person_link}`,
       {
         method: "GET",
