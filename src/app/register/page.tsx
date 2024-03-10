@@ -56,7 +56,15 @@ const Register = () => {
   const requiredInfos = [
     {
       step: 1,
-      fields: ["name", "cpf_cnpj", "email", "phone", "password", "person_link"],
+      fields: [
+        "name",
+        "cpf_cnpj",
+        "email",
+        "phone",
+        "password",
+        "confirmation_password",
+        "person_link",
+      ],
     },
     {
       step: 2,
@@ -80,14 +88,24 @@ const Register = () => {
     return "Próximo";
   }, [step]);
 
-  const formSchemaStep1 = z.object({
-    name: z.string().min(1, "O campo nome da loja é obrigatório"),
-    cpf_cnpj: z.string().min(1, "O campo CPF/CNPJ é obrigatório"),
-    email: z.string().email("O campo e-mail é obrigatório"),
-    phone: z.string().min(8, "O campo telefone é obrigatório"),
-    password: z.string().min(1, "O campo senha é obrigatório"),
-    person_link: z.string().min(1, "O campo link personalizado é obrigatório"),
-  });
+  const formSchemaStep1 = z
+    .object({
+      name: z.string().min(1, "O campo nome da loja é obrigatório"),
+      cpf_cnpj: z.string().min(1, "O campo CPF/CNPJ é obrigatório"),
+      email: z.string().email("O campo e-mail é obrigatório"),
+      phone: z.string().min(8, "O campo telefone é obrigatório"),
+      password: z.string().min(1, "O campo senha é obrigatório"),
+      confirmation_password: z
+        .string()
+        .min(1, "O campo confirmação de senha é obrigatório"),
+      person_link: z
+        .string()
+        .min(1, "O campo link personalizado é obrigatório"),
+    })
+    .refine((data) => data.password === data.confirmation_password, {
+      message: "As senhas não coincidem",
+      path: ["confirmation_password"],
+    }) as any;
 
   const formSchemaStep2 = z.object({
     cep: z.string().min(1, "O campo CEP é obrigatório"),
@@ -104,7 +122,6 @@ const Register = () => {
   });
 
   const stepSchemas = [formSchemaStep1, formSchemaStep2, formSchemaStep3];
-
   const formSchema = z.object({
     ...formSchemaStep1.shape,
     ...formSchemaStep2.shape,
@@ -131,6 +148,7 @@ const Register = () => {
       phone: "",
       person_link: "",
       password: "",
+      confirmation_password: "",
       cep: "",
       street: "",
       number: "",
@@ -194,7 +212,7 @@ const Register = () => {
 
   type FormSchemaType = z.infer<typeof formSchema>;
 
-  type FormField = keyof FormSchemaType;
+  type FormField = keyof FormSchemaType & string;
 
   const setCustomValue = (id: FormField, value: any) => {
     setValue(id, value, {
@@ -481,7 +499,7 @@ const Register = () => {
         </h1>
 
         <div className="flex flex-col xl:flex-row ">
-          <div className="w-full">
+          <div className="w-full mr-3 mb-5 xl:mb-0">
             <FormField
               control={form.control}
               name="password"
@@ -493,6 +511,27 @@ const Register = () => {
                       type="password"
                       className=""
                       placeholder="Insira sua senha"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="w-full">
+            <FormField
+              control={form.control}
+              name="confirmation_password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-blue-primary">
+                    Confirme sua senha
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Repita sua senha"
                       {...field}
                     />
                   </FormControl>

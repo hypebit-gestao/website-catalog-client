@@ -387,7 +387,7 @@ ${data.observation ? `*Observação*: ${data.observation}` : ""}
                 </div>
                 {deliveryType === "Entrega a domícilio" && (
                   <>
-                    <div className="flex flex-row mt-5">
+                    <div className="flex flex-col xl:flex-row mt-5">
                       <div className="w-full mr-3">
                         <FormField
                           control={form.control}
@@ -419,7 +419,7 @@ ${data.observation ? `*Observação*: ${data.observation}` : ""}
                           )}
                         />
                       </div>
-                      <div className="w-full mr-3">
+                      <div className="w-full mr-3 xl:mt-0 mt-5">
                         <FormField
                           control={form.control}
                           name="street"
@@ -442,7 +442,7 @@ ${data.observation ? `*Observação*: ${data.observation}` : ""}
                           )}
                         />
                       </div>
-                      <div className="w-full">
+                      <div className="w-full xl:mt-0 mt-5">
                         <FormField
                           control={form.control}
                           name="district"
@@ -466,7 +466,7 @@ ${data.observation ? `*Observação*: ${data.observation}` : ""}
                         />
                       </div>
                     </div>
-                    <div className="flex flex-row mt-5">
+                    <div className="flex flex-col xl:flex-row mt-5">
                       <div className="w-full mr-3">
                         <FormField
                           control={form.control}
@@ -491,7 +491,7 @@ ${data.observation ? `*Observação*: ${data.observation}` : ""}
                           )}
                         />
                       </div>
-                      <div className="w-full mr-3">
+                      <div className="w-full mr-3 xl:mt-0 mt-5">
                         <FormField
                           control={form.control}
                           name="city"
@@ -514,7 +514,7 @@ ${data.observation ? `*Observação*: ${data.observation}` : ""}
                           )}
                         />
                       </div>
-                      <div className="w-full">
+                      <div className="w-full xl:mt-0 mt-5">
                         <FormField
                           control={form.control}
                           name="state"
