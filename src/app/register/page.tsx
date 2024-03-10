@@ -28,6 +28,7 @@ import { ReturnUpload } from "@/models/upload";
 import Image from "next/image";
 import { TiDelete } from "react-icons/ti";
 import StepByStep from "@/components/step-by-step";
+import Loader from "@/components/loader";
 
 enum REGISTER_STORE_STEPS {
   BASIC_INFORMATION = 0,
@@ -36,6 +37,7 @@ enum REGISTER_STORE_STEPS {
 }
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const cepService = useCepService();
   const addressService = useAddressService();
   const uploadService = useUploadService();
@@ -257,12 +259,16 @@ const Register = () => {
   };
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    if (loading) return;
+    setLoading(true);
+
     setFormData({
       ...formData,
       ...data,
     });
 
     if (step !== REGISTER_STORE_STEPS.ATTACHMENT) {
+      setLoading(false);
       return onNext();
     }
     if (customerId) {
@@ -299,10 +305,14 @@ const Register = () => {
                     status: "ACTIVE",
                   })
                   .then((res) => {
+                    setLoading(false);
                     toast.success("Loja cadastrada com sucesso");
                     router.push("/register/success");
                   })
-                  .catch((err) => toast.error(err.message));
+                  .catch((err) => {
+                    setLoading(false);
+                    toast.error(err.message);
+                  });
               }
             });
         } else {
@@ -321,15 +331,20 @@ const Register = () => {
               status: "ACTIVE",
             })
             .then((res) => {
+              setLoading(false);
               toast.success("Loja cadastrada com sucesso");
               form.reset();
               setStep(REGISTER_STORE_STEPS.BASIC_INFORMATION);
               router.push("/register/success");
             })
-            .catch((err) => toast.error(err.message));
+            .catch((err) => {
+              setLoading(false);
+              toast.error(err.message);
+            });
         }
       }
     } else {
+      setLoading(false);
       toast.error("Erro ao cadastrar loja");
     }
 
@@ -758,11 +773,13 @@ const Register = () => {
                     </Button>
                     <Button
                       size="lg"
-                      className=" w-[50%] md:w-[30%] text-lg ml-6"
+                      className={`w-[50%] md:w-[30%] text-lg ml-6 ${
+                        loading && "cursor-not-allowed"
+                      }`}
                       type="submit"
                       variant={"default"}
                     >
-                      {secondaryLabelButton}
+                      {loading ? <Loader color="#fff" /> : secondaryLabelButton}
                     </Button>
                   </div>
                 </>
