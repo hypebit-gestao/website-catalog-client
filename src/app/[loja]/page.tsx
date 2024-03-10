@@ -106,39 +106,54 @@ const Catalog = () => {
 
   return (
     <div className=" min-h-screen ">
-      {categories?.length > 0 && (
-        <div className="flex flex-row justify-center h-full items-center border-b shadow-sm border-gray-200 py-5">
-          <Container>
-            {loading ? (
-              <Loader />
-            ) : (
-              <div
-                id="categories"
-                className="w-full flex flex-row items-center"
-              >
-                <div className="w-full flex flex-row items-center">
-                  {categories?.map((category: Category, index: number) => (
-                    <CategoryItem
-                      onClick={() => setCategoryFilter(category?.id)}
-                      key={index}
-                      image={category?.image_url}
-                      name={category?.name}
-                    />
-                  ))}
-                </div>
-                {categories?.length > 1 && (
-                  <div
-                    onClick={() => removeFilters()}
-                    className="ml-auto cursor-pointer"
-                  >
-                    <h3 className="text-red-600">Remover filtros</h3>
+      {categories?.map((category) =>
+        products?.map((product) => {
+          if (product.category_id === category.id) {
+            return (
+              <>
+                {categories?.length > 0 && (
+                  <div className="flex flex-row justify-center h-full items-center border-b shadow-sm border-gray-200 py-5">
+                    <Container>
+                      {loading ? (
+                        <Loader />
+                      ) : (
+                        <div
+                          id="categories"
+                          className="w-full flex flex-row items-center"
+                        >
+                          <div className="w-full flex flex-row items-center">
+                            {categories?.map(
+                              (category: Category, index: number) => (
+                                <CategoryItem
+                                  onClick={() =>
+                                    setCategoryFilter(category?.id)
+                                  }
+                                  key={index}
+                                  image={category?.image_url}
+                                  name={category?.name}
+                                />
+                              )
+                            )}
+                          </div>
+                          {categories?.length > 0 && (
+                            <div
+                              onClick={() => removeFilters()}
+                              className="ml-auto cursor-pointer"
+                            >
+                              <h3 className="text-red-600">Remover filtros</h3>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </Container>
                   </div>
                 )}
-              </div>
-            )}
-          </Container>
-        </div>
+              </>
+            );
+          }
+        })
       )}
+
       <div className="mt-12">
         {loading ? (
           <Loader />
