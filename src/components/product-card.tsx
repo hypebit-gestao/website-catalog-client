@@ -98,7 +98,7 @@ const ProductCard = ({
               {name}
             </h1>
           </div>
-          {promotionPrice ? (
+          {promotionPrice && promotionPrice > 0 ? (
             <div className="flex flex-row items-center mt-2">
               <div className="flex flex-row items-center">
                 <p className="mr-2 text-xl">de</p>
