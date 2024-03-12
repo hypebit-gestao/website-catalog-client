@@ -11,7 +11,7 @@ const CategoryItem = ({ name, image, onClick }: CategoryItemProps) => {
   return (
     <div
       onClick={onClick}
-      className="mx-5 flex flex-col items-center justify-center cursor-pointer "
+      className="mr-5 xl:mr-10 flex flex-col items-center justify-center cursor-pointer "
     >
       <div className="w-[64px] h-[64px] ">
         <Image
