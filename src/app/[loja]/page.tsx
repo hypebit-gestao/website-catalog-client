@@ -115,16 +115,16 @@ const Catalog = () => {
   return (
     <div className=" min-h-screen ">
       {categories?.length > 0 && (
-        <div className="flex flex-row justify-center w-full h-full items-center border-b shadow-sm border-gray-200 py-5 overflow-auto">
+        <div className="flex flex-row justify-center w-full h-full items-center border-b shadow-sm border-gray-200 py-5 overflow-auto xl:overflow-hidden">
           <Container>
             {loading ? (
               <Loader />
             ) : (
               <div
                 id="categories"
-                className="w-full flex flex-col xl:flex-row items-center justify-center mx-12"
+                className="w-full flex flex-col xl:flex-row items-center "
               >
-                <div className="w-full flex flex-row items-center xl:justify-normal justify-center">
+                <div className="w-full flex flex-row items-center xl:justify-normal ">
                   {filteredCategories?.map(
                     (category: Category, index: number) => (
                       <CategoryItem
@@ -139,7 +139,7 @@ const Catalog = () => {
                 {filteredCategories?.length > 0 && (
                   <div
                     onClick={() => removeFilters()}
-                    className="mt-8 xl:mt-0 xl:ml-auto cursor-pointer"
+                    className="mt-8 xl:mt-0 xl:ml-auto ml-0 cursor-pointer"
                   >
                     <h3 className="text-red-600">Remover filtros</h3>
                   </div>
