@@ -13,11 +13,12 @@ const config = {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
     },
     extend: {
+      screens: {
+        "2xl": "1400px",
+        "3xl": "1600px",
+      },
       colors: {
         "green-primary": "#1e3222",
         "green-secondary": "#1e3222",

@@ -4,20 +4,21 @@ import Container from "../container";
 
 import { Link } from "react-scroll";
 import NextLink from "next/link";
+import Image from "next/image";
+import logo from "../../../public/images/logo-dark.png";
 
 const Navbar = () => {
   return (
-    <Container isLanding>
-      <nav className="flex justify-between p-8 z-[9999999] bg-white">
-        <NextLink href={"/"}>
-          <div>
-            <h1 className="font-bold text-2xl cursor-pointer">
-              Catalogo<span className="text-green-secondary">Place</span>
-            </h1>
-          </div>
-        </NextLink>
-        <div className="flex flex-row items-center">
-          <ul className="flex flex-row mr-6">
+    <nav className=" bg-white  w-full shadow-md px-12 lg:px-44 flex justify-between items-center h-20  z-[100]">
+      <div className="flex flex-row justify-between items-center w-full">
+        <Image
+          src={logo}
+          alt="Picture of the author"
+          width={100}
+          height={100}
+        />
+        <ul className="2xl:flex flex-row items-center hidden">
+          <li className="text-xl mr-8">
             <Link
               to={"plans"}
               spy={true}
@@ -25,20 +26,53 @@ const Navbar = () => {
               offset={0}
               duration={700}
             >
-              <li className="px-4 text-green-primary cursor-pointer">Planos</li>
+              Planos
             </Link>
-          </ul>
-          <NextLink href={"https://wa.me/5516996177828"} target="_blank">
-            <Button
-              className="bg-green-secondary hover:bg-green-primary/90 rounded-3xl w-44"
-              size={"lg"}
+          </li>
+          <li className="text-xl mr-8">
+            <Link
+              to={"plans"}
+              spy={true}
+              smooth={true}
+              offset={0}
+              duration={700}
             >
-              Entre em contato
-            </Button>
-          </NextLink>
-        </div>
-      </nav>
-    </Container>
+              Recursos
+            </Link>
+          </li>
+          <li className="text-xl mr-8">
+            <Link
+              to={"plans"}
+              spy={true}
+              smooth={true}
+              offset={0}
+              duration={700}
+            >
+              Dúvidas Frequentes
+            </Link>
+          </li>
+          <li className="text-xl cursor-pointer ">
+            <Link
+              to={"plans"}
+              spy={true}
+              smooth={true}
+              offset={0}
+              duration={700}
+            >
+              Como funciona?
+            </Link>
+          </li>
+        </ul>
+        <Button
+          size="xl"
+          className=" text-xl"
+          type="submit"
+          variant={"default"}
+        >
+          Acesse já
+        </Button>
+      </div>
+    </nav>
   );
 };
 

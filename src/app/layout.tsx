@@ -1,6 +1,6 @@
 "use client";
 
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "./footer";
@@ -19,8 +19,7 @@ import CartWrapper from "@/providers/CartWrapper";
 import Navbar from "@/components/landing/navbar";
 import LandingFooter from "@/components/landing/footer";
 
-const inter = Inter({ subsets: ["latin"] });
-
+const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -55,7 +54,7 @@ export default function RootLayout({
       <head>
         <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
       </head>
-      <body className={`${inter.className}`}>
+      <body className={`${poppins.className}`}>
         <CartWrapper cartId={cartId}>
           <ToastProvider />
           <ViewCartModal
@@ -63,11 +62,11 @@ export default function RootLayout({
             onClose={viewCartModal.onClose}
           />
           <div>{isClient && <Header />}</div>
-          {pathname === "/" && (
+          {/* {pathname === "/" && (
             <div className="fixed top-0 w-full">
               <Navbar />
             </div>
-          )}
+          )} */}
           <div
             className={`${
               pathname === "/" ||
@@ -80,7 +79,7 @@ export default function RootLayout({
             {children}
           </div>
           <Footer />
-          {pathname === "/" && <LandingFooter />}
+          {/* {pathname === "/" && <LandingFooter />} */}
           {/* <Link href="https://www.hypebit.com.br" target="_blank">
             <div
               className={`w-full bg-black flex items-center justify-center p-3 text-white cursor-pointer ${

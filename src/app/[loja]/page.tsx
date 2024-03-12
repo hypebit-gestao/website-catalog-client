@@ -104,54 +104,50 @@ const Catalog = () => {
     setCategoryFilter("");
   };
 
+  const filteredCategories = categories?.filter((category) => {
+    const filteredProducts = products?.filter(
+      (product) => product.category_id === category.id
+    );
+
+    if (filteredProducts?.length) return category;
+  });
+
   return (
     <div className=" min-h-screen ">
-      {categories?.map((category) =>
-        products?.map((product) => {
-          if (product.category_id === category.id) {
-            return (
-              <>
-                {categories?.length > 0 && (
-                  <div className="flex flex-row justify-center h-full items-center border-b shadow-sm border-gray-200 py-5">
-                    <Container>
-                      {loading ? (
-                        <Loader />
-                      ) : (
-                        <div
-                          id="categories"
-                          className="w-full flex flex-row items-center"
-                        >
-                          <div className="w-full flex flex-row items-center">
-                            {categories?.map(
-                              (category: Category, index: number) => (
-                                <CategoryItem
-                                  onClick={() =>
-                                    setCategoryFilter(category?.id)
-                                  }
-                                  key={index}
-                                  image={category?.image_url}
-                                  name={category?.name}
-                                />
-                              )
-                            )}
-                          </div>
-                          {categories?.length > 0 && (
-                            <div
-                              onClick={() => removeFilters()}
-                              className="ml-auto cursor-pointer"
-                            >
-                              <h3 className="text-red-600">Remover filtros</h3>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </Container>
+      {categories?.length > 0 && (
+        <div className="flex flex-row justify-center h-full items-center border-b shadow-sm border-gray-200 py-5">
+          <Container>
+            {loading ? (
+              <Loader />
+            ) : (
+              <div
+                id="categories"
+                className="w-full flex flex-row items-center"
+              >
+                <div className="w-full flex flex-row items-center">
+                  {filteredCategories?.map(
+                    (category: Category, index: number) => (
+                      <CategoryItem
+                        onClick={() => setCategoryFilter(category?.id)}
+                        key={index}
+                        image={category?.image_url}
+                        name={category?.name}
+                      />
+                    )
+                  )}
+                </div>
+                {filteredCategories?.length > 0 && (
+                  <div
+                    onClick={() => removeFilters()}
+                    className="ml-auto cursor-pointer"
+                  >
+                    <h3 className="text-red-600">Remover filtros</h3>
                   </div>
                 )}
-              </>
-            );
-          }
-        })
+              </div>
+            )}
+          </Container>
+        </div>
       )}
 
       <div className="mt-12">
@@ -237,7 +233,7 @@ const Catalog = () => {
                     )}
                 </div>
                 {visibleProducts <
-                  products?.filter((product) => !product.featured).length && ( // Verificar se há mais produtos para carregar
+                  products?.filter((product) => !product.featured).length && (
                   <div className="w-full flex justify-center mt-32">
                     <Button
                       onClick={loadMoreProducts}
