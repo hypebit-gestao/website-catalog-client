@@ -114,7 +114,7 @@ const Catalog = () => {
 
   return (
     <div className=" min-h-screen ">
-      {categories?.length > 0 && (
+      {filteredCategories?.length > 0 && (
         <div className="flex flex-row justify-center w-full h-full items-center border-b shadow-sm border-gray-200 py-5 overflow-auto xl:overflow-hidden">
           <Container>
             {loading ? (
