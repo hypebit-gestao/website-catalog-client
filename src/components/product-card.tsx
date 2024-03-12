@@ -106,7 +106,6 @@ const ProductCard = ({
                 </h3>
               </div>
               <h3 className="text-xl  ml-2">
-                por{" "}
                 <span className="font-bold">
                   {formater.format(promotionPrice)}
                 </span>
