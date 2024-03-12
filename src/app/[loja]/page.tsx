@@ -122,7 +122,7 @@ const Catalog = () => {
             ) : (
               <div
                 id="categories"
-                className="w-full flex flex-col xl:flex-row items-center justify-center"
+                className="w-full flex flex-col xl:flex-row items-center justify-center mx-12"
               >
                 <div className="w-full flex flex-row items-center xl:justify-normal justify-center">
                   {filteredCategories?.map(
