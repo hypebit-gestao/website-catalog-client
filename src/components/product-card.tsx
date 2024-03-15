@@ -82,7 +82,7 @@ const ProductCard = ({
               className="cursor-pointer border border-solid border-gray-200 rounded-2xl"
               key={index}
             >
-              <div className=" relative w-full h-[350px]">
+              <div className="relative w-full h-[250px] lg:h-[350px]">
                 <Image
                   className="w-full h-full object-cover object-center rounded-2xl"
                   src={src}
@@ -94,12 +94,12 @@ const ProductCard = ({
             </div>
           ))}
         </Slider>
-        <div className="mt-8  flex flex-col  w-full">
+        <div className="mt-8 flex flex-col w-full">
           <div className="w-full">
             <h1 className="text-2xl text-gray-800 truncate">{name}</h1>
           </div>
           {promotionPrice && promotionPrice > 0 ? (
-            <div className="flex flex-row items-center mt-2">
+            <div className="flex flex-col lg:flex-row lg:items-center mt-2">
               <div className="flex flex-row items-center">
                 <h3 className="text-xl font-bold">
                   {formater.format(promotionPrice)}
