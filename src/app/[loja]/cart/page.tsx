@@ -193,7 +193,11 @@ ${
 ${data.observation ? `*Observação*: ${data.observation}` : ""}
 ${
   data.deliveryType === "Entrega a domícilio"
-    ? `*Taxa de entrega*: ${formater.format(store?.store?.shipping_taxes)}`
+    ? `*Taxa de entrega*: ${
+        store?.store?.shipping_type === 1
+          ? formater.format(store?.store?.shipping_taxes)
+          : "A combinar"
+      } `
     : ""
 }
 *Valor Total*: ${
