@@ -191,7 +191,16 @@ ${
     : ""
 }
 ${data.observation ? `*Observação*: ${data.observation}` : ""}
-*Valor Total*: ${formater.format(Number(cartTotal))}
+${
+  data.deliveryType === "Entrega a domícilio"
+    ? `*Taxa de entrega*: ${formater.format(store?.store?.shipping_taxes)}`
+    : ""
+}
+*Valor Total*: ${
+      data.deliveryType === "Entrega a domícilio"
+        ? formater.format(cartTotal + store?.store?.shipping_taxes)
+        : formater.format(cartTotal)
+    }
 `;
 
     const mensagemURLFormatada = encodeURIComponent(mensagem);
@@ -219,8 +228,8 @@ ${data.observation ? `*Observação*: ${data.observation}` : ""}
       });
     }
 
-    setItems([]);
-    router.push(`/${params.loja}`);
+    // setItems([]);
+    // router.push(`/${params.loja}`);
   };
 
   const formatMethodPayment = (method: string) => {
@@ -560,13 +569,29 @@ ${data.observation ? `*Observação*: ${data.observation}` : ""}
                     )}
                   />
                 </div>
+
                 <div className="my-8">
-                  <h1 className="text-xl ">
-                    Valor total:{" "}
-                    <span className="font-bold text-green-secondary text-2xl">
-                      {formater.format(cartTotal)}
-                    </span>
-                  </h1>
+                  {store?.store?.shipping_type !== null &&
+                    deliveryType === "Entrega a domícilio" && (
+                      <h1 className="text-lg">
+                        Taxa de entrega:{" "}
+                        {store?.store?.shipping_type === 1
+                          ? formater.format(store?.store?.shipping_taxes)
+                          : "A combinar"}
+                      </h1>
+                    )}
+                  <div className="mt-4">
+                    <h1 className="text-xl ">
+                      Valor total:{" "}
+                      <span className="font-bold text-green-secondary text-2xl">
+                        {deliveryType === "Entrega a domícilio"
+                          ? formater.format(
+                              cartTotal + store?.store?.shipping_taxes
+                            )
+                          : formater.format(cartTotal)}
+                      </span>
+                    </h1>
+                  </div>
                 </div>
 
                 <div className="mt-6 w-full">
