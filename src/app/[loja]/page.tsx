@@ -166,7 +166,7 @@ const Catalog = () => {
                   <h1 className="text-green-secondary text-3xl mb-6">
                     Produtos em destaque
                   </h1>
-                  <div className="w-full gap-x-16 gap-y-16 grid grid-cols grid-cols-1 lg:grid-cols-3 xl:grid-cols-4">
+                  <div className="w-full  gap-y-16 grid grid-cols grid-cols-2 gap-x-2 lg:gap-x-16 lg:grid-cols-3 xl:grid-cols-4">
                     {products?.map(
                       (product, index) =>
                         product.featured && (
@@ -207,7 +207,7 @@ const Catalog = () => {
             ) && (
               <>
                 <h1 className="text-green-secondary text-3xl mb-6">Produtos</h1>
-                <div className="w-full gap-x-16 gap-y-16 grid grid-cols grid-cols-1 lg:grid-cols-3 xl:grid-cols-4">
+                <div className="w-full gap-y-16 grid grid-cols grid-cols-2 gap-x-4 lg:gap-x-16 lg:grid-cols-3 xl:grid-cols-4">
                   {products
                     ?.filter((product) => !product.featured)
                     .slice(0, visibleProducts)
