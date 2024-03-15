@@ -8,6 +8,8 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import Link from "next/link";
+import { FaShoppingBag } from "react-icons/fa";
+import { Button } from "./ui/button";
 
 interface ProductCardProps {
   name: string;
@@ -72,17 +74,17 @@ const ProductCard = ({
 
   return (
     <div className="w-full h-full ">
-      <div className="relative w-full h-full rounded-xl">
+      <div className="relative w-full h-full rounded-2xl">
         <Slider {...settings}>
           {images?.map((src, index) => (
             <div
               onClick={onClick}
-              className="cursor-pointer border border-solid border-gray-200 rounded-md"
+              className="cursor-pointer border border-solid border-gray-200 rounded-2xl"
               key={index}
             >
               <div className=" relative w-full h-[350px]">
                 <Image
-                  className="w-full h-full object-cover object-center rounded-lg"
+                  className="w-full h-full object-cover object-center rounded-2xl"
                   src={src}
                   width={450}
                   height={300}
@@ -92,23 +94,19 @@ const ProductCard = ({
             </div>
           ))}
         </Slider>
-        <div className="mt-8  flex flex-col items-center w-full">
+        <div className="mt-8  flex flex-col  w-full">
           <div className="w-full">
-            <h1 className="text-2xl text-center text-gray-800 truncate">
-              {name}
-            </h1>
+            <h1 className="text-2xl text-gray-800 truncate">{name}</h1>
           </div>
           {promotionPrice && promotionPrice > 0 ? (
             <div className="flex flex-row items-center mt-2">
               <div className="flex flex-row items-center">
-                <h3 className="text-xl  text-gray-500  line-through">
-                  {formater.format(price)}
+                <h3 className="text-xl font-bold">
+                  {formater.format(promotionPrice)}
                 </h3>
               </div>
-              <h3 className="text-xl  ml-2">
-                <span className="font-bold">
-                  {formater.format(promotionPrice)}
-                </span>
+              <h3 className="text-md  text-gray-500  ml-2 line-through">
+                {formater.format(price)}
               </h3>
             </div>
           ) : (
@@ -117,12 +115,19 @@ const ProductCard = ({
             </div>
           )}
           <div className="mt-5 w-full">
-            <button
+            <Button
               onClick={onClick}
-              className="bg-green-primary w-full px-3 py-2 rounded-lg hover:opacity-70 transition-all duration-200"
+              size="lg"
+              className={`w-full`}
+              variant={"default"}
             >
-              <h1 className="text-white text-lg">Comprar</h1>
-            </button>
+              <div className="flex items-center">
+                <div className="mr-2">
+                  <FaShoppingBag size={18} />
+                </div>
+                <h1 className="text-white text-lg">Comprar</h1>
+              </div>
+            </Button>
           </div>
         </div>
       </div>

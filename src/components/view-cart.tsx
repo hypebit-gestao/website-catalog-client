@@ -79,7 +79,6 @@ const ViewCartModal = ({ isOpen, onClose }: ViewCartModalProps) => {
   const deliveryType = watch("deliveryType");
 
   const finishOrder = (data: z.infer<typeof FormSchema>) => {
-    console.log("Data: ", data);
     const numeroTelefone = `55${store?.store?.phone}`;
 
     const mensagem = `
@@ -113,8 +112,6 @@ ${items
 
     window.open(linkWhatsApp);
   };
-
-  console.log("Deliver: ", deliveryType);
 
   return (
     <Modal

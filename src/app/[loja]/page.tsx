@@ -115,7 +115,7 @@ const Catalog = () => {
   return (
     <div className=" min-h-screen ">
       {filteredCategories?.length > 0 && (
-        <div className="flex flex-row justify-center w-full h-full items-center border-b shadow-sm border-gray-200 py-5 overflow-auto xl:overflow-hidden">
+        <div className="flex flex-row justify-center w-full h-full items-center  py-5 overflow-auto xl:overflow-hidden">
           <Container>
             {loading ? (
               <Loader />
@@ -136,13 +136,16 @@ const Catalog = () => {
                     )
                   )}
                 </div>
+
                 {filteredCategories?.length > 0 && (
-                  <div
+                  <Button
                     onClick={() => removeFilters()}
-                    className="mt-8 xl:mt-0 xl:ml-auto ml-0 cursor-pointer"
+                    size="lg"
+                    className={`mt-5 lg:mt-0 w-[40%] lg:w-[15%]`}
+                    variant={"default"}
                   >
-                    <h3 className="text-red-600">Remover filtros</h3>
-                  </div>
+                    <div className="flex items-center">Remover Filtros</div>
+                  </Button>
                 )}
               </div>
             )}
@@ -150,7 +153,7 @@ const Catalog = () => {
         </div>
       )}
 
-      <div className="mt-12">
+      <div className="mt-4">
         {loading ? (
           <Loader />
         ) : (
@@ -194,7 +197,7 @@ const Catalog = () => {
           </div>
         )}
       </div>
-      <div className="mt-12">
+      <div className="mt-4">
         {loading ? (
           <Loader />
         ) : (

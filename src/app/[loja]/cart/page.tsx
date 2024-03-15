@@ -253,7 +253,7 @@ ${
 
   return (
     <Container>
-      <div className="mt-32 min-h-screen">
+      <div className="mt-4 min-h-screen">
         {totalItems > 0 ? (
           items.map((item: ProductCart | Item, index) => (
             <div key={index} className="flex flex-col">
