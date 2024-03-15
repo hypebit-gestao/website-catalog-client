@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "./ui/checkbox";
+import { useUserService } from "@/services/user.service";
 
 interface ViewCartModalProps {
   isOpen: boolean;
@@ -50,8 +51,11 @@ const FormSchema = z.object({
 
 const ViewCartModal = ({ isOpen, onClose }: ViewCartModalProps) => {
   const { items, removeItem, totalItems, cartTotal } = useCart();
+  const [loading, setLoading] = useState(false);
   const params = useParams();
+  const { loja } = params;
   const router = useRouter();
+  const userService = useUserService();
   const viewCartModal = useViewCartModal();
   const store = useStore();
   const formater = new Intl.NumberFormat("pt-BR", {
@@ -70,7 +74,12 @@ const ViewCartModal = ({ isOpen, onClose }: ViewCartModalProps) => {
     removeItem(id);
   };
 
+  const { setValue, watch } = form;
+
+  const deliveryType = watch("deliveryType");
+
   const finishOrder = (data: z.infer<typeof FormSchema>) => {
+    console.log("Data: ", data);
     const numeroTelefone = `55${store?.store?.phone}`;
 
     const mensagem = `
@@ -92,7 +101,11 @@ ${items
   .join("")}
 *Forma de pagamento*: ${data.methodPayment}
 *Tipo de entrega*: ${data.deliveryType}
-*Valor Total*: ${formater.format(Number(cartTotal))}
+*Valor Total*: ${
+      deliveryType === "Entrega a domícilio"
+        ? formater.format(cartTotal + store?.store?.shipping_taxes)
+        : formater.format(cartTotal)
+    }
 `;
 
     const mensagemURLFormatada = encodeURIComponent(mensagem);
@@ -100,6 +113,8 @@ ${items
 
     window.open(linkWhatsApp);
   };
+
+  console.log("Deliver: ", deliveryType);
 
   return (
     <Modal

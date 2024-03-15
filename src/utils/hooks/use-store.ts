@@ -1,12 +1,8 @@
+import { Store } from "@/models/store";
 import { create } from "zustand";
 
 interface useStoreProps {
-    store: {
-        phone: string;
-        name: string;
-        image_url: string;
-        email: string;
-    },
+  store: Store;
 }
 
 const useStore = create<useStoreProps>((set) => ({
@@ -15,7 +11,9 @@ const useStore = create<useStoreProps>((set) => ({
     name: "",
     image_url: "",
     email: "",
-  }
+    shipping_taxes: 0,
+    shipping_type: 0,
+  },
 }));
 
 export default useStore;
