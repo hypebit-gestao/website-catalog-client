@@ -228,8 +228,8 @@ ${
       });
     }
 
-    // setItems([]);
-    // router.push(`/${params.loja}`);
+    setItems([]);
+    router.push(`/${params.loja}`);
   };
 
   const formatMethodPayment = (method: string) => {
