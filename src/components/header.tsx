@@ -22,13 +22,13 @@ const Header = () => {
 
   return (
     <header
-      className={`h-auto border-b bg-white border-gray-200 w-full shadow-md  ${
+      className={`h-auto border-b bg-white border-gray-200 w-full   ${
         !params.loja && "hidden"
       }`}
     >
       <Container>
         <div className="flex justify-between items-center  h-20">
-          <div className=" w-full">
+          <div className="">
             <Link href={`/${params.loja}`}>
               {store?.store?.image_url ? (
                 <Image
@@ -47,17 +47,23 @@ const Header = () => {
               )}
             </Link>
           </div>
-          <div className="flex flex-row">
-            <div className="relative w-full items-center mr-5">
-              <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-primary" />
-              <input
-                className="pl-10 px-5 py-1 w-full border border-gray-200 rounded-lg placeholder:text-green-primary"
-                placeholder="Pesquisar"
-                value={search.text}
-                onChange={(e) => useSearch.setState({ text: e.target.value })}
-                type="text"
-              />
-            </div>
+
+          <div className="relative items-center w-[60%] lg:w-[40%]">
+            <FaSearch
+              size={20}
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-primary"
+            />
+            <input
+              className="pl-10 px-5 py-3 w-full border border-gray-200 rounded-lg placeholder:text-green-primary text-center"
+              placeholder="Pesquisar"
+              value={search.text}
+              onChange={(e) => useSearch.setState({ text: e.target.value })}
+              type="text"
+            />
+          </div>
+
+          <div className="flex flex-row items-center">
+            <h1 className="mr-4 font-bold hidden lg:block">Meu Carrinho</h1>
             <div
               onClick={() => router.push(`/${params.loja}/cart`)}
               className="relative "

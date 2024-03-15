@@ -16,8 +16,7 @@ import storeData from "@/utils/storeData";
 import useStore from "@/utils/hooks/use-store";
 import { Store } from "@/models/store";
 import CartWrapper from "@/providers/CartWrapper";
-import Navbar from "@/components/landing/navbar";
-import LandingFooter from "@/components/landing/footer";
+import { FaWhatsapp } from "react-icons/fa";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 export default function RootLayout({
@@ -54,7 +53,7 @@ export default function RootLayout({
       <head>
         <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
       </head>
-      <body className={`${poppins.className}`}>
+      <body className={`relative ${poppins.className}`}>
         <CartWrapper cartId={cartId}>
           <ToastProvider />
           <ViewCartModal
@@ -77,25 +76,20 @@ export default function RootLayout({
             }`}
           >
             {children}
+            {pathname !== "/" && pathname !== "/register" && (
+              <div className="fixed bottom-6 right-6">
+                <Link
+                  target="_blank"
+                  href={`https://wa.me/${store?.store?.phone}`}
+                >
+                  <div className="rounded-full bg-[#25D366] w-16 h-16 flex items-center justify-center cursor-pointer hover:bg-opacity-90">
+                    <FaWhatsapp color="#fff" size={34} />
+                  </div>
+                </Link>
+              </div>
+            )}
           </div>
           <Footer />
-          {/* {pathname === "/" && <LandingFooter />} */}
-          {/* <Link href="https://www.hypebit.com.br" target="_blank">
-            <div
-              className={`w-full bg-black flex items-center justify-center p-3 text-white cursor-pointer ${
-                pathname === "/" && "hidden"
-              }`}
-            >
-              <Image
-                className="mr-4"
-                alt="Logo da Hypebit"
-                src="/images/logo-hypebit.png"
-                width={44}
-                height={44}
-              />
-              Feito com Hypebit
-            </div>
-          </Link> */}
         </CartWrapper>
       </body>
     </html>
