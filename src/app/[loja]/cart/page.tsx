@@ -36,6 +36,7 @@ import { User } from "@/models/user";
 import { useCepService } from "@/services/cep.service";
 import toast from "react-hot-toast";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 interface ProductCart {
   id: string;
@@ -302,10 +303,19 @@ ${
             </div>
           ))
         ) : (
-          <div>
+          <div className="flex flex-col items-center justify-center mt-8 ">
             <h1 className="text-center text-gray-500 text-xl">
               Seu carrinho está vazio
             </h1>
+            <div className="mt-4 w-[60%] lg:w-[30%]">
+              <Button
+                className="w-full"
+                size={"xl"}
+                onClick={() => router.push(`/${params.loja}`)}
+              >
+                Voltar para o início
+              </Button>
+            </div>
           </div>
         )}
         {totalItems > 0 && (
