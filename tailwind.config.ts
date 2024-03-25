@@ -20,7 +20,7 @@ const config = {
         "3xl": "1600px",
       },
       colors: {
-        "green-primary": "#1e3222",
+        "green-primary": "#2c6e49",
         "green-secondary": "#1e3222",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

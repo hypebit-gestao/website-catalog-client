@@ -4,65 +4,58 @@ import { Button } from "../ui/button";
 import { FaCircleCheck } from "react-icons/fa6";
 import img from "../../../public/images/cellphone.png";
 import img_full from "../../../public/images/full.png";
+import Link from "next/link";
+import { Link as LinkScroll } from "react-scroll";
 
 const Hero = () => {
   return (
-    <section className="min-h-screen h-full w-full  flex flex-col">
-      <div className=" px-12 2xl:px-44 flex flex-row items-center justify-center 2xl:justify-start min-h-screen ">
-        <div className="max-w-full 2xl:max-w-[50%] h-full  ">
-          <div className="max-w-full 2xl:max-w-[90%]">
-            <h1 className="text-[40px] 2xl:text-[60px] text-center 2xl:text-start">
-              Criar seu{" "}
-              <span className="text-green-primary font-bold">
-                catálogo digital
-              </span>{" "}
-              é super simples!
+    <section
+      id="hero"
+      className="min-h-screen h-full w-full flex flex-col bg-white "
+    >
+      <div className="px-12 2xl:px-44 flex flex-row items-center justify-center 2xl:justify-start min-h-screen -mt-12">
+        <div className="h-full w-full 2xl:w-[60%]">
+          <div className="w-full 2xl:w-[90%]">
+            <h1 className="text-[60px] 2xl:text-[70px] text-center 2xl:text-start">
+              Vender seus{" "}
+              <span className="text-green-primary font-bold"> produtos</span>{" "}
+              nunca foi tão fácil
             </h1>
-            <div className="mt-12">
-              <div className="flex flex-col">
-                <div className="flex flex-row items-center justify-center 2xl:justify-start">
-                  <FaCircleCheck size={32} className="text-green-primary" />
-                  <h1 className="text-2xl ml-4 ">Fique livre de taxas</h1>
-                </div>
-                <div className="flex flex-row items-center justify-center 2xl:justify-start mt-8">
-                  <FaCircleCheck size={32} className="text-green-primary" />
-                  <h1 className="text-2xl ml-4 ">
-                    Controle simplificado de suas vendas
-                  </h1>
-                </div>
-                <div className="flex flex-row items-center mt-8 justify-center 2xl:justify-start">
-                  <FaCircleCheck size={32} className="text-green-primary" />
-                  <h1 className="text-2xl ml-4 ">
-                    Modernização do seu negócio
-                  </h1>
-                </div>
-              </div>
+            <div className="w-full 2xl:w-[80%]">
+              <p className="mt-8 text-xl text-center 2xl:text-start">
+                Receba os pedidos da sua loja no WhatsApp e construa uma relação
+                mais humanizada com seus clientes. 😍
+              </p>
             </div>
-            <p className="mt-12 text-xl text-center 2xl:text-start">
-              Receba os pedidos da sua loja no WhatsApp e construa uma relação
-              mais humanizada com seus clientes. 😍
-            </p>
-            <div className="mt-12 flex flex-row items-center justify-center 2xl:justify-start">
-              <Button
-                size="2xl"
-                className=" text-xl mr-4"
-                type="submit"
-                variant={"default"}
+            <div className=" w-full mt-12 flex flex-row items-center justify-center 2xl:justify-start">
+              <LinkScroll
+                to="plans"
+                spy={true}
+                smooth={true}
+                offset={0}
+                duration={700}
               >
-                Comecar agora
-              </Button>
-              <Button
+                <Button
+                  size="2xl"
+                  className=" text-xl bg-green-primary"
+                  type="submit"
+                  variant={"default"}
+                >
+                  Comecar agora
+                </Button>
+              </LinkScroll>
+              {/* <Button
                 size="2xl"
                 className=" text-xl"
                 type="submit"
                 variant={"outline"}
               >
                 Como funciona
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
-        <div className="w-[50%] hidden h-full 2xl:flex justify-center ml-24 2xl:ml-0">
+        <div className="w-[40%] hidden h-full 2xl:flex justify-center ml-24 2xl:ml-0">
           <div className="relative shadow-lg">
             <Image
               className=""
@@ -71,7 +64,7 @@ const Hero = () => {
               width={1000}
               height={1000}
             />
-            <div className="absolute right-12 2xl:-top-24 h-[300px] w-[300px] 2xl:w-[380px] 2xl:h-[380px] 3xl:w-[400px] 3xl:h-[400px]  ">
+            <div className="absolute right-12 2xl:-top-24 h-[300px] w-[300px]   ">
               <Image
                 className=""
                 src={img}
