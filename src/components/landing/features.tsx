@@ -12,7 +12,7 @@ const Features = () => {
   return (
     <section
       id="features"
-      className="min-h-screen w-full flex flex-col py-32 bg-[#F9F9F9]"
+      className="min-h-screen w-full flex flex-col py-24 bg-[#F9F9F9]"
     >
       <div className=" px-8 2xl:px-44 mt-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-8 w-full">

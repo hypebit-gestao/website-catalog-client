@@ -41,7 +41,7 @@ const FaqItem = ({ name, description }: FaqItemProps) => {
               leaveFrom="transform scale-100 opacity-100"
               leaveTo="transform scale-95 opacity-0"
             >
-              <Disclosure.Panel className="m-auto relative flex flex-col  bg-gray-200  z-0 -top-6 w-[90%] 2xl:w-[70%] rounded-lg">
+              <Disclosure.Panel className="m-auto relative flex flex-col  bg-gray-200  z-0 -top-6 w-full md:w-[90%] 2xl:w-[70%] rounded-lg">
                 <div
                   className={`px-6 pt-10 pb-6 font-semibold ${poppinsFont.className}`}
                 >
