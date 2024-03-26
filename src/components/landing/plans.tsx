@@ -8,7 +8,7 @@ const Plans = () => {
   return (
     <section
       id="plans"
-      className="min-h-screen w-full flex flex-col items-center py-12 px-12 bg-white"
+      className="min-h-screen w-full flex flex-col items-center py-12 px-8 bg-white"
     >
       <div className="">
         <h3 className="text-green-primary text-4xl 2xl:text-6xl">Planos</h3>

@@ -18,7 +18,7 @@ const FaqItem = ({ name, description }: FaqItemProps) => {
         {({ open }) => (
           <>
             <Disclosure.Button
-              className={`w-[90%] 2xl:w-[70%] relative h-auto py-4 m-auto flex flex-row bg-green-primary  items-center z-10 ${
+              className={`w-full md:w-[90%] 2xl:w-[70%] relative h-auto py-4 m-auto flex flex-row bg-green-primary  items-center z-10 ${
                 open ? "rounded-t-lg" : "rounded-lg"
               }`}
             >

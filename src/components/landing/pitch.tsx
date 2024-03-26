@@ -7,7 +7,7 @@ import { Link as LinkScroll } from "react-scroll";
 const Pitch = () => {
   return (
     <section className="w-full flex flex-col pt-6 bg-[#F9F9F9]">
-      <div className=" px-12 2xl:px-44 mt-6">
+      <div className=" px-8 2xl:px-44 mt-6">
         <div className="h-full w-full 2xl:w-[60%]">
           <div className="w-full 2xl:w-[90%]">
             <h1 className="text-[40px] 2xl:text-[50px] text-center  2xl:text-start text-green-secondary">
