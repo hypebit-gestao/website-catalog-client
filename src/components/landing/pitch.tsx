@@ -6,43 +6,60 @@ import { Link as LinkScroll } from "react-scroll";
 
 const Pitch = () => {
   return (
-    <section className="w-full flex flex-col py-12 bg-[#F9F9F9]">
+    <section className="w-full flex flex-col pt-6 bg-[#F9F9F9]">
       <div className=" px-12 2xl:px-44 mt-6">
         <div className="h-full w-full 2xl:w-[60%]">
           <div className="w-full 2xl:w-[90%]">
-            <h1 className="text-[40px] 2xl:text-[50px] text-center 2xl:text-start text-green-secondary">
+            <h1 className="text-[40px] 2xl:text-[50px] text-center  2xl:text-start text-green-secondary">
               Vender com o Catálogo Place é muito mais{" "}
               <span className="text-green-primary font-bold">tranquilo</span>
             </h1>
             <div className="mt-8">
-              <div className="flex flex-col">
-                <div className="flex flex-row items-center justify-center 2xl:justify-start">
-                  <FaCircleCheck size={32} className="text-green-primary" />
-                  <h1 className="text-2xl ml-4 ">
-                    Livre-se do uso de catálogos via PDF
-                  </h1>
+              <div className="flex flex-col  ">
+                <div className="flex flex-row items-center  2xl:justify-start">
+                  <div>
+                    <FaCircleCheck size={32} className="text-green-primary" />
+                  </div>
+                  <div>
+                    <h1 className="text-2xl ml-4 ">
+                      Livre-se do uso de catálogos via PDF
+                    </h1>
+                  </div>
                 </div>
-                <div className="flex flex-row items-center justify-center 2xl:justify-start mt-8">
-                  <FaCircleCheck size={32} className="text-green-primary" />
-                  <h1 className="text-2xl ml-4 ">Fique livre de taxas</h1>
+                <div className="flex flex-row items-center  2xl:justify-start mt-8 ">
+                  <div>
+                    <FaCircleCheck size={32} className="text-green-primary" />
+                  </div>
+                  <div>
+                    <h1 className="text-2xl ml-4 ">Fique livre de taxas</h1>
+                  </div>
                 </div>
-                <div className="flex flex-row items-center justify-center 2xl:justify-start mt-8">
-                  <FaCircleCheck size={32} className="text-green-primary" />
-                  <h1 className="text-2xl ml-4 ">
-                    Controle simplificado de suas vendas
-                  </h1>
+                <div className="flex flex-row items-center  2xl:justify-start mt-8">
+                  <div>
+                    <FaCircleCheck size={32} className="text-green-primary" />
+                  </div>
+                  <div>
+                    <h1 className="text-2xl ml-4 ">
+                      Controle simplificado de suas vendas
+                    </h1>
+                  </div>
                 </div>
-                <div className="flex flex-row items-center mt-8 justify-center 2xl:justify-start">
-                  <FaCircleCheck size={32} className="text-green-primary" />
-                  <h1 className="text-2xl ml-4 ">
-                    Modernização do seu negócio
-                  </h1>
+                <div className="flex flex-row items-center mt-8  2xl:justify-start">
+                  <div>
+                    <FaCircleCheck size={32} className="text-green-primary" />
+                  </div>
+                  <div>
+                    <h1 className="text-2xl ml-4 ">
+                      Modernização do seu negócio
+                    </h1>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="mt-12">
+          <div className="mt-12 flex 2xl:justify-start  w-full">
             <LinkScroll
+              className="w-full"
               to="plans"
               spy={true}
               smooth={true}
@@ -51,7 +68,7 @@ const Pitch = () => {
             >
               <Button
                 size="2xl"
-                className=" text-xl bg-green-primary"
+                className=" text-xl bg-green-primary w-full"
                 type="submit"
                 variant={"default"}
               >

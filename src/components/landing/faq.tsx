@@ -12,7 +12,9 @@ const Faq = () => {
       className=" w-full flex flex-col items-center pt-12 pb-20 2xl:pb-32 bg-[#F9F9F9] "
     >
       <div className="">
-        <h3 className="text-green-primary text-6xl">Dúvidas frequentes</h3>
+        <h3 className="text-green-primary text-4xl 2xl:text-6xl">
+          Dúvidas frequentes
+        </h3>
       </div>
 
       <div className="mt-12  w-full">

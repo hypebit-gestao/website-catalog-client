@@ -13,10 +13,10 @@ const Hero = () => {
       id="hero"
       className="min-h-screen h-full w-full flex flex-col bg-white "
     >
-      <div className="px-12 2xl:px-44 flex flex-row items-center justify-center 2xl:justify-start min-h-screen -mt-12">
+      <div className="px-12 2xl:px-44 flex flex-row items-center justify-center 2xl:justify-start min-h-screen 2xl:-mt-12">
         <div className="h-full w-full 2xl:w-[60%]">
           <div className="w-full 2xl:w-[90%]">
-            <h1 className="text-[60px] 2xl:text-[70px] text-center 2xl:text-start">
+            <h1 className="text-[50px] 2xl:text-[70px] text-center 2xl:text-start">
               Vender seus{" "}
               <span className="text-green-primary font-bold"> produtos</span>{" "}
               nunca foi tão fácil

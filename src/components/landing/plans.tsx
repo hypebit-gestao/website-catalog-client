@@ -8,10 +8,10 @@ const Plans = () => {
   return (
     <section
       id="plans"
-      className="min-h-screen w-full flex flex-col items-center py-12 bg-white"
+      className="min-h-screen w-full flex flex-col items-center py-12 px-12 bg-white"
     >
       <div className="">
-        <h3 className="text-green-primary text-6xl">Planos</h3>
+        <h3 className="text-green-primary text-4xl 2xl:text-6xl">Planos</h3>
       </div>
       <div className="grid grid-cols-1 2xl:grid-cols-2 gap-x-12 gap-y-3">
         <div className="p-8 rounded-xl border border-gray-200 mt-12 ">
@@ -63,11 +63,17 @@ const Plans = () => {
                 <FaCircleXmark size={24} className="text-red-500" />
                 <h1 className="text-xl ml-4">Cupons de desconto</h1>
               </li>
-              <li className="flex flex-row items-center mb-4">
-                <FaCircleXmark size={24} className="text-red-500" />
-                <h1 className="text-xl ml-4">
-                  Integração com Google Analytics e Pixel
-                </h1>
+              <li className="">
+                <div className="flex flex-row items-center">
+                  <div>
+                    <FaCircleXmark size={24} className="text-red-500" />
+                  </div>
+                  <div>
+                    <h1 className="text-xl ml-4">
+                      Integração com Google Analytics e Pixel
+                    </h1>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
@@ -135,12 +141,17 @@ const Plans = () => {
                 <FaCircleCheck size={24} className="text-green-primary" />
                 <h1 className="text-xl ml-4">Cupons de desconto</h1>
               </li>
-              <li className="flex flex-row items-center mb-4">
-                <FaCircleCheck size={24} className="text-green-primary" />
-                <h1 className="text-xl ml-4">
-                  {" "}
-                  Integração com Google Analytics e Pixel
-                </h1>
+              <li className="">
+                <div className="flex flex-row items-center">
+                  <div>
+                    <FaCircleCheck size={24} className="text-green-primary" />
+                  </div>
+                  <div>
+                    <h1 className="text-xl ml-4">
+                      Integração com Google Analytics e Pixel
+                    </h1>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
