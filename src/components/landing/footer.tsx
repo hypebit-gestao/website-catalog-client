@@ -34,11 +34,11 @@ const Footer = () => {
                 />
               </Link>
             </div>
-            <div>
+            {/* <div>
               <h1 className={`text-green-primary text-4xl uppercase `}>
                 Catálogo Place
               </h1>
-            </div>
+            </div> */}
           </div>
           <div className="mt-6 w-full">
             <p className="text-green-secondary  text-xl">

@@ -5,6 +5,7 @@ import React from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import { HiChevronDown, HiChevronRight } from "react-icons/hi";
 const poppinsFont = Poppins({ subsets: ["latin"], weight: ["400"] });
+import { motion } from "framer-motion";
 
 interface FaqItemProps {
   name: string;
@@ -13,7 +14,13 @@ interface FaqItemProps {
 
 const FaqItem = ({ name, description }: FaqItemProps) => {
   return (
-    <div className="w-full mb-6 md:mb-8 ">
+    <motion.div
+      initial={{ x: -100, opacity: 0 }}
+      whileInView={{ x: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="w-full mb-6 md:mb-8 "
+    >
       <Disclosure>
         {({ open }) => (
           <>
@@ -52,7 +59,7 @@ const FaqItem = ({ name, description }: FaqItemProps) => {
           </>
         )}
       </Disclosure>
-    </div>
+    </motion.div>
   );
 };
 

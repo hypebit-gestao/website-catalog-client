@@ -4,6 +4,7 @@ import { FaCircleCheck, FaCircleXmark } from "react-icons/fa6";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import FaqItem from "../faq-item";
+import { motion } from "framer-motion";
 
 const Faq = () => {
   return (

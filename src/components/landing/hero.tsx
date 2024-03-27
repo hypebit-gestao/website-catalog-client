@@ -6,6 +6,7 @@ import img from "../../../public/images/cellphone.png";
 import img_full from "../../../public/images/full.png";
 import Link from "next/link";
 import { Link as LinkScroll } from "react-scroll";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
@@ -16,35 +17,53 @@ const Hero = () => {
       <div className="px-8 2xl:px-44 flex flex-row items-center justify-center 2xl:justify-start min-h-screen -mt-12">
         <div className="h-full w-full 2xl:w-[60%]">
           <div className="w-full 2xl:w-[90%]">
-            <h1 className="text-[50px] 2xl:text-[70px] text-center 2xl:text-start">
-              Vender seus{" "}
-              <span className="text-green-primary font-bold"> produtos</span>{" "}
-              nunca foi tão fácil
-            </h1>
-            <div className="w-full 2xl:w-[80%]">
-              <p className="mt-8 text-xl text-center 2xl:text-start">
-                Receba os pedidos da sua loja no WhatsApp e construa uma relação
-                mais humanizada com seus clientes. 😍
-              </p>
-            </div>
-            <div className=" w-full mt-12 flex flex-row items-center justify-center 2xl:justify-start">
-              <LinkScroll
-                to="plans"
-                spy={true}
-                smooth={true}
-                offset={0}
-                duration={700}
-              >
-                <Button
-                  size="2xl"
-                  className=" text-xl bg-green-primary"
-                  type="submit"
-                  variant={"default"}
+            <motion.div
+              initial={{ x: -100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ ease: "easeOut", duration: 0.5 }}
+            >
+              <h1 className="text-[50px] 2xl:text-[70px] text-center 2xl:text-start">
+                Vender seus{" "}
+                <span className="text-green-primary font-bold"> produtos</span>{" "}
+                nunca foi tão fácil
+              </h1>
+            </motion.div>
+            <motion.div
+              initial={{ x: 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ ease: "easeOut", duration: 0.5 }}
+            >
+              <div className="w-full 2xl:w-[80%]">
+                <p className="mt-8 text-xl text-center 2xl:text-start">
+                  Receba os pedidos da sua loja no WhatsApp e construa uma
+                  relação mais humanizada com seus clientes. 😍
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ ease: "easeOut", duration: 0.5 }}
+            >
+              <div className=" w-full mt-12 flex flex-row items-center justify-center 2xl:justify-start">
+                <LinkScroll
+                  to="plans"
+                  spy={true}
+                  smooth={true}
+                  offset={0}
+                  duration={700}
                 >
-                  Comecar agora
-                </Button>
-              </LinkScroll>
-              {/* <Button
+                  <Button
+                    size="2xl"
+                    className=" text-xl bg-green-primary"
+                    type="submit"
+                    variant={"default"}
+                  >
+                    Comecar agora
+                  </Button>
+                </LinkScroll>
+                {/* <Button
                 size="2xl"
                 className=" text-xl"
                 type="submit"
@@ -52,11 +71,16 @@ const Hero = () => {
               >
                 Como funciona
               </Button> */}
-            </div>
+              </div>
+            </motion.div>
           </div>
         </div>
         <div className="w-[40%] hidden h-full 2xl:flex justify-center ml-24 2xl:ml-0">
-          <div className="relative shadow-lg">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="relative shadow-lg"
+          >
             <Image
               className=""
               src={img_full}
@@ -73,7 +97,7 @@ const Hero = () => {
                 height={600}
               />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

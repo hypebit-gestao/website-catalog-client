@@ -3,6 +3,7 @@ import { IoClose } from "react-icons/io5";
 import { FaCircleCheck, FaCircleXmark } from "react-icons/fa6";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const Plans = () => {
   return (
@@ -14,7 +15,13 @@ const Plans = () => {
         <h3 className="text-green-primary text-4xl 2xl:text-6xl">Planos</h3>
       </div>
       <div className="grid grid-cols-1 2xl:grid-cols-2 gap-x-12 gap-y-3">
-        <div className="p-8 rounded-xl border border-gray-200 mt-12 ">
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="p-8 rounded-xl border border-gray-200 mt-12 "
+        >
           <h1 className="uppercase text-xl text-center">Plano</h1>
           <h1 className="text-4xl uppercase text-green-primary text-center">
             Standard
@@ -91,8 +98,14 @@ const Plans = () => {
               </Button>
             </div>
           </Link>
-        </div>
-        <div className="p-8 rounded-xl border border-gray-200 mt-12 ">
+        </motion.div>
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="p-8 rounded-xl border border-gray-200 mt-12 "
+        >
           <h1 className="uppercase text-xl text-center">Plano</h1>
           <h1 className="text-4xl uppercase text-green-primary text-center">
             Professional
@@ -170,7 +183,7 @@ const Plans = () => {
               </Button>
             </div>
           </Link>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
