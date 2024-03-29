@@ -13,7 +13,7 @@ const Features = () => {
   return (
     <section
       id="features"
-      className="min-h-screen w-full flex flex-col py-24 bg-[#F9F9F9]"
+      className="min-h-screen w-full flex flex-col pt-36 pb-24 bg-[#F9F9F9]"
     >
       <motion.div
         initial={{ y: 100, opacity: 0 }}

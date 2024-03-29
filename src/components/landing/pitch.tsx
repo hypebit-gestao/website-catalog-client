@@ -9,7 +9,7 @@ const Pitch = () => {
   return (
     <section
       id="pitch"
-      className="w-full h-full   flex flex-col items-center pt-6 bg-[#F9F9F9]"
+      className="w-full h-full  flex flex-col  pt-6 bg-[#F9F9F9]"
     >
       <motion.div
         initial={{ y: 100, opacity: 0 }}
@@ -142,7 +142,7 @@ const Pitch = () => {
           </motion.div>
         </div>
 
-        <div className="w-[550px] absolute -bottom-20 right-20  hidden  2xl:flex ">
+        <div className="w-[500px] 2xl:w-[550px] absolute -bottom-20 right-20  hidden  2xl:flex ">
           <Image
             className=""
             src={"/images/img-pitch.png"}
