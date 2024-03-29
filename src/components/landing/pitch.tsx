@@ -9,16 +9,16 @@ const Pitch = () => {
   return (
     <section
       id="pitch"
-      className="w-full h-full min-h-screen flex flex-col items-center pt-6 bg-[#F9F9F9]"
+      className="w-full h-full   flex flex-col items-center pt-6 bg-[#F9F9F9]"
     >
       <motion.div
         initial={{ y: 100, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className=" px-8 2xl:px-44 mt-6"
+        className="flex flex-row items-center px-8 2xl:px-44 relative "
       >
-        <div className="h-full w-full 2xl:w-[60%]">
+        <div className="h-full w-full 2xl:w-[80%]">
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
@@ -142,25 +142,14 @@ const Pitch = () => {
           </motion.div>
         </div>
 
-        <div className="w-[40%] hidden h-full 2xl:flex justify-center ml-24 2xl:ml-0">
-          <div className="relative shadow-lg">
-            {/* <Image
-              className=""
-              src={img_full}
-              alt="Picture of the author"
-              width={1000}
-              height={1000}
-            /> */}
-            <div className="absolute right-12 2xl:-top-24 h-[300px] w-[300px]   ">
-              {/* <Image
-                className=""
-                src={img}
-                alt="Picture of the author"
-                width={600}
-                height={600}
-              /> */}
-            </div>
-          </div>
+        <div className="w-[550px] absolute -bottom-20 right-20  hidden  2xl:flex ">
+          <Image
+            className=""
+            src={"/images/img-pitch.png"}
+            alt="Picture of the author"
+            width={1000}
+            height={1000}
+          />
         </div>
       </motion.div>
     </section>
