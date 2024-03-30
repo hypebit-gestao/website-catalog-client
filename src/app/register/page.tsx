@@ -73,6 +73,8 @@ const Register = () => {
     },
   ];
 
+  console.log("PlanId: ", planId);
+
   const primaryLabelButton = useMemo(() => {
     if (step === REGISTER_STORE_STEPS.BASIC_INFORMATION) {
       return "Cancelar";
@@ -285,6 +287,7 @@ const Register = () => {
       ...formData,
       ...data,
     });
+    console.log("Data: ", formData);
 
     if (step !== REGISTER_STORE_STEPS.ATTACHMENT) {
       setLoading(false);
@@ -323,6 +326,8 @@ const Register = () => {
                     address_id: addressResponse.id,
                     user_type: 1,
                     status: "ACTIVE",
+                    shipping_taxes: null,
+                    shipping_type: null,
                   })
                   .then((res) => {
                     setLoading(false);
@@ -350,6 +355,8 @@ const Register = () => {
               address_id: addressResponse.id,
               user_type: 1,
               status: "ACTIVE",
+              shipping_taxes: null,
+              shipping_type: null,
             })
             .then((res) => {
               setLoading(false);
