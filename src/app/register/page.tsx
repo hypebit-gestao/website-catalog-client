@@ -44,6 +44,7 @@ const Register = () => {
   const userService = useUserService();
   const url = useSearchParams();
   const customerId = url.get("customerId");
+  const planId = url.get("planId");
   const router = useRouter();
   const [step, setStep] = useState(REGISTER_STORE_STEPS.BASIC_INFORMATION);
   const [formData, setFormData] = useState<z.infer<typeof formSchema>>(
@@ -317,6 +318,7 @@ const Register = () => {
                     password: formData.password,
                     person_link: formData.person_link,
                     payer_id: customerId,
+                    plan_id: planId,
                     image_url: res[0].imageUrl,
                     address_id: addressResponse.id,
                     user_type: 1,
@@ -343,6 +345,7 @@ const Register = () => {
               password: formData.password,
               person_link: formData.person_link,
               payer_id: customerId,
+              plan_id: planId,
               image_url: null,
               address_id: addressResponse.id,
               user_type: 1,
