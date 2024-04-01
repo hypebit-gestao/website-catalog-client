@@ -52,24 +52,24 @@ const Plans = () => {
                 <FaCircleCheck size={24} className="text-green-primary" />
                 <h1 className="text-xl ml-4">Configuração de frete</h1>
               </li>
-              <li className="flex flex-row items-center mb-4">
+              {/* <li className="flex flex-row items-center mb-4">
                 <FaCircleCheck size={24} className="text-green-primary" />
                 <h1 className="text-xl ml-4">Personalização da loja</h1>
-              </li>
-              <li className="flex flex-row items-center mb-4">
+              </li> */}
+              {/* <li className="flex flex-row items-center mb-4">
                 <div>
                   <FaCircleCheck size={24} className="text-green-primary" />
                 </div>
                 <h1 className="text-xl ml-4">Variações de produtos</h1>
-              </li>
+              </li> */}
               <li className="flex flex-row items-center mb-4">
                 <FaCircleCheck size={24} className="text-green-primary" />
                 <h1 className="text-xl ml-4">Suporte no Whatsapp</h1>
               </li>
-              <li className="flex flex-row items-center mb-4">
+              {/* <li className="flex flex-row items-center mb-4">
                 <FaCircleXmark size={24} className="text-red-500" />
                 <h1 className="text-xl ml-4">Cupons de desconto</h1>
-              </li>
+              </li> */}
               <li className="">
                 <div className="flex flex-row items-center">
                   <div>
@@ -136,24 +136,24 @@ const Plans = () => {
                 <FaCircleCheck size={24} className="text-green-primary" />
                 <h1 className="text-xl ml-4">Configuração de frete</h1>
               </li>
-              <li className="flex flex-row items-center mb-4">
+              {/* <li className="flex flex-row items-center mb-4">
                 <FaCircleCheck size={24} className="text-green-primary" />
                 <h1 className="text-xl ml-4">Personalização da loja</h1>
-              </li>
-              <li className="flex flex-row items-center mb-4">
+              </li> */}
+              {/* <li className="flex flex-row items-center mb-4">
                 <div>
                   <FaCircleCheck size={24} className="text-green-primary" />
                 </div>
                 <h1 className="text-xl ml-4">Variações de produtos</h1>
-              </li>
+              </li> */}
               <li className="flex flex-row items-center mb-4">
                 <FaCircleCheck size={24} className="text-green-primary" />
                 <h1 className="text-xl ml-4">Suporte no Whatsapp</h1>
               </li>
-              <li className="flex flex-row items-center mb-4">
+              {/* <li className="flex flex-row items-center mb-4">
                 <FaCircleCheck size={24} className="text-green-primary" />
                 <h1 className="text-xl ml-4">Cupons de desconto</h1>
-              </li>
+              </li> */}
               <li className="">
                 <div className="flex flex-row items-center">
                   <div>
