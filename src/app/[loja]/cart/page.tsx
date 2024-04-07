@@ -209,7 +209,7 @@ ${
 `;
 
     const mensagemURLFormatada = encodeURIComponent(mensagem);
-    const linkWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTelefone}&text=${mensagemURLFormatada}`;
+    const linkWhatsApp = `https://web.whatsapp.com/send?phone=${numeroTelefone}&text=${mensagemURLFormatada}`;
 
     window.open(linkWhatsApp);
 
