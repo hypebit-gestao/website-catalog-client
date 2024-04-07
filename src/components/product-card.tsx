@@ -82,12 +82,12 @@ const ProductCard = ({
               className="cursor-pointer border border-solid border-gray-200 rounded-2xl"
               key={index}
             >
-              <div className="relative w-full h-[250px] lg:h-[350px]">
+              <div className="relative w-full h-[250px] lg:h-[400px]">
                 <Image
-                  className="w-full h-full object-cover object-center rounded-2xl"
+                  className="w-full h-full object-cover  rounded-2xl"
                   src={src}
                   width={450}
-                  height={300}
+                  height={400}
                   alt={`Imagem Produto ${index + 1}`}
                 />
               </div>
