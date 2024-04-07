@@ -209,9 +209,27 @@ ${
 `;
 
     const mensagemURLFormatada = encodeURIComponent(mensagem);
-    const linkWhatsApp = `https://web.whatsapp.com/send?phone=${numeroTelefone}&text=${mensagemURLFormatada}`;
+    // Função para verificar se o usuário está em um dispositivo móvel
+    function isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+    }
 
-    window.open(linkWhatsApp);
+    // URL para WhatsApp Web
+    const linkWhatsAppWeb = `https://web.whatsapp.com/send?phone=${numeroTelefone}&text=${mensagemURLFormatada}`;
+
+    // URL para o aplicativo WhatsApp
+    const linkWhatsAppApp = `whatsapp://send?phone=${numeroTelefone}&text=${mensagemURLFormatada}`;
+
+    // Verifica se o usuário está em um dispositivo móvel
+    if (isMobileDevice()) {
+      // Se estiver em um dispositivo móvel, redireciona para o link do aplicativo WhatsApp
+      window.location.href = linkWhatsAppApp;
+    } else {
+      // Caso contrário, redireciona para o WhatsApp Web
+      window.location.href = linkWhatsAppWeb;
+    }
 
     const orderResponse = await orderService.POST({
       user_id: user?.id,
