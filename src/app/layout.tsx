@@ -48,6 +48,8 @@ export default function RootLayout({
     }
   }, [params]);
 
+  console.log(store?.store);
+
   return (
     <html lang="en">
       <head>
@@ -89,7 +91,7 @@ export default function RootLayout({
               </div>
             )}
           </div>
-          <Footer />
+          <Footer background={store?.store?.background_color} />
         </CartWrapper>
       </body>
     </html>

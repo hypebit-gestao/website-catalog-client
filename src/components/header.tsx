@@ -50,11 +50,18 @@ const Header = () => {
 
           <div className="relative items-center w-[60%] lg:w-[40%]">
             <FaSearch
+              style={{
+                color:
+                  store?.store?.background_color !== null
+                    ? `${store?.store?.background_color}`
+                    : "#1e3222",
+              }}
               size={20}
               className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-primary"
             />
             <input
-              className="pl-10 px-5 py-3 w-full border border-gray-200 rounded-lg placeholder:text-green-primary text-center"
+              style={{}}
+              className="pl-10 px-5 py-3 w-full border border-gray-200 rounded-lg  text-center"
               placeholder="Pesquisar"
               value={search.text}
               onChange={(e) => useSearch.setState({ text: e.target.value })}
@@ -68,11 +75,28 @@ const Header = () => {
               onClick={() => router.push(`/${params.loja}/cart`)}
               className="relative "
             >
-              <div className="bg-green-secondary cursor-pointer rounded-full flex justify-center items-center w-5 h-5 absolute top-0 -right-3 text-center z-[99999] text-sm text-white">
+              <div
+                style={{
+                  backgroundColor:
+                    store?.store?.background_color !== null
+                      ? `${store?.store?.background_color}`
+                      : "#1e3222",
+                }}
+                className="bg-green-secondary cursor-pointer rounded-full flex justify-center items-center w-5 h-5 absolute top-0 -right-3 text-center z-[99999] text-sm text-white"
+              >
                 {totalUniqueItems}
               </div>
               <div className="cursor-pointer">
-                <FaShoppingCart className="text-green-primary" size={28} />
+                <FaShoppingCart
+                  style={{
+                    color:
+                      store?.store?.background_color !== null
+                        ? `${store?.store?.background_color}`
+                        : "#1e3222",
+                  }}
+                  className="text-green-primary"
+                  size={28}
+                />
               </div>
             </div>
           </div>

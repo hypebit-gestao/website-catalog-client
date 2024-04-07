@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { IoAdd, IoRemove } from "react-icons/io5";
 import { useCart } from "react-use-cart";
 import Loader from "@/components/loader";
+import useStore from "@/utils/hooks/use-store";
 
 const ProductPage = () => {
   const productService = useProductService();
@@ -22,6 +23,7 @@ const ProductPage = () => {
   const viewCartModal = useViewCartModal();
   const router = useRouter();
   const { addItem, items, removeItem } = useCart();
+  const store = useStore();
 
   const formater = new Intl.NumberFormat("pt-BR", {
     style: "currency",
@@ -117,6 +119,12 @@ const ProductPage = () => {
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mt-6">
                   <div className="flex ">
                     <div
+                      style={{
+                        backgroundColor:
+                          store?.store?.background_color !== null
+                            ? `${store?.store?.background_color}`
+                            : "#1e3222",
+                      }}
                       onClick={() => handleRemove()}
                       className="rounded-full bg-green-primary p-3 mr-5 cursor-pointer"
                     >
@@ -129,6 +137,12 @@ const ProductPage = () => {
                       type="number"
                     />
                     <div
+                      style={{
+                        backgroundColor:
+                          store?.store?.background_color !== null
+                            ? `${store?.store?.background_color}`
+                            : "#1e3222",
+                      }}
                       onClick={() => handleAdd()}
                       className="rounded-full bg-green-primary p-3 ml-5 cursor-pointer"
                     >
@@ -136,7 +150,7 @@ const ProductPage = () => {
                     </div>
                   </div>
                   <div className="mt-6 lg:mt-0 lg:ml-12">
-                    <h1 className="text-green-secondary font-bold text-3xl">
+                    <h1 className="text-black font-bold text-3xl">
                       {formater.format(
                         Number(product?.price && product?.price * quantity)
                       )}
@@ -151,12 +165,28 @@ const ProductPage = () => {
                 </div>
                 <div>
                   <button
+                    style={{
+                      backgroundColor:
+                        store?.store?.background_color !== null
+                          ? `${store?.store?.background_color}`
+                          : "#1e3222",
+                    }}
                     onClick={() => addToCart(quantity)}
                     className="bg-green-primary w-full py-2 rounded-lg text-white text-xl"
                   >
                     Adicionar ao carrinho
                   </button>
                   <button
+                    style={{
+                      borderColor:
+                        store?.store?.background_color !== null
+                          ? `${store?.store?.background_color}`
+                          : "#1e3222",
+                      color:
+                        store?.store?.background_color !== null
+                          ? `${store?.store?.background_color}`
+                          : "#1e3222",
+                    }}
                     onClick={() => router.back()}
                     className="mt-5 border border-solid border-green-primary w-full py-2 rounded-lg text-green-primary text-xl"
                   >

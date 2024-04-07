@@ -6,4 +6,5 @@ export interface Store {
   email: string;
   shipping_taxes: number;
   shipping_type: number;
+  background_color: string;
 }
