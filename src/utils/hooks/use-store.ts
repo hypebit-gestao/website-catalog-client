@@ -13,6 +13,7 @@ const useStore = create<useStoreProps>((set) => ({
     email: "",
     shipping_taxes: 0,
     shipping_type: 0,
+    background_color: "",
   },
 }));
 

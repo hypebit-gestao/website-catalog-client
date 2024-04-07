@@ -8,12 +8,19 @@ import React from "react";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
 
-const Footer = () => {
+interface FooterProps {
+  background: string;
+}
+
+const Footer = ({ background }: FooterProps) => {
   const params = useParams();
   const store = useStore();
   return (
     <div
-      className={`w-full bg-green-secondary py-24 px-4 lg:py-24 lg:px-24 mt-24  ${
+      style={{
+        backgroundColor: background !== null ? `${background}` : "#1e3222",
+      }}
+      className={`w-full   py-24 px-4 lg:py-24 lg:px-24 mt-24  ${
         !params.loja && "hidden"
       }`}
     >

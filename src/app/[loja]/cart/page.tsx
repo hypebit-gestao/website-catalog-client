@@ -298,7 +298,7 @@ ${
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <h1 className="text-green-secondary text-lg font-bold">
+                  <h1 className="text-black text-lg font-bold">
                     {item.quantity
                       ? formater.format(item.quantity * item.price)
                       : item.price}
@@ -615,7 +615,7 @@ ${
                   <div className="mt-4">
                     <h1 className="text-xl ">
                       Valor total:{" "}
-                      <span className="font-bold text-green-secondary text-2xl">
+                      <span className="font-bold text-black text-2xl">
                         {deliveryType === "Entrega a domícilio"
                           ? formater.format(
                               cartTotal + store?.store?.shipping_taxes
@@ -628,6 +628,16 @@ ${
 
                 <div className="mt-6 w-full">
                   <button
+                    style={{
+                      borderColor:
+                        store?.store?.background_color !== null
+                          ? `${store?.store?.background_color}`
+                          : "#1e3222",
+                      color:
+                        store?.store?.background_color !== null
+                          ? `${store?.store?.background_color}`
+                          : "#1e3222",
+                    }}
                     onClick={() => {
                       viewCartModal.onClose();
                       router.push(`/${params.loja}`);
@@ -640,6 +650,12 @@ ${
 
                 <div className="my-6 w-full">
                   <button
+                    style={{
+                      backgroundColor:
+                        store?.store?.background_color !== null
+                          ? `${store?.store?.background_color}`
+                          : "#1e3222",
+                    }}
                     type="submit"
                     className="bg-green-primary p-4 rounded-lg text-white w-full hover:opacity-90 transition-all duration-200"
                   >
