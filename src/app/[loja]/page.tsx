@@ -16,10 +16,12 @@ import { Category, UserCategory } from "@/models/category";
 import { Button } from "@/components/ui/button";
 import { useUserService } from "@/services/user.service";
 import { User } from "@/models/user";
+import useStore from "@/utils/hooks/use-store";
 
 const Catalog = () => {
   const params = useParams();
   const { loja } = params;
+  const store = useStore();
   const userService = useUserService();
   const productService = useProductService();
   const categoryService = useCategoryService();
@@ -163,7 +165,15 @@ const Catalog = () => {
                 (product) => product.featured && product.active
               ) && (
                 <>
-                  <h1 className="text-green-secondary text-3xl mb-6">
+                  <h1
+                    style={{
+                      color:
+                        store?.store?.background_color !== null
+                          ? `${store?.store?.background_color}`
+                          : "#1e3222",
+                    }}
+                    className="text-green-secondary text-3xl mb-6"
+                  >
                     Produtos em destaque
                   </h1>
                   <div className="w-full  gap-y-16 grid grid-cols grid-cols-2 gap-x-2 lg:gap-x-16 lg:grid-cols-3 xl:grid-cols-4">
@@ -206,7 +216,17 @@ const Catalog = () => {
               (product) => !product.featured && product.active
             ) && (
               <>
-                <h1 className="text-green-secondary text-3xl mb-6">Produtos</h1>
+                <h1
+                  style={{
+                    color:
+                      store?.store?.background_color !== null
+                        ? `${store?.store?.background_color}`
+                        : "#1e3222",
+                  }}
+                  className="text-green-secondary text-3xl mb-6"
+                >
+                  Produtos
+                </h1>
                 <div className="w-full gap-y-16 grid grid-cols grid-cols-2 gap-x-4 lg:gap-x-16 lg:grid-cols-3 xl:grid-cols-4">
                   {products
                     ?.filter((product) => !product.featured)
