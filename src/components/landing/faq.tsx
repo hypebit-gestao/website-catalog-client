@@ -23,10 +23,10 @@ const Faq = () => {
           name="Como irei receber os pedidos feitos em minha loja?"
           description="Seus pedidos serão enviados diretamente para o WhatsApp de sua empresa, onde você poderá gerenciá-los de forma rápida e eficiente. Isso permite que você mantenha um contato direto com seus clientes e forneça um atendimento personalizado, aumentando a satisfação e fidelidade dos mesmos."
         />
-        {/* <FaqItem
+        <FaqItem
           name="É possível personalizar a aparência do meu catálogo?"
           description="Sim, oferecemos uma variedade de opções de personalização para garantir que seu catálogo reflita a identidade visual de sua marca."
-        /> */}
+        />
         <FaqItem
           name="É necessário baixar algum aplicativo para utilizar o Catálogo Place?"
           description="Não, o Catálogo Place é uma plataforma web que pode ser acessada diretamente de seu navegador, sem a necessidade de baixar ou instalar qualquer aplicativo adicional."

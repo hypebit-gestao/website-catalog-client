@@ -52,10 +52,10 @@ const Plans = () => {
                 <FaCircleCheck size={24} className="text-green-primary" />
                 <h1 className="text-xl ml-4">Configuração de frete</h1>
               </li>
-              {/* <li className="flex flex-row items-center mb-4">
+              <li className="flex flex-row items-center mb-4">
                 <FaCircleCheck size={24} className="text-green-primary" />
                 <h1 className="text-xl ml-4">Personalização da loja</h1>
-              </li> */}
+              </li>
               {/* <li className="flex flex-row items-center mb-4">
                 <div>
                   <FaCircleCheck size={24} className="text-green-primary" />
@@ -136,10 +136,10 @@ const Plans = () => {
                 <FaCircleCheck size={24} className="text-green-primary" />
                 <h1 className="text-xl ml-4">Configuração de frete</h1>
               </li>
-              {/* <li className="flex flex-row items-center mb-4">
+              <li className="flex flex-row items-center mb-4">
                 <FaCircleCheck size={24} className="text-green-primary" />
                 <h1 className="text-xl ml-4">Personalização da loja</h1>
-              </li> */}
+              </li>
               {/* <li className="flex flex-row items-center mb-4">
                 <div>
                   <FaCircleCheck size={24} className="text-green-primary" />
