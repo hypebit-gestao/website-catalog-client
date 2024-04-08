@@ -48,8 +48,6 @@ export default function RootLayout({
     }
   }, [params]);
 
-  console.log(store?.store);
-
   return (
     <html lang="en">
       <head>

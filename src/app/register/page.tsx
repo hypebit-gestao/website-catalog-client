@@ -73,8 +73,6 @@ const Register = () => {
     },
   ];
 
-  console.log("PlanId: ", planId);
-
   const primaryLabelButton = useMemo(() => {
     if (step === REGISTER_STORE_STEPS.BASIC_INFORMATION) {
       return "Cancelar";
@@ -287,7 +285,6 @@ const Register = () => {
       ...formData,
       ...data,
     });
-    console.log("Data: ", formData);
 
     if (step !== REGISTER_STORE_STEPS.ATTACHMENT) {
       setLoading(false);

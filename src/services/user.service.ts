@@ -11,8 +11,6 @@ export const useUserService = () => {
       body: JSON.stringify(data),
     });
 
-    console.log("Response: ", response);
-
     if (!response) {
       console.error("Sem resposta do servidor");
       throw new Error("Erro ao criar loja");

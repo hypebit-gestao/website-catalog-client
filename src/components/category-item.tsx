@@ -4,10 +4,11 @@ import React from "react";
 interface CategoryItemProps {
   name: string | undefined;
   image: string | undefined;
+  color?: string;
   onClick?: () => void;
 }
 
-const CategoryItem = ({ name, image, onClick }: CategoryItemProps) => {
+const CategoryItem = ({ name, image, onClick, color }: CategoryItemProps) => {
   return (
     <div
       onClick={onClick}
@@ -23,7 +24,14 @@ const CategoryItem = ({ name, image, onClick }: CategoryItemProps) => {
         />
       </div>
       <div className="hidden xl:block">
-        <h3 className="text-green-primary text-lg cursor-pointer">{name}</h3>
+        <h3
+          style={{
+            color: color,
+          }}
+          className="text-green-primary text-lg cursor-pointer"
+        >
+          {name}
+        </h3>
       </div>
     </div>
   );

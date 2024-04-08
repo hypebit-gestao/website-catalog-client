@@ -11,8 +11,6 @@ export async function fetchWrapper<T = unknown>(
     return;
   }
 
-  console.log("Data: ", data);
-
   // Check if the response is empty
   const text = await data.text();
 
@@ -22,7 +20,6 @@ export async function fetchWrapper<T = unknown>(
   } else {
     result = {};
   }
-  console.log("Result: ", result);
 
   return result as T;
 }

@@ -134,6 +134,11 @@ const Catalog = () => {
                         key={index}
                         image={category?.image_url}
                         name={category?.name}
+                        color={
+                          store?.store?.background_color !== null
+                            ? `${store?.store?.background_color}`
+                            : "#1e3222"
+                        }
                       />
                     )
                   )}
