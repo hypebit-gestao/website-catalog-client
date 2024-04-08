@@ -83,7 +83,7 @@ const Features = () => {
               Visualize todos os pedidos de forma simples e rápida
             </p>
           </motion.div>
-          {/* <motion.div
+          <motion.div
             initial={{ y: 100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
@@ -99,7 +99,7 @@ const Features = () => {
               </h1>
             </div>
             <p className="text-md">Personalize o tema da sua loja.</p>
-          </motion.div> */}
+          </motion.div>
           {/* <motion.div
             initial={{ y: 100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
