@@ -23,12 +23,12 @@ const CategoryItem = ({ name, image, onClick, color }: CategoryItemProps) => {
           height={64}
         />
       </div>
-      <div className="hidden xl:block">
+      <div className="hidden xl:block  max-w-[100px]">
         <h3
           style={{
             color: color,
           }}
-          className="text-green-primary text-lg cursor-pointer"
+          className="text-green-primary text-lg cursor-pointer text-center"
         >
           {name}
         </h3>
