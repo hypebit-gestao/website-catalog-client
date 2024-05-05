@@ -325,6 +325,7 @@ const Register = () => {
                     status: "ACTIVE",
                     shipping_taxes: null,
                     shipping_type: null,
+                    background_color: "#000",
                   })
                   .then((res) => {
                     setLoading(false);
@@ -354,6 +355,7 @@ const Register = () => {
               status: "ACTIVE",
               shipping_taxes: null,
               shipping_type: null,
+              background_color: "#000",
             })
             .then((res) => {
               setLoading(false);
