@@ -14,4 +14,5 @@ export interface User {
   shipping_type?: number | null;
   shipping_taxes?: number | null;
   image_url?: string | null;
+  background_color?: string | null;
 }
