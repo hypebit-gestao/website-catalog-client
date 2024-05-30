@@ -53,6 +53,7 @@ const Cart = () => {
   const { loja } = params;
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [typeDelivery, setTypeDelivery] = useState("Retirada");
   const viewCartModal = useViewCartModal();
   const userService = useUserService();
   const orderService = useOrderService();
@@ -63,6 +64,7 @@ const Cart = () => {
     style: "currency",
     currency: "BRL",
   });
+
   const FormSchema = z.object({
     fullName: z.string().min(1, "Nome é obrigatório"),
     methodPayment: z.string().min(1, "Método de pagamento é obrigatório"),
@@ -75,8 +77,24 @@ const Cart = () => {
     city: z.string(),
     state: z.string(),
   });
+
+  const FormSchema2 = z.object({
+    fullName: z.string().min(1, "Nome é obrigatório"),
+    methodPayment: z.string().min(1, "Método de pagamento é obrigatório"),
+    deliveryType: z.string().min(1, "Tipo de entrega é obrigatório"),
+    observation: z.string(),
+    cep: z.string(),
+    street: z.string().min(1, "Rua é obrigatório"),
+    district: z.string().min(1, "Bairro é obrigatório"),
+    number: z.string().min(1, "Número é obrigatório"),
+    city: z.string().min(1, "Cidade é obrigatório"),
+    state: z.string().min(1, "Estado é obrigatório"),
+  });
+
   const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+    resolver: zodResolver(
+      typeDelivery === "Retirada" ? FormSchema : FormSchema2
+    ),
     defaultValues: {
       fullName: "",
       methodPayment: "CREDIT_CARD",
@@ -131,7 +149,7 @@ const Cart = () => {
         setCustomValue("state", res.uf);
       })
       .catch((err) => {
-        toast.error("CEP não encontrado");
+        // toast.error("CEP não encontrado");
       });
   };
 
@@ -155,7 +173,9 @@ const Cart = () => {
     getUser();
   }, [loja]);
 
-  const finishOrder = async (data: z.infer<typeof FormSchema>) => {
+  const finishOrder = async (
+    data: z.infer<typeof FormSchema | typeof FormSchema2>
+  ) => {
     const numeroTelefone = `55${store?.store?.phone}`;
     const formattedMethod = formatMethodPayment(data.methodPayment);
 
@@ -209,27 +229,11 @@ ${
 `;
 
     const mensagemURLFormatada = encodeURIComponent(mensagem);
-    // Função para verificar se o usuário está em um dispositivo móvel
-    function isMobileDevice() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      );
-    }
 
     // URL para WhatsApp Web
-    const linkWhatsAppWeb = `https://web.whatsapp.com/send?phone=${numeroTelefone}&text=${mensagemURLFormatada}`;
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${numeroTelefone}&text=${mensagemURLFormatada}`;
 
-    // URL para o aplicativo WhatsApp
-    const linkWhatsAppApp = `whatsapp://send?phone=${numeroTelefone}&text=${mensagemURLFormatada}`;
-
-    // Verifica se o usuário está em um dispositivo móvel
-    if (isMobileDevice()) {
-      // Se estiver em um dispositivo móvel, redireciona para o link do aplicativo WhatsApp
-      window.location.href = linkWhatsAppApp;
-    } else {
-      // Caso contrário, redireciona para o WhatsApp Web
-      window.location.href = linkWhatsAppWeb;
-    }
+    window.open(whatsappUrl, "_blank");
 
     const orderResponse = await orderService.POST({
       user_id: user?.id,
@@ -269,6 +273,12 @@ ${
         return "";
     }
   };
+
+  useEffect(() => {
+    if (deliveryType) {
+      setTypeDelivery(deliveryType);
+    }
+  }, [deliveryType]);
 
   return (
     <Container>
@@ -440,12 +450,9 @@ ${
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  required={
-                                    deliveryType === "Entrega a domícilio"
-                                  }
                                   maxLength={9}
                                   onBlur={(e) => {
-                                    setCustomValue("cep", e.target.value);
+                                    // setCustomValue("cep", e.target.value);
                                     getCep();
                                   }}
                                   placeholder="Insira o cep"
@@ -471,9 +478,6 @@ ${
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  required={
-                                    deliveryType === "Entrega a domícilio"
-                                  }
                                   placeholder="Insira sua rua"
                                   {...field}
                                 />
@@ -494,9 +498,6 @@ ${
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  required={
-                                    deliveryType === "Entrega a domícilio"
-                                  }
                                   placeholder="Insira seu bairro"
                                   {...field}
                                 />
@@ -519,9 +520,6 @@ ${
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  required={
-                                    deliveryType === "Entrega a domícilio"
-                                  }
                                   type="number"
                                   placeholder="Insira o número"
                                   {...field}
@@ -543,9 +541,6 @@ ${
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  required={
-                                    deliveryType === "Entrega a domícilio"
-                                  }
                                   placeholder="Insira a cidade"
                                   {...field}
                                 />
@@ -566,9 +561,6 @@ ${
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  required={
-                                    deliveryType === "Entrega a domícilio"
-                                  }
                                   placeholder="Insira o estado"
                                   {...field}
                                 />
