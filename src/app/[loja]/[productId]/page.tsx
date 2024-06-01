@@ -27,7 +27,7 @@ const ProductPage = () => {
   const [product, setProduct] = useState<Product>();
   const [currentImg, setCurrentImg] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [selectSize, setSelectSize] = useState<string>("");
+  const [selectSize, setSelectSize] = useState<any>();
   const viewCartModal = useViewCartModal();
   const router = useRouter();
   const { addItem, items, removeItem } = useCart();
@@ -63,7 +63,8 @@ const ProductPage = () => {
         name: product?.name as string,
         price: product?.price as number,
         image: product?.images && product?.images[0],
-        size: selectSize || null,
+        sizeId: selectSize?.id || null,
+        sizeName: selectSize?.size || null,
       },
       quantity
     );
@@ -182,7 +183,7 @@ const ProductPage = () => {
                     </h3>
                     <Select
                       onValueChange={(value) => {
-                        setSelectSize(value as string);
+                        setSelectSize(value as any);
                       }}
                     >
                       <SelectTrigger>
@@ -191,10 +192,7 @@ const ProductPage = () => {
                       <SelectContent className="z-[300]">
                         {/* product?.product_size?.map((prodSize) => prodSize?.size) */}
                         {product?.product_size?.map((prodSize, index) => (
-                          <SelectItem
-                            key={index}
-                            value={prodSize?.size?.id as string}
-                          >
+                          <SelectItem key={index} value={prodSize?.size as any}>
                             {prodSize?.size?.size}
                           </SelectItem>
                         ))}
