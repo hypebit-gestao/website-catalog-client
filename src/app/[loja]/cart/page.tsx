@@ -188,6 +188,7 @@ ${items
     (item) => ` 
 *${item.name}*
 *Quantidade*: ${item.quantity}
+${item.sizeName ? `*Tamanho*: ${item.sizeName}` : ""}
 *Valor*: ${
       item.quantity
         ? formater.format(item.quantity * Number(item.price))
@@ -248,6 +249,7 @@ ${
         await orderService.POSTORDERITEMS({
           order_id: orderResponse.id,
           product_id: item.id,
+          size_id: item.sizeId,
           quantity: item.quantity,
           unit_price: item.price,
           total: item.itemTotal,
@@ -279,6 +281,8 @@ ${
       setTypeDelivery(deliveryType);
     }
   }, [deliveryType]);
+
+  console.log("Items", items);
 
   return (
     <Container>
