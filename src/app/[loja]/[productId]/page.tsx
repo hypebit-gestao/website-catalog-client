@@ -12,6 +12,13 @@ import { IoAdd, IoRemove } from "react-icons/io5";
 import { useCart } from "react-use-cart";
 import Loader from "@/components/loader";
 import useStore from "@/utils/hooks/use-store";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const ProductPage = () => {
   const productService = useProductService();
@@ -20,6 +27,7 @@ const ProductPage = () => {
   const [product, setProduct] = useState<Product>();
   const [currentImg, setCurrentImg] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [selectSize, setSelectSize] = useState<string>("");
   const viewCartModal = useViewCartModal();
   const router = useRouter();
   const { addItem, items, removeItem } = useCart();
@@ -41,12 +49,21 @@ const ProductPage = () => {
   };
 
   const addToCart = (quantity: number) => {
+    if (
+      product?.product_size &&
+      product.product_size.length > 0 &&
+      !selectSize
+    ) {
+      toast.error("Selecione um tamanho");
+      return;
+    }
     addItem(
       {
         id: product?.id as string,
         name: product?.name as string,
         price: product?.price as number,
         image: product?.images && product?.images[0],
+        size: selectSize || null,
       },
       quantity
     );
@@ -74,6 +91,7 @@ const ProductPage = () => {
     getProduct();
   }, []);
 
+  console.log("SelectSize", selectSize);
   return (
     <>
       {loading ? (
@@ -157,7 +175,34 @@ const ProductPage = () => {
                     </h1>
                   </div>
                 </div>
-                <div className="my-5 lg:my-12">
+                {product?.product_size && product.product_size.length > 0 && (
+                  <div className="mt-5 lg:mt-8">
+                    <h3 className="text-gray-600 text-xl mb-4">
+                      Tamanho do produto
+                    </h3>
+                    <Select
+                      onValueChange={(value) => {
+                        setSelectSize(value as string);
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione um tamanho" />
+                      </SelectTrigger>
+                      <SelectContent className="z-[300]">
+                        {/* product?.product_size?.map((prodSize) => prodSize?.size) */}
+                        {product?.product_size?.map((prodSize, index) => (
+                          <SelectItem
+                            key={index}
+                            value={prodSize?.size?.id as string}
+                          >
+                            {prodSize?.size?.size}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+                <div className="my-5 ">
                   <h3 className="text-gray-600 text-xl mb-4">
                     Descrição do produto
                   </h3>

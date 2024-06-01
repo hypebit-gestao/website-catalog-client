@@ -8,6 +8,14 @@ export interface Product {
     name: string;
     image_url?: string;
   };
+  product_size?: [
+    {
+      size: {
+        id: string;
+        size: string;
+      };
+    }
+  ];
   category_id: string | undefined;
   user_id: string | undefined;
   weight: number;

@@ -248,6 +248,7 @@ ${
         await orderService.POSTORDERITEMS({
           order_id: orderResponse.id,
           product_id: item.id,
+          size_id: item.size,
           quantity: item.quantity,
           unit_price: item.price,
           total: item.itemTotal,
@@ -279,6 +280,8 @@ ${
       setTypeDelivery(deliveryType);
     }
   }, [deliveryType]);
+
+  console.log("Items", items);
 
   return (
     <Container>
