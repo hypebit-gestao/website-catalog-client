@@ -100,7 +100,7 @@ const Features = () => {
             </div>
             <p className="text-md">Personalize o tema da sua loja.</p>
           </motion.div>
-          {/* <motion.div
+          <motion.div
             initial={{ y: 100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
@@ -116,11 +116,10 @@ const Features = () => {
               </h1>
             </div>
             <p className="text-md">
-              Adicione informações personalizadas em seu produto: cores,
-              tamanhos...
+              Adicione informações personalizadas de tamanho em seu produto
             </p>
-          </motion.div> */}
-          {/* <motion.div
+          </motion.div>
+          <motion.div
             initial={{ y: 100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
@@ -138,7 +137,7 @@ const Features = () => {
             <p className="text-md">
               Crie cupons de desconto para seus clientes.
             </p>
-          </motion.div> */}
+          </motion.div>
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
