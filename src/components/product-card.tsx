@@ -96,22 +96,22 @@ const ProductCard = ({
         </Slider>
         <div className="mt-8 flex flex-col w-full">
           <div className="w-full">
-            <h1 className="text-2xl text-gray-800 truncate">{name}</h1>
+            <h1 className="text-lg lg:text-2xl text-gray-800 truncate">{name}</h1>
           </div>
           {promotionPrice && promotionPrice > 0 ? (
-            <div className="flex flex-col lg:flex-row lg:items-center mt-2">
+            <div className="flex flex-row items-center mt-2">
               <div className="flex flex-row items-center">
-                <h3 className="text-xl font-bold">
+                <h3 className="text-md lg:text-xl font-bold">
                   {formater.format(promotionPrice)}
                 </h3>
               </div>
-              <h3 className="text-md  text-gray-500  ml-2 line-through">
+              <h3 className="text-sm lg:text-lg  text-gray-500  ml-2 line-through">
                 {formater.format(price)}
               </h3>
             </div>
           ) : (
             <div className="mt-2">
-              <h3 className="text-xl font-bold">{formater.format(price)}</h3>
+              <h3 className="text-md lg:text-xl font-bold">{formater.format(price)}</h3>
             </div>
           )}
           <div className="mt-5 w-full">
@@ -125,7 +125,7 @@ const ProductCard = ({
                 <div className="mr-2">
                   <FaShoppingBag size={18} />
                 </div>
-                <h1 className="text-white text-lg">Comprar</h1>
+                <h1 className="text-white text-md lg:text-lg">Comprar</h1>
               </div>
             </Button>
           </div>
