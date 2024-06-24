@@ -495,7 +495,7 @@ const Register = () => {
           </div>
           {storeLink !== "" && (
             <div className="mt-5 border border-solid border-green-primary p-1 rounded-lg">
-              <h3>
+              <h3 className="break-all">
                 O link da sua loja vai ficar https://www.catalogoplace.com.br/
                 {storeLink}
               </h3>
