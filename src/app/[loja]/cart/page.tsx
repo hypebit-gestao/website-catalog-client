@@ -53,6 +53,7 @@ const Cart = () => {
   const { loja } = params;
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [discount, setDiscount] = useState(0);
   const [typeDelivery, setTypeDelivery] = useState("Retirada");
   const viewCartModal = useViewCartModal();
   const userService = useUserService();
@@ -213,6 +214,7 @@ ${
     : ""
 }
 ${data.observation ? `*Observação*: ${data.observation}` : ""}
+*Subtotal*: ${formater.format(cartTotal)}
 ${
   data.deliveryType === "Entrega a domícilio"
     ? `*Taxa de entrega*: ${
@@ -222,10 +224,11 @@ ${
       } `
     : ""
 }
+${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
 *Valor Total*: ${
       data.deliveryType === "Entrega a domícilio"
-        ? formater.format(cartTotal + store?.store?.shipping_taxes)
-        : formater.format(cartTotal)
+        ? formater.format((cartTotal + store?.store?.shipping_taxes) - discount)
+        : formater.format(cartTotal - discount)
     }
 `;
 
@@ -282,7 +285,23 @@ ${
     }
   }, [deliveryType]);
 
-  console.log("Items", items);
+  useEffect(() => {
+    if (watch("methodPayment") == "CREDIT_CARD") {
+      if (store?.store?.credit_discount !== null && store?.store?.credit_discount > 0) {
+        setDiscount((cartTotal + store?.store?.shipping_taxes) * (store?.store?.credit_discount / 100));
+      }
+    } else if (watch("methodPayment") == "PIX") {
+      if (store?.store?.pix_discount !== null && store?.store?.pix_discount > 0) {
+        setDiscount((cartTotal + store?.store?.shipping_taxes) * (store?.store?.pix_discount / 100));
+      }
+    } else if (watch("methodPayment") == "DEBIT_CARD") {
+      if (store?.store?.debit_discount !== null && store?.store?.debit_discount > 0) {
+        setDiscount((cartTotal + store?.store?.shipping_taxes) * (store?.store?.debit_discount / 100));
+      }
+    } else {
+      setDiscount(0);
+    }
+  }, [watch('methodPayment')])
 
   return (
     <Container>
@@ -597,26 +616,56 @@ ${
                     )}
                   />
                 </div>
-
+                    {/* {console.log("Store: ", store?.store)}
+                    {console.log("Method: ", watch("methodPayment"))} */}
                 <div className="my-8">
-                  {store?.store?.shipping_type !== null &&
+                    <div className="mt-4">
+                    <h1 className="text-lg ">
+                      Subtotal:{" "}
+                      <span className="">
+                        {formater.format(cartTotal)}
+                      </span>
+                    </h1>
+                    </div>
+                    {store?.store?.shipping_type !== null &&
                     deliveryType === "Entrega a domícilio" && (
-                      <h1 className="text-lg">
+                     <div className="mt-4">
+                       <h1 className="text-lg">
                         Taxa de entrega:{" "}
                         {store?.store?.shipping_type === 1
                           ? formater.format(store?.store?.shipping_taxes)
                           : "A combinar"}
                       </h1>
+                     </div>
+                    )}
+                    {watch("methodPayment") == "CREDIT_CARD" && (store?.store?.credit_discount !== null && store?.store?.credit_discount > 0) && (
+                      <div className="mt-4">
+                        <h1 className="text-lg">
+                        Desconto: <span className="">{formater.format((cartTotal + store?.store?.shipping_taxes) * (store?.store?.credit_discount / 100))}</span>
+                      </h1>
+                      </div>
+                    )}
+                       {watch("methodPayment") == "PIX" && (store?.store?.pix_discount !== null && store?.store?.pix_discount > 0) && (
+                      <div className="mt-4">
+                        <h1 className="text-lg">
+                        Desconto: <span className="">{formater.format((cartTotal + store?.store?.shipping_taxes) * (store?.store?.pix_discount / 100))}</span>
+                      </h1>
+                      </div>
+                    )}
+                       {watch("methodPayment") == "DEBIT_CARD" && (store?.store?.debit_discount !== null && store?.store?.debit_discount > 0) && (
+                      <div className="mt-4">
+                        <h1 className="text-lg">
+                        Desconto: <span className="">{formater.format((cartTotal + store?.store?.shipping_taxes) * (store?.store?.debit_discount / 100))}</span>
+                      </h1>
+                      </div>
                     )}
                   <div className="mt-4">
-                    <h1 className="text-xl ">
+                    <h1 className="text-lg ">
                       Valor total:{" "}
-                      <span className="font-bold text-black text-2xl">
+                      <span className="font-bold text-black text-xl">
                         {deliveryType === "Entrega a domícilio"
-                          ? formater.format(
-                              cartTotal + store?.store?.shipping_taxes
-                            )
-                          : formater.format(cartTotal)}
+                          ? formater.format((cartTotal + store?.store?.shipping_taxes) - discount)
+                          : formater.format(cartTotal - discount)}
                       </span>
                     </h1>
                   </div>

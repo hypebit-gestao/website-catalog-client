@@ -68,7 +68,7 @@ const Plans = () => {
               </li>
               <li className="flex flex-row items-center mb-4">
                 <FaCircleXmark size={24} className="text-red-500" />
-                <h1 className="text-xl ml-4">Cupons de desconto</h1>
+                <h1 className="text-xl ml-4">Descontos por método de pagamento</h1>
               </li>
               <li className="">
                 <div className="flex flex-row items-center">
@@ -152,7 +152,7 @@ const Plans = () => {
               </li>
               <li className="flex flex-row items-center mb-4">
                 <FaCircleCheck size={24} className="text-green-primary" />
-                <h1 className="text-xl ml-4">Cupons de desconto</h1>
+                <h1 className="text-xl ml-4">Descontos por método de pagamento</h1>
               </li>
               <li className="">
                 <div className="flex flex-row items-center">
