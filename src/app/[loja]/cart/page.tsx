@@ -301,7 +301,7 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
     } else {
       setDiscount(0);
     }
-  }, [watch('methodPayment')])
+  }, [watch('methodPayment'), watch('deliveryType')]);
 
   return (
     <Container>
