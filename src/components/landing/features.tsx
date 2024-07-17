@@ -131,11 +131,11 @@ const Features = () => {
             </div>
             <div className="my-4">
               <h1 className="text-2xl text-green-primary font-bold">
-                Cupons de desconto
+                Desconto por método de pagamento
               </h1>
             </div>
             <p className="text-md">
-              Crie cupons de desconto para seus clientes.
+              Crie descontos para seus clientes de acordo com o método de pagamento selecionado na compra
             </p>
           </motion.div>
           <motion.div

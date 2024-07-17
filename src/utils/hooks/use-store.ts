@@ -14,6 +14,9 @@ const useStore = create<useStoreProps>((set) => ({
     shipping_taxes: 0,
     shipping_type: 0,
     background_color: "",
+    pix_discount: null,
+    credit_discount: null,
+    debit_discount: null,
   },
 }));
 

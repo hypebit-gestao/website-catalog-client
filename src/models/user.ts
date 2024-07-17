@@ -15,4 +15,7 @@ export interface User {
   shipping_taxes?: number | null;
   image_url?: string | null;
   background_color?: string | null;
+  pix_discount?: number | null;
+  credit_discount?: number | null;
+  debit_discount?: number | null;
 }

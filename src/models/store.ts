@@ -7,4 +7,7 @@ export interface Store {
   shipping_taxes: number;
   shipping_type: number;
   background_color: string;
+  pix_discount: number | null;
+  credit_discount: number | null;
+  debit_discount: number | null;
 }
