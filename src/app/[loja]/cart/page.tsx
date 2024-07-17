@@ -286,22 +286,22 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
   }, [deliveryType]);
 
   useEffect(() => {
-    if (watch("methodPayment") == "CREDIT_CARD") {
-      if (store?.store?.credit_discount !== null && store?.store?.credit_discount > 0) {
+    const methodPayment = watch("methodPayment");
+    const deliveryType = watch("deliveryType");
+
+    if (methodPayment === "CREDIT_CARD" && store?.store?.credit_discount !== null && store?.store?.credit_discount > 0) {
         setDiscount((cartTotal + store?.store?.shipping_taxes) * (store?.store?.credit_discount / 100));
-      }
-    } else if (watch("methodPayment") == "PIX") {
-      if (store?.store?.pix_discount !== null && store?.store?.pix_discount > 0) {
+    } else if (methodPayment === "PIX" && store?.store?.pix_discount !== null && store?.store?.pix_discount > 0) {
         setDiscount((cartTotal + store?.store?.shipping_taxes) * (store?.store?.pix_discount / 100));
-      }
-    } else if (watch("methodPayment") == "DEBIT_CARD") {
-      if (store?.store?.debit_discount !== null && store?.store?.debit_discount > 0) {
+    } else if (methodPayment === "DEBIT_CARD" && store?.store?.debit_discount !== null && store?.store?.debit_discount > 0) {
         setDiscount((cartTotal + store?.store?.shipping_taxes) * (store?.store?.debit_discount / 100));
-      }
+    } else if (methodPayment === "CASH") {
+        setDiscount(0);
     } else {
-      setDiscount(0);
+        setDiscount(0); 
     }
-  }, [watch('methodPayment'), watch('deliveryType')]);
+}, [watch('methodPayment'), watch('deliveryType')]);
+
 
   return (
     <Container>
@@ -616,8 +616,6 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
                     )}
                   />
                 </div>
-                    {/* {console.log("Store: ", store?.store)}
-                    {console.log("Method: ", watch("methodPayment"))} */}
                 <div className="my-8">
                     <div className="mt-4">
                     <h1 className="text-lg ">
