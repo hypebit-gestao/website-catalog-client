@@ -16,3 +16,11 @@ export interface OrderItem {
   unit_price: number;
   total: number;
 }
+
+export interface OrderAttribute {
+  id?: string;
+  user_id?: string | undefined;
+  order_item_id?: string | undefined | any;
+  attribute_id?: string | undefined;
+  attribute_option_id?: string | undefined; 
+}

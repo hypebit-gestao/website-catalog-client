@@ -37,6 +37,7 @@ import { useCepService } from "@/services/cep.service";
 import toast from "react-hot-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { OrderItem } from "@/models/order";
 
 interface ProductCart {
   id: string;
@@ -45,7 +46,13 @@ interface ProductCart {
   image: string;
   quantity?: number;
   itemTotal: number;
+  attributesOptions: [];
 }
+
+interface AttributesOptions {
+  attributeName: string;
+  attributeOptionName: string;
+} 
 
 const Cart = () => {
   const { items, removeItem, totalItems, cartTotal, setItems } = useCart();
@@ -189,6 +196,9 @@ ${items
     (item) => ` 
 *${item.name}*
 *Quantidade*: ${item.quantity}
+${item.attributesOptions && item.attributesOptions?.map((attribute: AttributesOptions, index: number) => (
+  `*${attribute.attributeName}*: ${attribute.attributeOptionName}`
+)).join('\n')}
 ${item.sizeName ? `*Tamanho*: ${item.sizeName}` : ""}
 *Valor*: ${
       item.quantity
@@ -256,8 +266,23 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
           quantity: item.quantity,
           unit_price: item.price,
           total: item.itemTotal,
-        });
+        }).then((responseOrderItem: OrderItem | undefined) => {
+          if (item.attributesOptions && item.attributesOptions.length > 0) {
+            item.attributesOptions.forEach(async (attribute : any) => {
+              await orderService.POSTORDERATTRIBUTE({
+                user_id: user?.id,
+                order_item_id: responseOrderItem !== undefined && responseOrderItem?.id,
+                attribute_id: attribute?.attributeId,
+                attribute_option_id: attribute.attributeOptionId,
+              }).then((res) => {
+                console.log("RES: ", res)
+              }).catch((err) => {
+                console.log("ERR: ", err)
+              })
+            })}
+        })
       });
+      
     }
 
     setItems([]);
@@ -324,10 +349,17 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
                       height={100}
                     />
                   </div>
-                  <div className="ml-4">
-                    <h1>
+                  <div className="ml-4 flex flex-col">
+                   <div>
+                   <h1>
                       {item.quantity}x {item.name}
                     </h1>
+                   </div>
+                   {item.attributesOptions && item.attributesOptions?.map((attribute: AttributesOptions, index: number) => (
+                    <div key={index} className="flex items-center">
+                      <h1 className="text-gray-500 text-sm">{attribute.attributeName}: <span className="text-black text-sm ml-1">{attribute.attributeOptionName}</span></h1>
+                    </div>
+                   ))}
                   </div>
                 </div>
                 <div className="flex items-center">

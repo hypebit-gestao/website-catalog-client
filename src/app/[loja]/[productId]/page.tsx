@@ -28,6 +28,7 @@ const ProductPage = () => {
   const [currentImg, setCurrentImg] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [selectSize, setSelectSize] = useState<any>();
+  const [attributesSelected, setAttributesSelected] = useState<any>([]);
   const viewCartModal = useViewCartModal();
   const router = useRouter();
   const { addItem, items, removeItem } = useCart();
@@ -65,6 +66,7 @@ const ProductPage = () => {
         image: product?.images && product?.images[0],
         sizeId: selectSize?.id || null,
         sizeName: selectSize?.size || null,
+        attributesOptions: attributesSelected,
       },
       quantity
     );
@@ -92,7 +94,10 @@ const ProductPage = () => {
     getProduct();
   }, []);
 
-  console.log("SelectSize", selectSize);
+
+  console.log("Product", product);
+  console.log("Selected Attributes", attributesSelected);  
+
   return (
     <>
       {loading ? (
@@ -176,6 +181,41 @@ const ProductPage = () => {
                     </h1>
                   </div>
                 </div>
+                {product?.product_attribute && product.product_attribute.length > 0 && (
+                  <div className="mt-5 lg:mt-8">
+                    {product?.product_attribute?.map((prodAttr, indexProdAttr) => (
+                    
+                    <div key={indexProdAttr} className="mb-4">
+                    <h3 className="text-gray-600 text-xl mb-3">
+                      {prodAttr.attribute.name}
+                    </h3>
+                      <Select
+                      onValueChange={(value: any) => {
+                        setAttributesSelected((prev: any) => [...prev, {
+                          attributeId: prodAttr.attribute.id,
+                          attributeName: prodAttr.attribute.name,
+                          attributeOptionId: value,
+                          attributeOptionName: prodAttr.attribute.attributeOption?.find((attrOpt) => attrOpt.id === value)?.option_name
+                        }])
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder={prodAttr.attribute.name} />
+                      </SelectTrigger>
+                      <SelectContent className="z-[300]">
+                        {/* product?.product_size?.map((prodSize) => prodSize?.size) */}
+                        {prodAttr.attribute?.attributeOption?.map((prodAttrOpt, index) => (
+                          <SelectItem key={index} value={prodAttrOpt?.id as string}>
+                            {prodAttrOpt?.option_name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    </div>
+                    
+                    ))}
+                  </div>
+                )}
                 {product?.product_size && product.product_size.length > 0 && (
                   <div className="mt-5 lg:mt-8">
                     <h3 className="text-gray-600 text-xl mb-4">

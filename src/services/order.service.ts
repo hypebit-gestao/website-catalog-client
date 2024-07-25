@@ -1,6 +1,6 @@
 import { fetchWrapper } from "../utils/functions/fetch";
 import { User } from "../models/user";
-import { Order, OrderItem } from "@/models/order";
+import { Order, OrderAttribute, OrderItem } from "@/models/order";
 
 export const useOrderService = () => {
   const POST = async (data: Order): Promise<Order | undefined> => {
@@ -23,6 +23,24 @@ export const useOrderService = () => {
     data: OrderItem
   ): Promise<OrderItem | undefined> => {
     const response = await fetchWrapper<OrderItem>(`orderItem`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response) {
+      console.error("Sem resposta do servidor");
+    }
+
+    return response;
+  };
+
+  const POSTORDERATTRIBUTE = async (
+    data: OrderAttribute
+  ): Promise<OrderAttribute | undefined> => {
+    const response = await fetchWrapper<OrderAttribute>(`attributeOrder`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -107,6 +125,7 @@ export const useOrderService = () => {
     GETBYID,
     POST,
     POSTORDERITEMS,
+    POSTORDERATTRIBUTE,
     PUT,
     DELETE,
   };
