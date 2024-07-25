@@ -16,6 +16,21 @@ export interface Product {
       };
     }
   ];
+  product_attribute?: [
+    {
+      attribute: {
+        id: string;
+        name: string;
+        type: number;
+        attributeOption?: [
+          {
+            id: string;
+            option_name: string;
+          }
+        ]
+      };
+    }
+  ];
   category_id: string | undefined;
   user_id: string | undefined;
   weight: number;
