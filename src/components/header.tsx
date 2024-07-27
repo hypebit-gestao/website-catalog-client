@@ -28,13 +28,14 @@ const Header = () => {
     >
       <Container>
         <div className="flex justify-between items-center  h-20">
-          <div className="">
+          <div className="rounded-lg">
             <Link href={`/${params.loja}`}>
               {store?.store?.image_url ? (
                 <Image
+                className="rounded-lg"
                   src={store?.store?.image_url}
-                  width={80}
-                  height={80}
+                  width={70}
+                  height={70}
                   alt="Logo da Loja"
                 />
               ) : (

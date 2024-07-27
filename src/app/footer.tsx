@@ -20,7 +20,7 @@ const Footer = ({ background }: FooterProps) => {
       style={{
         backgroundColor: background !== null ? `${background}` : "#1e3222",
       }}
-      className={`w-full   py-24 px-4 lg:py-24 lg:px-24 mt-24  ${
+      className={`w-full  py-24 px-4 lg:py-24 lg:px-24 mt-24  ${
         !params.loja && "hidden"
       }`}
     >
@@ -47,7 +47,7 @@ const Footer = ({ background }: FooterProps) => {
                     <button className="my-4">
                       <div className="flex flex-row items-center">
                         <IoLogoWhatsapp color="white" size={32} />
-                        <h1 className="text-white text-2xl ml-2">
+                        <h1 className="text-white text-2xl ml-4 break-words break-all text-justify">
                           {store?.store?.name}
                         </h1>
                       </div>
@@ -57,7 +57,7 @@ const Footer = ({ background }: FooterProps) => {
                     <button className="my-4">
                       <div className="flex flex-row items-center">
                         <MdEmail color="white" size={32} />
-                        <h1 className="text-white text-2xl ml-2">
+                        <h1 className="text-white text-2xl ml-4 break-words break-all text-justify">
                           {store?.store?.email}
                         </h1>
                       </div>
@@ -67,25 +67,6 @@ const Footer = ({ background }: FooterProps) => {
               </li>
             </ul>
           </div>
-          {/* <div className="w-full">
-            <ul>
-              <li>
-                <h1 className="text-gray-200 text-2xl font-bold">
-                  Formas de pagamento aceitas
-                </h1>
-              </li>
-              <div className="flex flex-row items-center">
-                <li className="text-white text-2xl my-4">
-                  <Image
-                    alt="Logo do Pix"
-                    src="/images/pix.png"
-                    width={50}
-                    height={50}
-                  />
-                </li>
-              </div>
-            </ul>
-          </div> */}
         </div>
       </Container>
     </div>

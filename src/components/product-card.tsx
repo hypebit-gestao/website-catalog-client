@@ -73,7 +73,7 @@ const ProductCard = ({
   });
 
   return (
-    <div className="w-full h-full ">
+    <div className="w-full h-full  relative">
       <div className="relative w-full h-full rounded-2xl">
         <Slider {...settings}>
           {images?.map((src, index) => (
@@ -95,8 +95,9 @@ const ProductCard = ({
           ))}
         </Slider>
         <div className="mt-8 flex flex-col w-full">
+          <div className="mb-20 lg:mb-24">
           <div className="w-full">
-            <h1 className="text-lg lg:text-2xl text-gray-800 truncate">{name}</h1>
+            <h1 className="text-lg lg:text-2xl text-gray-800 truncate-multiline">{name}</h1>
           </div>
           {promotionPrice && promotionPrice > 0 ? (
             <div className="flex flex-row items-center mt-2">
@@ -114,7 +115,8 @@ const ProductCard = ({
               <h3 className="text-md lg:text-xl font-bold">{formater.format(price)}</h3>
             </div>
           )}
-          <div className="mt-5 w-full">
+          </div>
+          <div className="mt-12 w-full absolute bottom-0 pt-6">
             <Button
               onClick={onClick}
               size="lg"
