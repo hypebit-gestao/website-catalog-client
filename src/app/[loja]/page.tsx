@@ -135,16 +135,17 @@ const Catalog = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
       {filteredCategories?.length > 0 && (
         <div className="flex flex-row justify-center w-full h-full items-center py-5 overflow-auto xl:overflow-hidden">
           <Container>
             {loading ? (
               <Loader />
             ) : (
+              <>
               <div
                 id="categories"
-                className="w-full flex flex-col xl:flex-row items-center"
+                className="w-full flex flex-col xl:flex-row items-center justify-center"
               >
                 <div className="w-full flex flex-row items-center xl:justify-normal">
                   {filteredCategories?.map(
@@ -163,18 +164,21 @@ const Catalog = () => {
                     )
                   )}
                 </div>
-
+                
                 {filteredCategories?.length > 0 && (
                   <Button
                     onClick={() => removeFilters()}
                     size="lg"
-                    className={`mt-5 lg:mt-0 w-[40%] lg:w-[15%]`}
+                    className={`absolute left-1/2 transform -translate-x-1/2 md:static md:-translate-x-0 md:mt-0 mt-56 w-[40%] lg:w-[15%]`}
                     variant={"default"}
                   >
-                    <div className="flex items-center">Remover Filtros</div>
+                    <h1 className="flex items-center">Remover Filtros</h1>
                   </Button>
                 )}
               </div>
+
+              </>
+
             )}
           </Container>
         </div>
@@ -256,7 +260,7 @@ const Catalog = () => {
           </div>
         )}
       </div>
-      <div className="mt-4">
+      <div className="mt-24 md:mt-4">
         {loading ? (
           <Loader />
         ) : (
