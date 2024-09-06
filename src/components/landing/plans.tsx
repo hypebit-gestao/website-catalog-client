@@ -9,7 +9,7 @@ const Plans = () => {
   return (
     <section
       id="plans"
-      className="min-h-screen w-full flex flex-col items-center py-12 px-8 bg-white"
+      className="min-h-screen w-full flex flex-col 2xl:px-24 py-12 px-8 bg-white"
     >
       <div className="">
         <h3 className="text-green-primary text-4xl 2xl:text-6xl">Planos</h3>
@@ -68,7 +68,9 @@ const Plans = () => {
               </li>
               <li className="flex flex-row items-center mb-4">
                 <FaCircleXmark size={24} className="text-red-500" />
-                <h1 className="text-xl ml-4">Descontos por método de pagamento</h1>
+                <h1 className="text-xl ml-4">
+                  Descontos por método de pagamento
+                </h1>
               </li>
               <li className="">
                 <div className="flex flex-row items-center">
@@ -152,7 +154,9 @@ const Plans = () => {
               </li>
               <li className="flex flex-row items-center mb-4">
                 <FaCircleCheck size={24} className="text-green-primary" />
-                <h1 className="text-xl ml-4">Descontos por método de pagamento</h1>
+                <h1 className="text-xl ml-4">
+                  Descontos por método de pagamento
+                </h1>
               </li>
               <li className="">
                 <div className="flex flex-row items-center">

@@ -113,8 +113,6 @@ ${items
     window.open(linkWhatsApp);
   };
 
-  console.log("Cart: ", items)
-
   return (
     <Modal
       isOpen={isOpen}
@@ -147,11 +145,9 @@ ${items
                         <h1>
                           {item.quantity}x {item.name}
                         </h1>
-                        
                       </div>
-                  
                     </div>
-                    
+
                     <div className="flex items-center">
                       <h1 className="text-green-secondary text-lg font-bold">
                         {item.quantity

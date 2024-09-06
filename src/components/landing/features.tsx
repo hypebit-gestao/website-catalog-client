@@ -20,7 +20,7 @@ const Features = () => {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className=" px-8 2xl:px-44 mt-0"
+        className=" px-8 2xl:px-24 mt-0"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-8 w-full">
           <motion.div
@@ -135,7 +135,8 @@ const Features = () => {
               </h1>
             </div>
             <p className="text-md">
-              Crie descontos para seus clientes de acordo com o método de pagamento selecionado na compra
+              Crie descontos para seus clientes de acordo com o método de
+              pagamento selecionado na compra
             </p>
           </motion.div>
           <motion.div

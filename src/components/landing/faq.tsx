@@ -10,7 +10,7 @@ const Faq = () => {
   return (
     <section
       id="faq"
-      className="px-8 w-full flex flex-col items-center pt-12 pb-20 2xl:pb-32 bg-[#F9F9F9] "
+      className="px-8 w-full flex flex-col 2xl:px-24 pt-12 pb-20 2xl:pb-32 bg-[#F9F9F9] "
     >
       <div className="">
         <h3 className="text-green-primary text-4xl 2xl:text-6xl">
