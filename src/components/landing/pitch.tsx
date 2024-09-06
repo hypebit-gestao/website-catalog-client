@@ -16,15 +16,15 @@ const Pitch = () => {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="flex flex-row items-center px-8 2xl:px-24 relative "
+        className="flex flex-row items-center px-8 xl:px-24 relative "
       >
-        <div className="h-full w-full 2xl:w-[80%]">
+        <div className="h-full w-full xl:w-[80%]">
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="w-full 2xl:w-[90%]"
+            className="w-full xl:w-[90%]"
           >
             <motion.div
               whileInView={{ y: 0, opacity: 1 }}
@@ -33,7 +33,7 @@ const Pitch = () => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ ease: "easeOut", duration: 0.5 }}
             >
-              <h1 className="text-[40px] 2xl:text-[50px] text-center  2xl:text-start text-green-secondary">
+              <h1 className="text-[40px] xl:text-[50px] text-center  xl:text-start text-green-secondary">
                 Vender com o Catálogo Place é muito mais{" "}
                 <span className="text-green-primary font-bold">tranquilo</span>
               </h1>
@@ -52,13 +52,13 @@ const Pitch = () => {
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ ease: "easeOut", duration: 0.5, delay: 0.1 }}
-                className="flex flex-row items-center  2xl:justify-start"
+                className="flex flex-row items-center  xl:justify-start"
               >
                 <div>
                   <FaCircleCheck size={32} className="text-green-primary" />
                 </div>
                 <div>
-                  <h1 className="text-2xl ml-4 ">
+                  <h1 className="text-xl ml-4 ">
                     Livre-se do uso de catálogos via PDF
                   </h1>
                 </div>
@@ -69,7 +69,7 @@ const Pitch = () => {
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ ease: "easeOut", duration: 0.5, delay: 0.2 }}
-                className="flex flex-row items-center  2xl:justify-start mt-8 "
+                className="flex flex-row items-center  xl:justify-start mt-8 "
               >
                 <div>
                   <FaCircleCheck size={32} className="text-green-primary" />
@@ -84,7 +84,7 @@ const Pitch = () => {
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ ease: "easeOut", duration: 0.5, delay: 0.3 }}
-                className="flex flex-row items-center  2xl:justify-start mt-8"
+                className="flex flex-row items-center  xl:justify-start mt-8"
               >
                 <div>
                   <FaCircleCheck size={32} className="text-green-primary" />
@@ -101,7 +101,7 @@ const Pitch = () => {
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ ease: "easeOut", duration: 0.5, delay: 0.4 }}
-                className="flex flex-row items-center mt-8  2xl:justify-start"
+                className="flex flex-row items-center mt-8  xl:justify-start"
               >
                 <div>
                   <FaCircleCheck size={32} className="text-green-primary" />
@@ -120,7 +120,7 @@ const Pitch = () => {
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ ease: "easeOut", duration: 0.5 }}
-            className="mt-12 flex 2xl:justify-start  w-full"
+            className="mt-12 flex xl:justify-start  w-full"
           >
             <LinkScroll
               className="w-full"
@@ -142,7 +142,7 @@ const Pitch = () => {
           </motion.div>
         </div>
 
-        <div className="w-[500px] 2xl:w-[550px] absolute -bottom-20 right-20  hidden  2xl:flex ">
+        <div className="w-[500px] xl:w-[550px] absolute -bottom-20 right-20  hidden  xl:flex ">
           <Image
             className=""
             src={"/images/img-pitch.png"}

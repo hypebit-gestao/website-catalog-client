@@ -20,9 +20,9 @@ const Features = () => {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className=" px-8 2xl:px-24 mt-0"
+        className=" px-8 xl:px-24 mt-0"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-8 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8 w-full">
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}

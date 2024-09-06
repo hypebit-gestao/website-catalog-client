@@ -9,12 +9,12 @@ const Plans = () => {
   return (
     <section
       id="plans"
-      className="min-h-screen w-full flex flex-col 2xl:px-24 py-12 px-8 bg-white"
+      className="min-h-screen w-full flex flex-col xl:px-24 py-12 px-8 bg-white"
     >
       <div className="">
-        <h3 className="text-green-primary text-4xl 2xl:text-6xl">Planos</h3>
+        <h3 className="text-green-primary text-4xl xl:text-6xl">Planos</h3>
       </div>
-      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-x-12 gap-y-3">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-12 gap-y-3">
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
