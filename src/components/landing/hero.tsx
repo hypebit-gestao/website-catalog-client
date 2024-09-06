@@ -75,7 +75,7 @@ const Hero = () => {
             </motion.div>
           </div>
         </div>
-        <div className="w-[60%] hidden h-full 2xl:flex justify-center 2xl:ml-0  ">
+        <div className="w-[60%] hidden h-full md:flex justify-center 2xl:ml-0  ">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
