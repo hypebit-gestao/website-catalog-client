@@ -19,7 +19,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className=" bg-white  w-full px-12 lg:px-44 flex justify-between items-center h-24  z-[100]">
+    <nav className=" bg-white  w-full px-12 lg:px-24 flex justify-between items-center h-24  z-[100]">
       <div className="flex flex-row justify-between items-center w-full">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <Image

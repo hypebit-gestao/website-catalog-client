@@ -25,7 +25,7 @@ const FaqItem = ({ name, description }: FaqItemProps) => {
         {({ open }) => (
           <>
             <Disclosure.Button
-              className={`w-full md:w-[90%] 2xl:w-[70%] relative h-auto py-4 m-auto flex flex-row bg-green-primary  items-center z-10 ${
+              className={`w-full md:w-[90%] 2xl:w-[100%] relative h-auto py-4 m-auto flex flex-row bg-green-primary  items-center z-10 ${
                 open ? "rounded-t-lg" : "rounded-lg"
               }`}
             >
@@ -48,7 +48,7 @@ const FaqItem = ({ name, description }: FaqItemProps) => {
               leaveFrom="transform scale-100 opacity-100"
               leaveTo="transform scale-95 opacity-0"
             >
-              <Disclosure.Panel className="m-auto relative flex flex-col  bg-gray-200  z-0 -top-6 w-full md:w-[90%] 2xl:w-[70%] rounded-lg">
+              <Disclosure.Panel className="m-auto relative flex flex-col  bg-gray-200  z-0 -top-6 w-full md:w-[90%] 2xl:w-[100%] rounded-lg">
                 <div
                   className={`px-6 pt-10 pb-6 font-semibold ${poppinsFont.className}`}
                 >

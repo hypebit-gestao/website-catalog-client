@@ -16,7 +16,7 @@ const Pitch = () => {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="flex flex-row items-center px-8 2xl:px-44 relative "
+        className="flex flex-row items-center px-8 2xl:px-24 relative "
       >
         <div className="h-full w-full 2xl:w-[80%]">
           <motion.div
