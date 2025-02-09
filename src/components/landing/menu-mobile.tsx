@@ -14,7 +14,7 @@ const MenuMobile = () => {
   const menu = useMenu();
 
   return (
-    <div className="z-50 absolute top-0 left-0  w-full min-h-screen bg-white-primary transition-all duration-700 animate-in slide-in-from-left flex flex-col items-center justify-center text-center">
+    <div className="z-50 fixed inset-0 bg-white  w-full min-h-screen  transition-all duration-700 animate-in slide-in-from-left flex flex-col items-center justify-center text-center">
       <div className="absolute top-4 right-4 text-black">
         <AiOutlineClose
           onClick={() => menu.onClose()}
@@ -24,38 +24,38 @@ const MenuMobile = () => {
       <ul className="flex flex-col  w-full py-12 mb-24">
         <Link
           onClick={() => menu.onClose()}
-          to="hero"
+          to="plans"
           spy={true}
           smooth={true}
           offset={0}
           duration={700}
         >
           <li className="text-green-primary  mb-4 text-3xl  transition-all duration-500 cursor-pointer  py-3">
-            Home
+            Planos
           </li>
         </Link>
         <Link
           onClick={() => menu.onClose()}
-          to="services"
+          to="features"
           spy={true}
           smooth={true}
           offset={0}
           duration={700}
         >
           <li className="text-green-primary   mb-4 text-3xl  transition-all duration-500 cursor-pointer  py-3">
-            Serviços
+            Recursos
           </li>
         </Link>
         <Link
           onClick={() => menu.onClose()}
-          to="process"
+          to="faq"
           spy={true}
           smooth={true}
           offset={0}
           duration={700}
         >
           <li className="text-green-primary text-3xl  transition-all duration-500 cursor-pointer  py-3">
-            Processo
+            Dúvidas Frequentes
           </li>
         </Link>
       </ul>

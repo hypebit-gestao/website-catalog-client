@@ -14,16 +14,16 @@ import MenuMobile from "@/components/landing/menu-mobile";
 
 export default function Home() {
   const menu = useMenu();
-  return menu.isOpen ? (
-    <MenuMobile />
-  ) : (
+  return (
     <main className="bg-[#fcfcfc]">
       <Container isLanding>
         <Navbar />
         <Hero />
         <Pitch />
         <Features />
+        <div id="plans">
         <Plans />
+        </div>
         <Faq />
         <LandingFooter />
       </Container>
