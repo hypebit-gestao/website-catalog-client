@@ -5,6 +5,7 @@ const nextConfig = {
       "a0.muscache.com",
       "portimages.nyc3.digitaloceanspaces.com",
       "portimages.nyc3.cdn.digitaloceanspaces.com",
+      "barber-ai.nyc3.digitaloceanspaces.com",
       "cdn.vendizap.com",
       "via.placeholder.com",
       "www.pallenz.co.nz",
