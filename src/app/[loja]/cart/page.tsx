@@ -191,6 +191,8 @@ const Cart = () => {
   const finishOrder = async (
     data: z.infer<typeof FormSchema | typeof FormSchema2>
   ) => {
+    console.log("[checkout] items before submit:", items);
+    console.log("[checkout] subtotal:", subtotal);
     const numeroTelefone = `55${store?.store?.phone}`;
     const formattedMethod = formatMethodPayment(data.methodPayment);
 
@@ -199,27 +201,24 @@ const Cart = () => {
 *Novo Pedido!*
 --------------------------
 ${items
-  .map(
-    (item) => ` 
+  .map((item) => {
+    const unit = Number(item.promotionPrice ?? item.price ?? 0);
+    return ` 
 *${item.name}*
 *Quantidade*: ${item.quantity}
 ${
-  item.attributesOptions &&
-  item.attributesOptions
-    ?.map(
-      (attribute: AttributesOptions, index: number) =>
-        `*${attribute.attributeName}*: ${attribute.attributeOptionName}`
-    )
-    .join("\n")
-}
-${item.sizeName ? `*Tamanho*: ${item.sizeName}` : ""}
-*Valor*: ${
-      item.quantity
-        ? formater.format(item.quantity * Number(item.promotionPrice ?? item.price))
-        : Number(item.promotionPrice ?? item.price)
+      item.attributesOptions &&
+      item.attributesOptions
+        ?.map(
+          (attribute: AttributesOptions, index: number) =>
+            `*${attribute.attributeName}*: ${attribute.attributeOptionName}`
+        )
+        .join("\n")
     }
-`
-  )
+${item.sizeName ? `*Tamanho*: ${item.sizeName}` : ""}
+*Valor*: ${item.quantity ? formater.format(item.quantity * unit) : unit}
+`;
+  })
   .join("")}
 *Nome completo*: ${data.fullName}
 *Forma de pagamento*: ${formattedMethod}

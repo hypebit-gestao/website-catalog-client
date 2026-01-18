@@ -58,18 +58,21 @@ const ProductPage = () => {
       toast.error("Selecione um tamanho");
       return;
     }
+    const unitPrice = product?.promotion_price && product?.promotion_price > 0
+      ? Number(product.promotion_price)
+      : Number(product?.price ?? 0);
+
     addItem(
       {
         id: product?.id as string,
         name: product?.name as string,
-        price: (product?.promotion_price && product?.promotion_price > 0
-          ? product?.promotion_price
-          : product?.price) as number,
-        promotionPrice: product?.promotion_price ?? undefined,
+        price: unitPrice,
+        promotionPrice: product?.promotion_price ? Number(product.promotion_price) : undefined,
         image: product?.images && product?.images[0],
         sizeId: selectSize?.id || null,
         sizeName: selectSize?.size || null,
         attributesOptions: attributesSelected,
+        itemTotal: unitPrice * quantity,
       },
       quantity
     );
