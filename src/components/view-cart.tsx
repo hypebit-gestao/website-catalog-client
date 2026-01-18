@@ -42,6 +42,7 @@ interface ProductCart {
   image: string;
   quantity?: number;
   itemTotal: number;
+  promotionPrice?: number;
 }
 
 const FormSchema = z.object({
@@ -62,6 +63,12 @@ const ViewCartModal = ({ isOpen, onClose }: ViewCartModalProps) => {
     style: "currency",
     currency: "BRL",
   });
+
+  const subtotal = items.reduce((acc: number, item: any) => {
+    const unit = item?.promotionPrice ?? item?.price ?? 0;
+    const qty = item?.quantity ?? 1;
+    return acc + Number(unit) * Number(qty);
+  }, 0);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -92,8 +99,8 @@ ${items
 *Quantidade*: ${item.quantity}
 *Valor*: ${
       item.quantity
-        ? formater.format(item.quantity * Number(item.price))
-        : Number(item.price)
+        ? formater.format(item.quantity * Number(item.promotionPrice ?? item.price))
+        : Number(item.promotionPrice ?? item.price)
     }
 `
   )
@@ -102,8 +109,8 @@ ${items
 *Tipo de entrega*: ${data.deliveryType}
 *Valor Total*: ${
       deliveryType === "Entrega a domícilio"
-        ? formater.format(cartTotal + store?.store?.shipping_taxes)
-        : formater.format(cartTotal)
+        ? formater.format(subtotal + store?.store?.shipping_taxes)
+        : formater.format(subtotal)
     }
 `;
 
@@ -151,8 +158,8 @@ ${items
                     <div className="flex items-center">
                       <h1 className="text-green-secondary text-lg font-bold">
                         {item.quantity
-                          ? formater.format(item.quantity * item.price)
-                          : item.price}
+                          ? formater.format(item.quantity * (item.promotionPrice ?? item.price))
+                          : (item.promotionPrice ?? item.price)}
                       </h1>
                       <div className="ml-4 flex items-center">
                         {/* <MdEdit
@@ -252,7 +259,7 @@ ${items
                       <h1 className="text-xl ">
                         Valor total:{" "}
                         <span className="font-bold text-green-secondary text-2xl">
-                          {formater.format(cartTotal)}
+                          {formater.format(subtotal)}
                         </span>
                       </h1>
                     </div>

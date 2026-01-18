@@ -62,7 +62,10 @@ const ProductPage = () => {
       {
         id: product?.id as string,
         name: product?.name as string,
-        price: product?.price as number,
+        price: (product?.promotion_price && product?.promotion_price > 0
+          ? product?.promotion_price
+          : product?.price) as number,
+        promotionPrice: product?.promotion_price ?? undefined,
         image: product?.images && product?.images[0],
         sizeId: selectSize?.id || null,
         sizeName: selectSize?.size || null,
@@ -172,7 +175,7 @@ const ProductPage = () => {
                   <div className="mt-6 lg:mt-0 lg:ml-12">
                     <h1 className="text-black font-bold text-3xl">
                       {formater.format(
-                        Number(product?.price && product?.price * quantity)
+                        Number(product?.promotion_price && product?.promotion_price > 0 ? product?.promotion_price && product?.promotion_price * quantity : product?.price && product?.price * quantity)
                       )}
                     </h1>
                   </div>

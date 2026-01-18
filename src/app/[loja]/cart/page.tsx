@@ -47,6 +47,7 @@ interface ProductCart {
   quantity?: number;
   itemTotal: number;
   attributesOptions: [];
+  promotionPrice?: number;
 }
 
 interface AttributesOptions {
@@ -72,6 +73,12 @@ const Cart = () => {
     style: "currency",
     currency: "BRL",
   });
+
+  const subtotal = items.reduce((acc: number, item: any) => {
+    const unit = item?.promotionPrice ?? item?.price ?? 0;
+    const qty = item?.quantity ?? 1;
+    return acc + Number(unit) * Number(qty);
+  }, 0);
 
   const FormSchema = z.object({
     fullName: z.string().min(1, "Nome é obrigatório"),
@@ -208,8 +215,8 @@ ${
 ${item.sizeName ? `*Tamanho*: ${item.sizeName}` : ""}
 *Valor*: ${
       item.quantity
-        ? formater.format(item.quantity * Number(item.price))
-        : Number(item.price)
+        ? formater.format(item.quantity * Number(item.promotionPrice ?? item.price))
+        : Number(item.promotionPrice ?? item.price)
     }
 `
   )
@@ -230,7 +237,7 @@ ${
     : ""
 }
 ${data.observation ? `*Observação*: ${data.observation}` : ""}
-*Subtotal*: ${formater.format(cartTotal)}
+*Subtotal*: ${formater.format(subtotal)}
 ${
   data.deliveryType === "Entrega a domícilio"
     ? `*Taxa de entrega*: ${
@@ -243,8 +250,8 @@ ${
 ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
 *Valor Total*: ${
       data.deliveryType === "Entrega a domícilio"
-        ? formater.format(cartTotal + store?.store?.shipping_taxes - discount)
-        : formater.format(cartTotal - discount)
+        ? formater.format(subtotal + store?.store?.shipping_taxes - discount)
+        : formater.format(subtotal - discount)
     }
 `;
 
@@ -260,7 +267,7 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
       observation: data.observation,
       status: "PENDENT",
       customer_name: data.fullName,
-      total: Number(cartTotal),
+      total: Number(subtotal),
     });
 
     if (orderResponse) {
@@ -271,8 +278,8 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
             product_id: item.id,
             size_id: item.sizeId,
             quantity: item.quantity,
-            unit_price: item.price,
-            total: item.itemTotal,
+            unit_price: Number(item.promotionPrice ?? item.price),
+            total: Number((item.promotionPrice ?? item.price) * (item.quantity ?? 1)),
           })
           .then((responseOrderItem: OrderItem | undefined) => {
             if (item.attributesOptions && item.attributesOptions.length > 0) {
@@ -330,7 +337,7 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
       store?.store?.credit_discount > 0
     ) {
       setDiscount(
-        (cartTotal + store?.store?.shipping_taxes) *
+        (subtotal + store?.store?.shipping_taxes) *
           (store?.store?.credit_discount / 100)
       );
     } else if (
@@ -339,7 +346,7 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
       store?.store?.pix_discount > 0
     ) {
       setDiscount(
-        (cartTotal + store?.store?.shipping_taxes) *
+        (subtotal + store?.store?.shipping_taxes) *
           (store?.store?.pix_discount / 100)
       );
     } else if (
@@ -348,7 +355,7 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
       store?.store?.debit_discount > 0
     ) {
       setDiscount(
-        (cartTotal + store?.store?.shipping_taxes) *
+        (subtotal + store?.store?.shipping_taxes) *
           (store?.store?.debit_discount / 100)
       );
     } else if (methodPayment === "CASH") {
@@ -356,7 +363,7 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
     } else {
       setDiscount(0);
     }
-  }, [watch("methodPayment"), watch("deliveryType")]);
+  }, [watch("methodPayment"), watch("deliveryType"), subtotal]);
 
   return (
     <Container>
@@ -403,8 +410,8 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
                 <div className="flex items-center">
                   <h1 className="text-black text-lg font-bold">
                     {item.quantity
-                      ? formater.format(item.quantity * item.price)
-                      : item.price}
+                      ? formater.format(item.quantity * (item.promotionPrice ?? item.price))
+                      : (item.promotionPrice ?? item.price)}
                   </h1>
                   <div className="ml-4 flex items-center">
                     {/* <MdEdit
@@ -690,7 +697,7 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
                   <div className="mt-4">
                     <h1 className="text-lg ">
                       Subtotal:{" "}
-                      <span className="">{formater.format(cartTotal)}</span>
+                      <span className="">{formater.format(subtotal)}</span>
                     </h1>
                   </div>
                   {store?.store?.shipping_type !== null &&
@@ -712,7 +719,7 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
                           Desconto:{" "}
                           <span className="">
                             {formater.format(
-                              (cartTotal + store?.store?.shipping_taxes) *
+                              (subtotal + store?.store?.shipping_taxes) *
                                 (store?.store?.credit_discount / 100)
                             )}
                           </span>
@@ -727,7 +734,7 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
                           Desconto:{" "}
                           <span className="">
                             {formater.format(
-                              (cartTotal + store?.store?.shipping_taxes) *
+                              (subtotal + store?.store?.shipping_taxes) *
                                 (store?.store?.pix_discount / 100)
                             )}
                           </span>
@@ -742,7 +749,7 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
                           Desconto:{" "}
                           <span className="">
                             {formater.format(
-                              (cartTotal + store?.store?.shipping_taxes) *
+                              (subtotal + store?.store?.shipping_taxes) *
                                 (store?.store?.debit_discount / 100)
                             )}
                           </span>
@@ -753,13 +760,13 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
                     <h1 className="text-lg ">
                       Valor total:{" "}
                       <span className="font-bold text-black text-xl">
-                        {deliveryType === "Entrega a domícilio"
+                          {deliveryType === "Entrega a domícilio"
                           ? formater.format(
-                              cartTotal +
+                              subtotal +
                                 store?.store?.shipping_taxes -
                                 discount
                             )
-                          : formater.format(cartTotal - discount)}
+                          : formater.format(subtotal - discount)}
                       </span>
                     </h1>
                   </div>
