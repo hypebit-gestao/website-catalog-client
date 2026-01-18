@@ -9,6 +9,12 @@ interface CategoryItemProps {
 }
 
 const CategoryItem = ({ name, image, onClick, color }: CategoryItemProps) => {
+  const shortName = React.useMemo(() => {
+    if (!name) return "";
+    const trimmed = name.trim();
+    if (trimmed.length <= 6) return trimmed;
+    return trimmed.slice(0, 6) + "...";
+  }, [name]);
   return (
     <div
       onClick={onClick}
@@ -32,6 +38,9 @@ const CategoryItem = ({ name, image, onClick, color }: CategoryItemProps) => {
         >
           {name}
         </h3>
+      </div>
+      <div className="block xl:hidden mt-1">
+        <h4 className="text-sm text-center text-gray-600">{shortName}</h4>
       </div>
     </div>
   );
