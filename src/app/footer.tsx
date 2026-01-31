@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React from "react";
+import { FaInstagram } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
 
@@ -53,6 +54,21 @@ const Footer = ({ background }: FooterProps) => {
                       </div>
                     </button>
                   </Link>
+                  {params.loja === 'invistamodas' && (
+                     <Link
+                    href={`https://www.instagram.com/invistamodas_/`}
+                    target="_blank"
+                  >
+                    <button className="my-4">
+                      <div className="flex flex-row items-center">
+                        <FaInstagram color="white" size={32} />
+                        <h1 className="text-white text-2xl ml-4 break-words break-all text-justify">
+                          @invistamodas_
+                        </h1>
+                      </div>
+                    </button>
+                  </Link>
+                  )}
                   <Link href="#" target="_blank">
                     <button className="my-4">
                       <div className="flex flex-row items-center">

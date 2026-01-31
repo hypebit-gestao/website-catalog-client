@@ -20,9 +20,12 @@ const Header = () => {
   const search = useSearch();
   const router = useRouter();
 
+  console.log("Params: ", params)
+  console.log("Store: ", store)
+
   return (
     <header
-      className={`h-auto border-b bg-white border-gray-200 w-full   ${
+      className={`h-auto border-b ${params.loja === 'invistamodas' ? 'bg-black' : 'bg-white'} border-gray-200 w-full   ${
         !params.loja && "hidden"
       }`}
     >
@@ -62,7 +65,7 @@ const Header = () => {
             />
             <input
               style={{}}
-              className="pl-10 px-5 py-3 w-full border border-gray-200 rounded-lg  text-center"
+              className={`pl-10 px-5 py-3 w-full border ${params?.loja === 'invistamodas' ? 'border-[#D3AF37]' : 'border-gray-200'} rounded-lg  text-center`}
               placeholder="Pesquisar"
               value={search.text}
               onChange={(e) => useSearch.setState({ text: e.target.value })}
@@ -71,7 +74,7 @@ const Header = () => {
           </div>
 
           <div className="flex flex-row items-center">
-            <h1 className="mr-4 font-bold hidden lg:block">Meu Carrinho</h1>
+            <h1 className={`mr-4 font-bold hidden lg:block ${params?.loja === 'invistamodas' ? 'text-[#D3AF37]' : ''}`}>Meu Carrinho</h1>
             <div
               onClick={() => router.push(`/${params.loja}/cart`)}
               className="relative "
@@ -79,11 +82,12 @@ const Header = () => {
               <div
                 style={{
                   backgroundColor:
+                    params.loja === 'invistamodas' ? '#D3AF37' :
                     store?.store?.background_color !== null
                       ? `${store?.store?.background_color}`
                       : "#1e3222",
                 }}
-                className="bg-green-secondary cursor-pointer rounded-full flex justify-center items-center w-5 h-5 absolute top-0 -right-3 text-center z-[99999] text-sm text-white"
+                className={`bg-green-secondary cursor-pointer rounded-full flex justify-center items-center w-5 h-5 absolute top-0 -right-3 text-center z-[99999] text-sm ${params?.loja === 'invistamodas' ? 'text-black' : 'text-white'}`}
               >
                 {totalUniqueItems}
               </div>
@@ -91,11 +95,12 @@ const Header = () => {
                 <FaShoppingCart
                   style={{
                     color:
+                    params.loja === 'invistamodas' ? '#D3AF37' :
                       store?.store?.background_color !== null
                         ? `${store?.store?.background_color}`
                         : "#1e3222",
                   }}
-                  className="text-green-primary"
+                  className={`${params?.loja === 'invistamodas' ? 'text-[#D3AF37]' : 'text-green-primary'}`}
                   size={28}
                 />
               </div>
