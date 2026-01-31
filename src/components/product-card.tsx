@@ -14,7 +14,7 @@ import { Button } from "./ui/button";
 interface ProductCardProps {
   name: string;
   price: number;
-  promotionPrice: number;
+  promotionPrice?: number | null;
   images?: string[];
   onClick?: () => void;
 }
