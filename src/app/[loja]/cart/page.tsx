@@ -74,6 +74,20 @@ const Cart = () => {
     currency: "BRL",
   });
 
+  const [selectedInstallments, setSelectedInstallments] = useState<number>(1);
+
+  const maxInstallmentsAllowed = React.useMemo(() => {
+    if (!items || items.length === 0) return 36;
+    const mins = items
+      .map((it: any) => Number(it.max_installments ?? 36))
+      .reduce((acc: number, v: number) => Math.min(acc, v), 36);
+    return Math.max(1, Math.min(36, mins));
+  }, [items]);
+
+  useEffect(() => {
+    setSelectedInstallments((prev) => Math.min(prev, maxInstallmentsAllowed));
+  }, [maxInstallmentsAllowed, items]);
+
   const subtotal = items.reduce((acc: number, item: any) => {
     const unit = item?.promotionPrice ?? item?.price ?? 0;
     const qty = item?.quantity ?? 1;
@@ -125,6 +139,8 @@ const Cart = () => {
   });
 
   const { setValue, watch } = form;
+
+  const methodPayment = watch("methodPayment");
 
   const deliveryType = watch("deliveryType");
 
@@ -196,6 +212,33 @@ const Cart = () => {
     const numeroTelefone = `55${store?.store?.phone}`;
     const formattedMethod = formatMethodPayment(data.methodPayment);
 
+    // compute total after discount and shipping
+    const totalValue =
+      data.deliveryType === "Entrega a domícilio"
+        ? subtotal + (store?.store?.shipping_taxes ?? 0) - discount
+        : subtotal - discount;
+
+    // installment summary for total
+    let parcelaText = "";
+    if (data.methodPayment === "CREDIT_CARD" && selectedInstallments > 1) {
+      const anyItemWithInterest = items.some((it: any) => it.installment_with_interest);
+      const interestPercent = items
+        .map((it: any) => Number(it.installment_interest_value ?? 0))
+        .reduce((acc, v) => Math.max(acc, v), 0);
+
+      if (!anyItemWithInterest || interestPercent === 0) {
+        const parcela = totalValue / selectedInstallments;
+        parcelaText = `\n*Parcelamento*: ${selectedInstallments}x de ${formater.format(parcela)} (sem juros)`;
+      } else {
+        const r = interestPercent / 100;
+        const n = selectedInstallments;
+        const denom = 1 - Math.pow(1 + r, -n);
+        let parcela = totalValue / n;
+        if (denom > 0) parcela = (totalValue * r) / denom;
+        parcelaText = `\n*Parcelamento*: ${selectedInstallments}x de ${formater.format(parcela)} (com juros)`;
+      }
+    }
+
     const mensagem = `
 --------------------------
 *Novo Pedido!*
@@ -203,6 +246,28 @@ const Cart = () => {
 ${items
   .map((item) => {
     const unit = Number(item.promotionPrice ?? item.price ?? 0);
+
+    // per-item installment info when paying by credit card
+    let perItemParcelaText = "";
+    if (data.methodPayment === "CREDIT_CARD" && selectedInstallments > 1) {
+      const itemMax = Number(item.max_installments ?? 1);
+      if (itemMax > 1) {
+        const itemWithInterest = Boolean(item.installment_with_interest);
+        const itemInterestPercent = Number(item.installment_interest_value ?? 0);
+        if (!itemWithInterest || itemInterestPercent === 0) {
+          const parcelaItem = (item.quantity ? item.quantity * unit : unit) / selectedInstallments;
+          perItemParcelaText = `\n*Parcelas*: ${selectedInstallments}x de ${formater.format(parcelaItem)} (sem juros)`;
+        } else {
+          const rItem = itemInterestPercent / 100;
+          const nItem = selectedInstallments;
+          const denomItem = 1 - Math.pow(1 + rItem, -nItem);
+          let parcelaItem = (item.quantity ? item.quantity * unit : unit) / nItem;
+          if (denomItem > 0) parcelaItem = ((item.quantity ? item.quantity * unit : unit) * rItem) / denomItem;
+          perItemParcelaText = `\n*Parcelas*: ${selectedInstallments}x de ${formater.format(parcelaItem)} (com juros)`;
+        }
+      }
+    }
+
     return ` 
 *${item.name}*
 *Quantidade*: ${item.quantity}
@@ -216,7 +281,7 @@ ${
         .join("\n")
     }
 ${item.sizeName ? `*Tamanho*: ${item.sizeName}` : ""}
-*Valor*: ${item.quantity ? formater.format(item.quantity * unit) : unit}
+*Valor*: ${item.quantity ? formater.format(item.quantity * unit) : formater.format(unit)}${perItemParcelaText}
 `;
   })
   .join("")}
@@ -247,11 +312,7 @@ ${
     : ""
 }
 ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
-*Valor Total*: ${
-      data.deliveryType === "Entrega a domícilio"
-        ? formater.format(subtotal + store?.store?.shipping_taxes - discount)
-        : formater.format(subtotal - discount)
-    }
+*Valor Total*: ${formater.format(totalValue)}${parcelaText}
 `;
 
     const mensagemURLFormatada = encodeURIComponent(mensagem);
@@ -502,6 +563,29 @@ ${discount > 0 ? `*Desconto*: ${formater.format(discount)}` : ""}
                   )}
                 />
               </div>
+              {watch("methodPayment") === "CREDIT_CARD" && (
+                <div className="mt-4">
+                  <FormLabel className="text-lg">Parcelamento</FormLabel>
+                  <Select
+                    onValueChange={(v) => setSelectedInstallments(Number(v))}
+                    defaultValue={String(selectedInstallments)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione número de parcelas" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[300]">
+                      {Array.from({ length: maxInstallmentsAllowed }, (_, i) => i + 1).map((n) => (
+                        <SelectItem key={n} value={String(n)}>
+                          {n}x
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormDescription className="text-sm text-gray-500 mt-1">
+                    Selecione em quantas vezes deseja parcelar (1 = à vista). Máximo permitido: {maxInstallmentsAllowed}x
+                  </FormDescription>
+                </div>
+              )}
 
               <div className="mt-5">
                 <div>

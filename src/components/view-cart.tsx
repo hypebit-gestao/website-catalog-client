@@ -86,6 +86,20 @@ const ViewCartModal = ({ isOpen, onClose }: ViewCartModalProps) => {
   const deliveryType = watch("deliveryType");
 
   const [selectedInstallments, setSelectedInstallments] = useState<number>(1);
+  const methodPayment = watch("methodPayment");
+
+  const maxInstallmentsAllowed = React.useMemo(() => {
+    if (!items || items.length === 0) return 36;
+    const mins = items
+      .map((it: any) => Number(it.max_installments ?? 36))
+      .reduce((acc: number, v: number) => Math.min(acc, v), 36);
+    return Math.max(1, Math.min(36, mins));
+  }, [items]);
+
+  useEffect(() => {
+    // ensure selectedInstallments never exceeds allowed max
+    setSelectedInstallments((prev) => Math.min(prev, maxInstallmentsAllowed));
+  }, [maxInstallmentsAllowed, methodPayment, items]);
 
   const finishOrder = (data: z.infer<typeof FormSchema>) => {
     const numeroTelefone = `55${store?.store?.phone}`;
@@ -122,17 +136,38 @@ const ViewCartModal = ({ isOpen, onClose }: ViewCartModalProps) => {
 *Novo Pedido!*
 --------------------------
 ${items
-  .map(
-    (item) => ` 
+  .map((item) => {
+    const unit = item.quantity
+      ? Number(item.quantity) * Number(item.promotionPrice ?? item.price)
+      : Number(item.promotionPrice ?? item.price);
+
+    // per-item installment info when paying by credit card
+    let perItemParcelaText = "";
+    if (data.methodPayment === "CREDIT_CARD" && selectedInstallments > 1) {
+      const itemMax = Number(item.max_installments ?? 1);
+      if (itemMax > 1) {
+        const itemWithInterest = Boolean(item.installment_with_interest);
+        const itemInterestPercent = Number(item.installment_interest_value ?? 0);
+        if (!itemWithInterest || itemInterestPercent === 0) {
+          const parcelaItem = unit / selectedInstallments;
+          perItemParcelaText = `\n*Parcelas*: ${selectedInstallments}x de ${formater.format(parcelaItem)} (sem juros)`;
+        } else {
+          const rItem = itemInterestPercent / 100;
+          const nItem = selectedInstallments;
+          const denomItem = 1 - Math.pow(1 + rItem, -nItem);
+          let parcelaItem = unit / nItem;
+          if (denomItem > 0) parcelaItem = (unit * rItem) / denomItem;
+          perItemParcelaText = `\n*Parcelas*: ${selectedInstallments}x de ${formater.format(parcelaItem)} (com juros)`;
+        }
+      }
+    }
+
+    return ` 
 *${item.name}*
 *Quantidade*: ${item.quantity}
-*Valor*: ${
-      item.quantity
-        ? formater.format(item.quantity * Number(item.promotionPrice ?? item.price))
-        : Number(item.promotionPrice ?? item.price)
-    }
-`
-  )
+*Valor*: ${formater.format(unit)}${perItemParcelaText}
+`;
+  })
   .join("")}
  *Forma de pagamento*: ${data.methodPayment}
  *Tipo de entrega*: ${data.deliveryType}
@@ -247,7 +282,7 @@ ${items
                     )}
                   />
                 )}
-                {totalItems > 0 && form.watch("methodPayment") === "CREDIT_CARD" && (
+                {totalItems > 0 && methodPayment === "CREDIT_CARD" && (
                   <div className="mt-4">
                     <FormLabel className="text-lg">Parcelamento</FormLabel>
                     <Select
@@ -258,7 +293,7 @@ ${items
                         <SelectValue placeholder="Selecione número de parcelas" />
                       </SelectTrigger>
                       <SelectContent className="z-[300]">
-                        {Array.from({ length: 36 }, (_, i) => i + 1).map((n) => (
+                        {Array.from({ length: maxInstallmentsAllowed }, (_, i) => i + 1).map((n) => (
                           <SelectItem key={n} value={String(n)}>
                             {n}x
                           </SelectItem>
@@ -266,7 +301,7 @@ ${items
                       </SelectContent>
                     </Select>
                     <FormDescription className="text-sm text-gray-500 mt-1">
-                      Selecione em quantas vezes deseja parcelar (1 = à vista)
+                      Selecione em quantas vezes deseja parcelar (1 = à vista). Máximo permitido: {maxInstallmentsAllowed}x
                     </FormDescription>
                   </div>
                 )}
