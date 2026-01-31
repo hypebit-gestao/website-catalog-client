@@ -241,6 +241,10 @@ const Catalog = () => {
                                 name={product.name}
                                 price={product.price}
                                 promotionPrice={product.promotion_price}
+                                installment_available={product.installment_available}
+                                installment_with_interest={product.installment_with_interest}
+                                installment_interest_value={product.installment_interest_value}
+                                max_installments={product.max_installments}
                                 images={
                                   product.images && product.images.length > 0
                                     ? product.images
@@ -296,6 +300,10 @@ const Catalog = () => {
                               name={product.name}
                               price={product.price}
                               promotionPrice={product.promotion_price}
+                              installment_available={product.installment_available}
+                              installment_with_interest={product.installment_with_interest}
+                              installment_interest_value={product.installment_interest_value}
+                              max_installments={product.max_installments}
                               images={
                                 product.images && product.images.length > 0
                                   ? product.images

@@ -19,6 +19,13 @@ interface ProductCardProps {
   onClick?: () => void;
 }
 
+interface InstallmentProps {
+  installment_available?: boolean;
+  installment_with_interest?: boolean;
+  installment_interest_value?: number;
+  max_installments?: number;
+}
+
 function SampleNextArrow(props: any) {
   const { onClick } = props;
   return (
@@ -53,7 +60,11 @@ const ProductCard = ({
   promotionPrice,
   images,
   onClick,
-}: ProductCardProps) => {
+  installment_available,
+  installment_with_interest,
+  installment_interest_value,
+  max_installments,
+}: ProductCardProps & InstallmentProps) => {
   const [sliderIndex, setSliderIndex] = useState(0);
 
   const settings = {
@@ -71,6 +82,39 @@ const ProductCard = ({
     style: "currency",
     currency: "BRL",
   });
+
+  // Installment display logic (assume quantity = 1 on listing)
+  const installmentInfo = React.useMemo(() => {
+    const available = installment_available ?? false;
+    if (!available) return null;
+
+    const maxRaw = max_installments ?? 1;
+    const max = Math.max(1, Math.min(Number(maxRaw), 36));
+
+    // If only 1 installment is allowed, don't display installment info
+    if (max <= 1) return null;
+
+    const withInterest = installment_with_interest ?? false;
+
+    const unitPrice = promotionPrice && promotionPrice > 0 ? Number(promotionPrice) : Number(price ?? 0);
+
+    if (!withInterest) {
+      return `ou até ${max}x sem juros no cartão`;
+    }
+
+    const interestPercent = Number(installment_interest_value ?? 0);
+    const r = interestPercent / 100;
+
+    let parcela = unitPrice / max;
+    if (r > 0) {
+      const denom = 1 - Math.pow(1 + r, -max);
+      if (denom > 0) {
+        parcela = (unitPrice * r) / denom;
+      }
+    }
+
+    return `ou ${max}x de ${formater.format(parcela)} no cartão`;
+  }, [installment_available, installment_with_interest, installment_interest_value, max_installments, promotionPrice, price, formater]);
 
   return (
     <div className="w-full h-full  relative">
@@ -114,6 +158,9 @@ const ProductCard = ({
             <div className="mt-2">
               <h3 className="text-md lg:text-xl font-bold">{formater.format(price)}</h3>
             </div>
+          )}
+          {installmentInfo && (
+            <div className="text-sm text-gray-600 mt-1">{installmentInfo}</div>
           )}
           </div>
           <div className="mt-12 w-full absolute bottom-0 pt-6">

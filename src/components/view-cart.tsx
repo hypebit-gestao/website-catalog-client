@@ -85,8 +85,37 @@ const ViewCartModal = ({ isOpen, onClose }: ViewCartModalProps) => {
 
   const deliveryType = watch("deliveryType");
 
+  const [selectedInstallments, setSelectedInstallments] = useState<number>(1);
+
   const finishOrder = (data: z.infer<typeof FormSchema>) => {
     const numeroTelefone = `55${store?.store?.phone}`;
+
+    // determine total including delivery if needed
+    const totalValue =
+      deliveryType === "Entrega a domícilio"
+        ? subtotal + (store?.store?.shipping_taxes ?? 0)
+        : subtotal;
+
+    // installment calculation: check items for interest settings
+    const anyItemWithInterest = items.some((it: any) => it.installment_with_interest);
+    const interestPercent = items
+      .map((it: any) => Number(it.installment_interest_value ?? 0))
+      .reduce((acc, v) => Math.max(acc, v), 0);
+
+    let parcelaText = "";
+    if (data.methodPayment === "CREDIT_CARD" && selectedInstallments > 1) {
+      if (!anyItemWithInterest || interestPercent === 0) {
+        const parcela = totalValue / selectedInstallments;
+        parcelaText = `\n*Parcelamento*: ${selectedInstallments}x de ${formater.format(parcela)} (sem juros)`;
+      } else {
+        const r = interestPercent / 100;
+        const n = selectedInstallments;
+        const denom = 1 - Math.pow(1 + r, -n);
+        let parcela = totalValue / n;
+        if (denom > 0) parcela = (totalValue * r) / denom;
+        parcelaText = `\n*Parcelamento*: ${selectedInstallments}x de ${formater.format(parcela)} (com juros)`;
+      }
+    }
 
     const mensagem = `
 --------------------------
@@ -105,13 +134,9 @@ ${items
 `
   )
   .join("")}
-*Forma de pagamento*: ${data.methodPayment}
-*Tipo de entrega*: ${data.deliveryType}
-*Valor Total*: ${
-      deliveryType === "Entrega a domícilio"
-        ? formater.format(subtotal + store?.store?.shipping_taxes)
-        : formater.format(subtotal)
-    }
+ *Forma de pagamento*: ${data.methodPayment}
+ *Tipo de entrega*: ${data.deliveryType}
+ *Valor Total*: ${formater.format(totalValue)}${parcelaText}
 `;
 
     const mensagemURLFormatada = encodeURIComponent(mensagem);
@@ -221,6 +246,29 @@ ${items
                       </FormItem>
                     )}
                   />
+                )}
+                {totalItems > 0 && form.watch("methodPayment") === "CREDIT_CARD" && (
+                  <div className="mt-4">
+                    <FormLabel className="text-lg">Parcelamento</FormLabel>
+                    <Select
+                      onValueChange={(v) => setSelectedInstallments(Number(v))}
+                      defaultValue={String(selectedInstallments)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione número de parcelas" />
+                      </SelectTrigger>
+                      <SelectContent className="z-[300]">
+                        {Array.from({ length: 36 }, (_, i) => i + 1).map((n) => (
+                          <SelectItem key={n} value={String(n)}>
+                            {n}x
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormDescription className="text-sm text-gray-500 mt-1">
+                      Selecione em quantas vezes deseja parcelar (1 = à vista)
+                    </FormDescription>
+                  </div>
                 )}
                 <div className="mt-5">
                   {totalItems > 0 && (

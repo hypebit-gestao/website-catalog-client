@@ -39,6 +39,42 @@ const ProductPage = () => {
     currency: "BRL",
   });
 
+  // Installment display logic
+  const installmentInfo = React.useMemo(() => {
+    const available = product?.installment_available ?? false;
+    if (!available) return null;
+
+    const maxRaw = product?.max_installments ?? 1;
+    const max = Math.max(1, Math.min(Number(maxRaw), 36));
+
+    // If only 1 installment is allowed, don't display installment info
+    if (max <= 1) return null;
+
+    const withInterest = product?.installment_with_interest ?? false;
+
+    const unitPrice = product?.promotion_price && product?.promotion_price > 0
+      ? Number(product.promotion_price)
+      : Number(product?.price ?? 0);
+
+    if (!withInterest) {
+      return `ou até ${max}x sem juros no cartão`;
+    }
+
+    const interestPercent = Number(product?.installment_interest_value ?? 0);
+    const r = interestPercent / 100;
+
+    // If interest percent is 0, fallback to simple division
+    let parcela = unitPrice / max;
+    if (r > 0) {
+      const denom = 1 - Math.pow(1 + r, -max);
+      if (denom > 0) {
+        parcela = (unitPrice * r) / denom;
+      }
+    }
+
+    return `ou ${max}x de ${formater.format(parcela)} no cartão`;
+  }, [product, formater]);
+
   const handleAdd = () => {
     setQuantity(quantity + 1);
   };
@@ -73,6 +109,11 @@ const ProductPage = () => {
         sizeName: selectSize?.size || null,
         attributesOptions: attributesSelected,
         itemTotal: unitPrice * quantity,
+        // Installment fields (forward to cart item)
+        installment_available: product?.installment_available,
+        installment_with_interest: product?.installment_with_interest,
+        installment_interest_value: product?.installment_interest_value,
+        max_installments: product?.max_installments,
       },
       quantity
     );
@@ -181,6 +222,9 @@ const ProductPage = () => {
                         Number(product?.promotion_price && product?.promotion_price > 0 ? product?.promotion_price && product?.promotion_price * quantity : product?.price && product?.price * quantity)
                       )}
                     </h1>
+                    {installmentInfo && (
+                      <div className="text-gray-600 mt-2">{installmentInfo}</div>
+                    )}
                   </div>
                 </div>
                 {product?.product_attribute &&
